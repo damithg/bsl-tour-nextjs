@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
@@ -26,6 +26,10 @@ const FeaturedPackages = () => {
       );
     }
   };
+
+  useEffect(() => {
+    checkScrollable();
+  }, [tours]);
 
   const scrollLeft = () => {
     const container = scrollContainerRef.current;
