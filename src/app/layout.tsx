@@ -18,15 +18,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className={`${inter.variable} ${playfair.variable} ${raleway.variable} antialiased`}>
-        <div className="min-h-screen bg-background text-foreground">
-          <Providers>{children}</Providers>
-        </div>
+      <body className={`${inter.variable} ${playfair.variable} ${raleway.variable} antialiased min-h-screen bg-background text-foreground`}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
