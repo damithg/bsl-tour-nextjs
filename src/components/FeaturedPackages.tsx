@@ -148,11 +148,11 @@ export default function FeaturedPackages() {
 
           <div
             ref={scrollContainerRef}
-            className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
+            className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide"
             onScroll={checkScrollable}
           >
             {tours.map((tour: TourCardDto) => (
-              <div key={tour.id} className="flex-none w-80">
+              <div key={tour.id} className="flex-none w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start">
                 <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100">
                   <div className="relative h-64 overflow-hidden">
                     <img
