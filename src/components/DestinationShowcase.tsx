@@ -136,8 +136,8 @@ export default function DestinationShowcase() {
           >
             {destinations.map((destination: DestinationCardDto) => (
               <div key={destination.id} className="flex-none w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start">
-                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100">
-                  <div className="relative h-64 overflow-hidden">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100 h-[450px] flex flex-col">
+                  <div className="relative h-64 overflow-hidden flex-shrink-0"></div>
                     <img
                       src={destination.imageUrl}
                       alt={destination.name}
@@ -152,16 +152,16 @@ export default function DestinationShowcase() {
                       ))}
                     </div>
                   </div>
-                  <div className="p-6">
+                  <div className="p-6 flex-1 flex flex-col">
                     <div className="mb-3">
                       <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2 font-['Playfair_Display']">
                         {destination.name}
                       </h3>
                     </div>
-                    <p className="text-gray-700 mb-4 line-clamp-3 text-sm leading-relaxed">
+                    <p className="text-gray-700 mb-4 line-clamp-3 text-sm leading-relaxed flex-1">
                       {destination.description}
                     </p>
-                    <div className="flex justify-end">
+                    <div className="flex justify-end mt-auto">
                       <Link
                         href={`/destinations/${destination.slug}`}
                         className="px-6 py-2.5 bg-[#0F4C81] text-white hover:bg-[#0F4C81]/90 rounded-lg transition-colors font-medium text-sm"
@@ -169,7 +169,7 @@ export default function DestinationShowcase() {
                         Explore
                       </Link>
                     </div>
-                  </div>
+                  </div></div>
                 </div>
               </div>
             ))}
