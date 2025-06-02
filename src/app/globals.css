@@ -1,20 +1,85 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  :root {
     /* Base ShadCN variables */
     --primary: #0f766e;
     --primary-foreground: #ffffff;
-    
+
     /* Luxury theme variables */
     --secondary: #D4AF37; /* Gold accent */
     --secondary-foreground: #000000;
     --accent: #103556; /* Dark blue */
     --accent-foreground: #ffffff;
-    
+
     /* Commonly used colors */
     --gold: #D4AF37;
     --gold-light: #e9d58a;
@@ -32,7 +97,7 @@
   body {
     @apply font-sans antialiased bg-[hsl(var(--background))] text-[hsl(var(--foreground))];
   }
-  
+
   /* Global luxury styling */
   h1, h2, h3, h4, h5, h6 {
     @apply font-['Playfair_Display'] text-[var(--accent)];
@@ -45,15 +110,15 @@
     margin-bottom: 1rem;
     line-height: 1.7;
   }
-  
+
   .timeline-luxury img {
     @apply shadow-lg transition-all duration-500;
   }
-  
+
   .timeline-luxury img:hover {
     @apply shadow-xl transform scale-[1.02];
   }
-  
+
   /* Add stylized connector lines between timeline points */
   .timeline-luxury > div:not(:last-child)::after {
     content: '';
@@ -65,68 +130,68 @@
     background: linear-gradient(to bottom, var(--primary), transparent);
     transform: translateY(100%);
   }
-  
+
   /* Enhanced day circles with pulsing effect on hover */
   .timeline-luxury .day-circle {
     transition: all 0.3s ease-in-out;
   }
-  
+
   .timeline-luxury > div:hover .day-circle {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 0 0 4px rgba(15, 118, 110, 0.2);
   }
-  
+
   /* Add soft highlight for accommodation blocks */
   .timeline-luxury .accommodation-info {
     border-left: 4px solid var(--secondary);
     transition: all 0.3s ease;
   }
-  
+
   .timeline-luxury .accommodation-info:hover {
     background-color: #f5f3ea;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   }
-  
+
   /* Gold decorative elements */
   .gold-divider {
     @apply h-0.5 bg-[var(--secondary)];
   }
-  
+
   /* Luxury buttons and CTAs */
   .btn-luxury-primary {
     @apply bg-[var(--accent)] text-white hover:bg-[var(--accent)]/90 transition;
   }
-  
+
   .btn-luxury-secondary {
-    
+
   /* Scrollbar hide utility */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
     @apply bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary)]/90 transition;
   }
-  
+
   .btn-luxury-outline {
     @apply border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white transition;
   }
-  
+
   /* Luxury section styling */
   .luxury-section-title {
     @apply flex items-center justify-between;
   }
-  
+
   .luxury-section-title h2 {
     @apply font-['Playfair_Display'] text-3xl font-bold text-[var(--accent)];
   }
-  
+
   .luxury-section-title .gold-divider {
     @apply w-32;
   }
-  
+
   /* Card styling */
   .luxury-card {
     @apply bg-white overflow-hidden shadow-lg transition-all hover:shadow-2xl;
@@ -142,41 +207,41 @@
     /* Beach-inspired luxury color palette */
     --primary: #0077B6; /* Ocean Blue */
     --primary-foreground: #ffffff;
-    
+
     --secondary: #F6E27F; /* Golden Sand */
     --secondary-foreground: #000000;
-    
+
     --accent: #F26B6B; /* Warm Coral */
     --accent-foreground: #ffffff;
-    
+
     --background: #FAF9F6; /* Soft Ivory */
     --foreground: #004E64; /* Deep Teal */
-    
+
     --muted: #A9A9A9; /* Driftwood Gray */
     --muted-foreground: #004E6488;
-    
+
     --card: #FAF9F6;
     --card-foreground: #004E64;
-    
+
     --popover: #FAF9F6;
     --popover-foreground: #004E64;
-    
+
     --border: #88B04B; /* Palm Green */
     --input: #FAF9F6;
     --ring: #0077B6;
-    
+
     --destructive: #F26B6B;
     --destructive-foreground: #ffffff;
-    
+
     --success: #88B04B;
     --success-foreground: #ffffff;
-    
+
     --warning: #F6E27F;
     --warning-foreground: #000000;
-    
+
     --info: #F8C8DC;
     --info-foreground: #000000;
-    
+
     --radius: 0.5rem;
   }
 }
@@ -186,26 +251,26 @@
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
   }
-  
+
   .hide-scrollbar::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
   }
-  
+
   /* Scrollbar hide utility */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-  
+
   /* Background utility classes */
   .bg-cream {
     @apply bg-[var(--background)];
   }
-  
+
   .bg-luxury-gradient {
     @apply bg-gradient-to-r from-[var(--accent)] to-[var(--primary)];
   }
