@@ -3,133 +3,142 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@layer base {
+  :root {
+    /* Base ShadCN variables */
+    --primary: #0f766e;
+    --primary-foreground: #ffffff;
+    
+    /* Luxury theme variables */
+    --secondary: #D4AF37; /* Gold accent */
+    --secondary-foreground: #000000;
+    --accent: #103556; /* Dark blue */
+    --accent-foreground: #ffffff;
+    
+    /* Commonly used colors */
+    --gold: #D4AF37;
+    --gold-light: #e9d58a;
+    --gold-dark: #aa8c27;
 
-:root {
-  --primary-color: #2c5282;
-  --secondary-color: #f6ad55;
-  --accent-color: #38a169;
-  --text-dark: #2d3748;
-  --text-light: #718096;
-  --background-light: #f7fafc;
-}
+    /* Gradients and backgrounds */
+    --luxury-gradient: linear-gradient(to right, var(--accent), var(--accent-dark, #0a2541));
+    --cream-bg: #f8f7f2;
+  }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+  * {
+    @apply border-[hsl(var(--border))];
+  }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  font-family: 'Inter', sans-serif;
-  line-height: 1.6;
-  color: var(--text-dark);
-}
-
-body {
-  background-color: #ffffff;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.hero-gradient {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.text-gradient {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.card-hover {
-  transition: all 0.3s ease-in-out;
-}
-
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-.section-padding {
-  padding: 80px 0;
-}
-
-@media (max-width: 768px) {
-  .section-padding {
-    padding: 60px 0;
+  body {
+    @apply font-sans antialiased bg-[hsl(var(--background))] text-[hsl(var(--foreground))];
+  }
+  
+  /* Global luxury styling */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-['Playfair_Display'] text-[var(--accent)];
   }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-in-out;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.8s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+@layer components {
+  /* Luxury Timeline Styling */
+  .timeline-luxury .prose p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
   }
-  to {
-    opacity: 1;
+  
+  .timeline-luxury img {
+    @apply shadow-lg transition-all duration-500;
+  }
+  
+  .timeline-luxury img:hover {
+    @apply shadow-xl transform scale-[1.02];
+  }
+  
+  /* Add stylized connector lines between timeline points */
+  .timeline-luxury > div:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 30px;
+    bottom: 0;
+    height: 2rem;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--primary), transparent);
+    transform: translateY(100%);
+  }
+  
+  /* Enhanced day circles with pulsing effect on hover */
+  .timeline-luxury .day-circle {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .timeline-luxury > div:hover .day-circle {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 0 0 4px rgba(15, 118, 110, 0.2);
+  }
+  
+  /* Add soft highlight for accommodation blocks */
+  .timeline-luxury .accommodation-info {
+    border-left: 4px solid var(--secondary);
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-luxury .accommodation-info:hover {
+    background-color: #f5f3ea;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Gold decorative elements */
+  .gold-divider {
+    @apply h-0.5 bg-[var(--secondary)];
+  }
+  
+  /* Luxury buttons and CTAs */
+  .btn-luxury-primary {
+    @apply bg-[var(--accent)] text-white hover:bg-[var(--accent)]/90 transition;
+  }
+  
+  .btn-luxury-secondary {
+    @apply bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary)]/90 transition;
+  }
+  
+  .btn-luxury-outline {
+    @apply border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white transition;
+  }
+  
+  /* Luxury section styling */
+  .luxury-section-title {
+    @apply flex items-center justify-between;
+  }
+  
+  .luxury-section-title h2 {
+    @apply font-['Playfair_Display'] text-3xl font-bold text-[var(--accent)];
+  }
+  
+  .luxury-section-title .gold-divider {
+    @apply w-32;
+  }
+  
+  /* Card styling */
+  .luxury-card {
+    @apply bg-white overflow-hidden shadow-lg transition-all hover:shadow-2xl;
   }
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+@layer utilities {
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .hide-scrollbar::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
   }
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 12px 30px;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: #667eea;
-  padding: 12px 30px;
-  border: 2px solid #667eea;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.btn-secondary:hover {
-  background: #667eea;
-  color: white;
-  transform: translateY(-2px);
+  
+  /* Background utility classes */
+  .bg-cream {
+    @apply bg-[var(--cream-bg)];
+  }
+  
+  .bg-luxury-gradient {
+    @apply bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark, #0a2541)];
+  }
 }

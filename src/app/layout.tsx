@@ -1,37 +1,11 @@
-
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
-
-const inter = Inter({ subsets: ['latin'] })
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'BSL Tours - Best Sri Lanka Tours | Travel Packages & Adventures',
-  description: 'Discover the magic of Sri Lanka with BSL Tours. Premium travel packages, cultural tours, wildlife safaris, and authentic experiences across the pearl of the Indian Ocean.',
-  keywords: 'Sri Lanka tours, travel packages, Ceylon tours, wildlife safari, cultural tours, beach holidays, tea plantation tours',
-  openGraph: {
-    title: 'BSL Tours - Best Sri Lanka Tours',
-    description: 'Premium Sri Lanka travel experiences and tour packages',
-    url: 'https://bestsrilankatours.com',
-    siteName: 'BSL Tours',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'BSL Tours - Sri Lanka Travel',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'BSL Tours - Best Sri Lanka Tours',
-    description: 'Premium Sri Lanka travel experiences and tour packages',
-    images: ['/og-image.jpg'],
-  },
+  title: 'Best Sri Lanka Tours - Luxury Travel Experiences',
+  description: 'Experience the beauty of Sri Lanka with our luxury, personalized tour packages. Explore beaches, wildlife, ancient temples, and more.',
 }
 
 export default function RootLayout({
@@ -41,9 +15,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+      </head>
+      <body>
         <Navigation />
-        {children}
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   )
