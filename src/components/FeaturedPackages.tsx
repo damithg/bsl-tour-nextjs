@@ -17,43 +17,6 @@ const FeaturedPackages = () => {
     queryKey: ['/api/tours/featured'],
   });
 
-  // Fallback sample data if API is not available
-  const fallbackTours = [
-    {
-      id: 1,
-      title: "Cultural Triangle Luxury Tour",
-      slug: "cultural-triangle-luxury-tour",
-      duration: 7,
-      price: 1200,
-      description: "Explore ancient kingdoms, magnificent temples, and royal palaces in comfort and style.",
-      imageUrl: "/images/sigiriya-destination.jpg",
-      isFeatured: true,
-    },
-    {
-      id: 2,
-      title: "Southern Coast Beach Paradise",
-      slug: "southern-coast-beach-paradise",
-      duration: 5,
-      price: 850,
-      description: "Relax on pristine beaches and discover coastal gems along Sri Lanka's stunning south coast.",
-      imageUrl: "/images/ella-destination.jpg",
-      isFeatured: true,
-    },
-    {
-      id: 3,
-      title: "Hill Country Adventure",
-      slug: "hill-country-adventure",
-      duration: 6,
-      price: 950,
-      description: "Journey through tea plantations, misty mountains, and charming hill stations.",
-      imageUrl: "/images/kandy-destination.jpg",
-      isFeatured: true,
-    }
-  ];
-
-  // Use API data if available, otherwise fallback to sample data
-  const displayTours = tours.length > 0 ? tours : fallbackTours;
-
   const checkScrollable = () => {
     const container = scrollContainerRef.current;
     if (container) {
@@ -123,6 +86,36 @@ const FeaturedPackages = () => {
     );
   }
 
+  if (error) {
+    return (
+      <section id="packages" className="py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">
+              Luxury Sri Lanka Tours
+            </h2>
+            <p className="text-red-500">Failed to load tours. Please try again later.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!tours || tours.length === 0) {
+    return (
+      <section id="packages" className="py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">
+              Luxury Sri Lanka Tours
+            </h2>
+            <p className="text-lg text-gray-700">Currently configuring our tours. Please check back soon!</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="packages" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -165,7 +158,7 @@ const FeaturedPackages = () => {
             className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory hide-scrollbar"
             onScroll={checkScrollable}
           >
-            {displayTours.map((tour) => (
+            {tours.map((tour) => (
               <div 
                 key={tour.id} 
                 className="flex-none w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start bg-gray-50 rounded-lg overflow-hidden shadow-lg transition transform hover:scale-[1.02] hover:shadow-xl"
