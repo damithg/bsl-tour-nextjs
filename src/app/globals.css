@@ -133,6 +133,54 @@
   }
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Beach-inspired luxury color palette */
+    --primary: #0077B6; /* Ocean Blue */
+    --primary-foreground: #ffffff;
+    
+    --secondary: #F6E27F; /* Golden Sand */
+    --secondary-foreground: #000000;
+    
+    --accent: #F26B6B; /* Warm Coral */
+    --accent-foreground: #ffffff;
+    
+    --background: #FAF9F6; /* Soft Ivory */
+    --foreground: #004E64; /* Deep Teal */
+    
+    --muted: #A9A9A9; /* Driftwood Gray */
+    --muted-foreground: #004E6488;
+    
+    --card: #FAF9F6;
+    --card-foreground: #004E64;
+    
+    --popover: #FAF9F6;
+    --popover-foreground: #004E64;
+    
+    --border: #88B04B; /* Palm Green */
+    --input: #FAF9F6;
+    --ring: #0077B6;
+    
+    --destructive: #F26B6B;
+    --destructive-foreground: #ffffff;
+    
+    --success: #88B04B;
+    --success-foreground: #ffffff;
+    
+    --warning: #F6E27F;
+    --warning-foreground: #000000;
+    
+    --info: #F8C8DC;
+    --info-foreground: #000000;
+    
+    --radius: 0.5rem;
+  }
+}
+
 @layer utilities {
   .hide-scrollbar {
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -145,10 +193,10 @@
   
   /* Background utility classes */
   .bg-cream {
-    @apply bg-[var(--cream-bg)];
+    @apply bg-[var(--background)];
   }
   
   .bg-luxury-gradient {
-    @apply bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark, #0a2541)];
+    @apply bg-gradient-to-r from-[var(--accent)] to-[var(--primary)];
   }
 }

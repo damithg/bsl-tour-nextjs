@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useRef } from 'react';
@@ -81,7 +80,7 @@ const ExperienceShowcase = () => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    
+
     return (
       <div className="flex text-[#D4AF37]">
         {Array(fullStars).fill(null).map((_, i) => (
@@ -120,7 +119,7 @@ const ExperienceShowcase = () => {
             Each journey is crafted with meticulous attention to detail, offering you exclusive access to Sri Lanka's hidden treasures and authentic cultural encounters.
           </p>
         </div>
-        
+
         <div className="relative">
           {/* Navigation buttons */}
           <button
@@ -133,7 +132,7 @@ const ExperienceShowcase = () => {
           >
             <ChevronLeft size={24} />
           </button>
-          
+
           <button
             onClick={scrollRight}
             className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-[#0F4C81] rounded-full p-2 shadow-md -mr-4 transition ${
@@ -144,7 +143,7 @@ const ExperienceShowcase = () => {
           >
             <ChevronRight size={24} />
           </button>
-          
+
           {/* Scroll container */}
           <div 
             ref={scrollContainerRef}
@@ -211,7 +210,7 @@ const ExperienceShowcase = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="mt-12 text-center">
           <Link 
             href="/experiences" 

@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
+import { Inter, Playfair_Display, Raleway } from 'next/font/google'
 import './globals.css'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
+const raleway = Raleway({ subsets: ['latin'], variable: '--font-raleway' })
 
 export const metadata: Metadata = {
-  title: 'Best Sri Lanka Tours - Luxury Travel Experiences',
-  description: 'Experience the beauty of Sri Lanka with our luxury, personalized tour packages. Explore beaches, wildlife, ancient temples, and more.',
+  title: 'Best Sri Lanka Tours',
+  description: 'Discover the beauty of Sri Lanka with our curated tours',
 }
 
 export default function RootLayout({
@@ -14,17 +17,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body>
-        <Navigation />
-        {children}
-        <Footer />
+      <body className={`${inter.variable} ${playfair.variable} ${raleway.variable} antialiased`} suppressHydrationWarning>
+        <div className="min-h-screen bg-background text-foreground">
+          {children}
+        </div>
       </body>
     </html>
   )

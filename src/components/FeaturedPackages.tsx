@@ -1,4 +1,6 @@
-
+The code adds the 'use client' directive to the FeaturedPackages component and updates the import statement for Lucide icons.
+```
+```replit_final_file
 'use client';
 
 import { useState, useRef } from 'react';
@@ -75,7 +77,7 @@ const FeaturedPackages = () => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    
+
     return (
       <div className="flex text-[#D4AF37]">
         {Array(fullStars).fill(null).map((_, i) => (
@@ -114,7 +116,7 @@ const FeaturedPackages = () => {
             Each journey is tailor-made to reflect your preferences, with private guides, luxury accommodations, and unforgettable experiences.
           </p>
         </div>
-        
+
         <div className="relative">
           {/* Navigation buttons */}
           <button
@@ -127,7 +129,7 @@ const FeaturedPackages = () => {
           >
             <ChevronLeft size={24} />
           </button>
-          
+
           <button
             onClick={scrollRight}
             className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-[#0F4C81] rounded-full p-2 shadow-md -mr-4 transition ${
@@ -138,7 +140,7 @@ const FeaturedPackages = () => {
           >
             <ChevronRight size={24} />
           </button>
-          
+
           {/* Scroll container */}
           <div 
             ref={scrollContainerRef}
@@ -205,7 +207,7 @@ const FeaturedPackages = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="text-center mt-12">
           <Link 
             href="/tours" 

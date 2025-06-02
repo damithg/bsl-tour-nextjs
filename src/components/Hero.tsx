@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 const Hero = () => {
@@ -12,7 +11,7 @@ const Hero = () => {
         />
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
       </div>
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center hero-animation">
         <h1 className="font-['Playfair_Display'] text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
           Best Sri Lanka Tours
@@ -29,7 +28,7 @@ const Hero = () => {
           </Link>
         </div>
       </div>
-      
+
       <div className="absolute bottom-8 left-0 right-0 flex justify-center">
         <a href="#highlights" className="animate-bounce text-white">
           <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

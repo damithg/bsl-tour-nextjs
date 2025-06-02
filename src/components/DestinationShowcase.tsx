@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useRef } from 'react';
@@ -116,7 +115,7 @@ const DestinationShowcase = () => {
                     className="w-full h-full object-cover object-center transition duration-700 group-hover:scale-110"
                   />
                 </div>
-                
+
                 {/* Tags at the top of the card */}
                 <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-10">
                   {destination.tags.slice(0, 2).map((tag, index) => (
@@ -125,7 +124,7 @@ const DestinationShowcase = () => {
                     </span>
                   ))}
                 </div>
-                
+
                 <div className="absolute inset-0 transition-opacity duration-300 group-hover:opacity-95" 
                      style={{ 
                        background: `linear-gradient(to top, 
@@ -137,7 +136,7 @@ const DestinationShowcase = () => {
                          transparent 100%)`
                      }}>
                 </div>
-                
+
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                   <h3 className="font-['Playfair_Display'] text-2xl md:text-3xl text-white font-bold mb-3 transition-colors duration-300 group-hover:text-[#D4AF37]">
                     {destination.name}

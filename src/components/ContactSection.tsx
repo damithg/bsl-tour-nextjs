@@ -1,7 +1,7 @@
-
 'use client';
 
 import { useState } from 'react';
+import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import Link from 'next/link';
 
 // Simple contact form component for Next.js
@@ -22,7 +22,7 @@ const SimpleContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     setTimeout(() => {
       setSubmitStatus({
@@ -63,7 +63,7 @@ const SimpleContactForm = () => {
               className="block w-full border-gray-300 rounded-md shadow-sm py-3 px-4 focus:ring-[#0F4C81] focus:border-[#0F4C81] bg-gray-50"
             />
           </div>
-          
+
           <div>
             <label htmlFor="lastName" className="block text-base font-medium font-['Raleway'] text-gray-700 mb-2">Last Name *</label>
             <input 
@@ -76,7 +76,7 @@ const SimpleContactForm = () => {
               className="block w-full border-gray-300 rounded-md shadow-sm py-3 px-4 focus:ring-[#0F4C81] focus:border-[#0F4C81] bg-gray-50"
             />
           </div>
-          
+
           <div>
             <label htmlFor="email" className="block text-base font-medium font-['Raleway'] text-gray-700 mb-2">Email Address *</label>
             <input 
@@ -89,7 +89,7 @@ const SimpleContactForm = () => {
               className="block w-full border-gray-300 rounded-md shadow-sm py-3 px-4 focus:ring-[#0F4C81] focus:border-[#0F4C81] bg-gray-50"
             />
           </div>
-          
+
           <div>
             <label htmlFor="phone" className="block text-base font-medium font-['Raleway'] text-gray-700 mb-2">Phone Number</label>
             <input 
@@ -102,7 +102,7 @@ const SimpleContactForm = () => {
             />
           </div>
         </div>
-        
+
         <div className="mb-6">
           <label htmlFor="message" className="block text-base font-medium font-['Raleway'] text-gray-700 mb-2">Your Requirements *</label>
           <textarea 
@@ -115,7 +115,7 @@ const SimpleContactForm = () => {
             className="block w-full border-gray-300 rounded-md shadow-sm py-3 px-4 focus:ring-[#0F4C81] focus:border-[#0F4C81] bg-gray-50"
           ></textarea>
         </div>
-        
+
         <button 
           type="submit" 
           className="w-full bg-[#0F4C81] hover:bg-opacity-90 text-white text-lg font-medium py-3 px-4 rounded-md transition flex items-center justify-center"
@@ -133,7 +133,7 @@ const SimpleContactForm = () => {
             'Send Inquiry'
           )}
         </button>
-        
+
         {submitStatus.type && (
           <div className={`mt-6 p-4 rounded-lg transition-opacity duration-300 ${
             submitStatus.type === 'success' 
@@ -165,7 +165,7 @@ const ContactSection = () => {
             <p className="text-lg text-gray-600 mb-8">
               Have questions about pricing, destinations, or Sri Lankan tours? Fill out the form and our travel experts will be in touch directly.
             </p>
-            
+
             {/* Contact Methods */}
             <div className="bg-white rounded-lg p-8 shadow-sm">
               <div className="space-y-6">
@@ -181,7 +181,7 @@ const ContactSection = () => {
                     <p className="text-gray-600">Monday - Saturday: 10:00 - 18:00</p>
                   </div>
                 </div>
-                
+
                 {/* WhatsApp Chat */}
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mr-4">
@@ -196,7 +196,7 @@ const ContactSection = () => {
                     </a>
                   </div>
                 </div>
-                
+
                 {/* Email */}
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mr-4">
@@ -212,7 +212,7 @@ const ContactSection = () => {
                   </div>
                 </div>
               </div>
-              
+
               {/* Social Media */}
               <div className="mt-8 pt-6 border-t border-gray-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Connect with us</h3>
@@ -230,7 +230,7 @@ const ContactSection = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Right Column - Contact Form */}
           <div>
             <div className="p-1">
