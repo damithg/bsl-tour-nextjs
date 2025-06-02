@@ -1,29 +1,42 @@
-
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { TourPackage } from '@/lib/queryClient';
 
-const FeaturedPackages = () => {
+interface Tour {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  duration: string;
+  image: string;
+  location: string;
+}
+
+export default function FeaturedPackages() {
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  // Fetch tours from .NET API using queryClient
-  const { data: tours = [], isLoading, error } = useQuery<TourPackage[]>({
-    queryKey: ['/api/tours/featured'],
+  const { data: tours = [], isLoading, error } = useQuery({
+    queryKey: ['featured-tours'],
+    queryFn: async () => {
+      const response = await fetch('https://bsl-tours-api-yqmyn.ondigitalocean.app/api/tours/featured');
+      if (!response.ok) {
+        throw new Error('Failed to fetch tours');
+      }
+      return response.json();
+    },
   });
 
   const checkScrollable = () => {
     const container = scrollContainerRef.current;
     if (container) {
-      setCanScrollLeft(container.scrollLeft > 0);
-      setCanScrollRight(
-        container.scrollLeft < container.scrollWidth - container.clientWidth - 1
-      );
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      setShowLeftArrow(scrollLeft > 0);
+      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 1);
     }
   };
 
@@ -34,56 +47,31 @@ const FeaturedPackages = () => {
   const scrollLeft = () => {
     const container = scrollContainerRef.current;
     if (container) {
-      container.scrollBy({ left: -container.clientWidth, behavior: "smooth" });
+      container.scrollBy({ left: -300, behavior: 'smooth' });
+      setTimeout(checkScrollable, 300);
     }
   };
 
   const scrollRight = () => {
     const container = scrollContainerRef.current;
     if (container) {
-      container.scrollBy({ left: container.clientWidth, behavior: "smooth" });
+      container.scrollBy({ left: 300, behavior: 'smooth' });
+      setTimeout(checkScrollable, 300);
     }
-  };
-
-  const formatRating = (rating: number) => {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-
-    return (
-      <div className="flex text-yellow-400">
-        {Array(fullStars).fill(null).map((_, i) => (
-          <svg key={`full-${i}`} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-          </svg>
-        ))}
-        {hasHalfStar && (
-          <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-            <defs>
-              <linearGradient id="half-star">
-                <stop offset="50%" stopColor="#FBBF24"/>
-                <stop offset="50%" stopColor="#E5E7EB"/>
-              </linearGradient>
-            </defs>
-            <path fill="url(#half-star)" d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-          </svg>
-        )}
-        {Array(emptyStars).fill(null).map((_, i) => (
-          <svg key={`empty-${i}`} className="w-4 h-4 fill-current text-gray-300" viewBox="0 0 20 20">
-            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-          </svg>
-        ))}
-      </div>
-    );
   };
 
   if (isLoading) {
     return (
-      <section id="packages" className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading featured tours...</p>
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-foreground mb-4">Featured Tour Packages</h2>
+            <div className="w-24 h-1 bg-secondary mx-auto"></div>
+          </div>
+          <div className="flex gap-6 justify-center">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="w-80 h-96 bg-muted animate-pulse rounded-lg"></div>
+            ))}
           </div>
         </div>
       </section>
@@ -92,28 +80,11 @@ const FeaturedPackages = () => {
 
   if (error) {
     return (
-      <section id="packages" className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">
-              Luxury Sri Lanka Tours
-            </h2>
-            <p className="text-red-500">Failed to load tours. Please try again later.</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!tours || tours.length === 0) {
-    return (
-      <section id="packages" className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">
-              Luxury Sri Lanka Tours
-            </h2>
-            <p className="text-lg text-gray-700">Currently configuring our tours. Please check back soon!</p>
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h2 className="text-4xl font-bold text-foreground mb-4">Featured Tour Packages</h2>
+            <p className="text-muted-foreground">Unable to load tours at the moment.</p>
           </div>
         </div>
       </section>
@@ -121,118 +92,82 @@ const FeaturedPackages = () => {
   }
 
   return (
-    <section id="packages" className="py-20 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">
-            Luxury Sri Lanka Tours
-          </h2>
-          <p className="text-lg text-gray-700">
-            Each journey is tailor-made to reflect your preferences, with private guides, luxury accommodations, and unforgettable experiences.
-          </p>
+    <section className="py-16 bg-background">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-foreground mb-4">Featured Tour Packages</h2>
+          <div className="w-24 h-1 bg-secondary mx-auto"></div>
         </div>
 
         <div className="relative">
-          {/* Navigation buttons */}
-          <button
-            onClick={scrollLeft}
-            className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-blue-900 rounded-full p-2 shadow-md -ml-4 transition ${
-              !canScrollLeft ? "opacity-0 cursor-default" : "opacity-100 cursor-pointer"
-            }`}
-            disabled={!canScrollLeft}
-            aria-label="Scroll left"
-          >
-            <ChevronLeft size={24} />
-          </button>
+          {showLeftArrow && (
+            <button
+              onClick={scrollLeft}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-colors"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="w-6 h-6 text-gray-600" />
+            </button>
+          )}
 
-          <button
-            onClick={scrollRight}
-            className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-blue-900 rounded-full p-2 shadow-md -mr-4 transition ${
-              !canScrollRight ? "opacity-0 cursor-default" : "opacity-100 cursor-pointer"
-            }`}
-            disabled={!canScrollRight}
-            aria-label="Scroll right"
-          >
-            <ChevronRight size={24} />
-          </button>
+          {showRightArrow && (
+            <button
+              onClick={scrollRight}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-colors"
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="w-6 h-6 text-gray-600" />
+            </button>
+          )}
 
-          {/* Scroll container */}
-          <div 
+          <div
             ref={scrollContainerRef}
-            className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory hide-scrollbar"
+            className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
             onScroll={checkScrollable}
           >
-            {tours.map((tour) => (
-              <div 
-                key={tour.id} 
-                className="flex-none w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start bg-gray-50 rounded-lg overflow-hidden shadow-lg transition transform hover:scale-[1.02] hover:shadow-xl"
-              >
-                <div className="relative h-64 flex items-center justify-center overflow-hidden">
-                  <img 
-                    src={tour.imageUrl} 
-                    alt={tour.title} 
-                    className="w-full h-full object-cover object-center" 
-                  />
-                  <div className="absolute top-4 right-4">
-                    <span className="bg-blue-900/90 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {tour.duration} Days
-                    </span>
-                  </div>
-                  <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                    <span className="bg-yellow-500/90 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      Featured
-                    </span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2 text-blue-900">
-                    {tour.title}
-                  </h3>
-                  <div className="flex items-center mb-4">
-                    {formatRating(tour.rating || 4.8)}
-                    <span className="text-sm text-gray-500 ml-2">
-                      {tour.rating || 4.8} ({tour.reviewCount || 24} reviews)
-                    </span>
-                  </div>
-                  <p className="text-gray-600 mb-4">
-                    {tour.description || tour.shortDescription || tour.excerpt}
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <div className="flex flex-col">
-                      <span className="text-sm text-gray-500">Starting from</span>
-                      <div className="flex items-baseline">
-                        <span className="text-xl font-semibold text-blue-900">
-                          ${tour.price}
-                        </span>
-                        <span className="text-gray-500 text-sm ml-1.5">/ per person</span>
-                      </div>
+            {tours.map((tour: Tour) => (
+              <div key={tour.id} className="flex-none w-80">
+                <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="relative h-48">
+                    <img
+                      src={tour.image}
+                      alt={tour.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-4 right-4 bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-sm font-semibold">
+                      {tour.duration}
                     </div>
-                    <Link 
-                      href={`/tours/${tour.slug || tour.id}`} 
-                      className="inline-flex items-center bg-blue-900 hover:bg-blue-800 text-white font-medium py-2 px-5 rounded-full transition group shadow-md"
-                    >
-                      Explore 
-                      <ChevronRight className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-1" />
-                    </Link>
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="text-xl font-semibold text-card-foreground line-clamp-2">
+                        {tour.title}
+                      </h3>
+                    </div>
+                    <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
+                      {tour.location}
+                    </p>
+                    <p className="text-muted-foreground mb-4 line-clamp-3">
+                      {tour.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold text-primary">
+                        ${tour.price}
+                      </span>
+                      <Link
+                        href={`/tours/${tour.id}`}
+                        className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+                      >
+                        View Details
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
-
-        <div className="text-center mt-12">
-          <Link 
-            href="/tours" 
-            className="inline-flex items-center bg-blue-900 hover:bg-blue-800 text-white font-medium py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 group"
-          >
-            View All Tours
-            <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </div>
       </div>
     </section>
   );
-};
-
-export default FeaturedPackages;
+}
