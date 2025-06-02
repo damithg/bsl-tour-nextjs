@@ -187,7 +187,7 @@ export default function FeaturedPackages() {
                         </div>
                       )}
                     </div>
-                    <p className="text-gray-700 mb-4 line-clamp-3 text-sm leading-relaxed">
+                    <p className="text-gray-700/70 mb-4 line-clamp-2">
                       {tour.shortDescription || tour.description}
                     </p>
                     <div className="flex items-center justify-between">

@@ -158,7 +158,7 @@ export default function DestinationShowcase() {
                         {destination.name}
                       </h3>
                     </div>
-                    <p className="text-gray-700 mb-4 line-clamp-3 text-sm leading-relaxed flex-1">
+                    <p className="text-gray-700/70 mb-4 line-clamp-2 flex-1">
                       {destination.description}
                     </p>
                     <div className="flex justify-end mt-auto">
