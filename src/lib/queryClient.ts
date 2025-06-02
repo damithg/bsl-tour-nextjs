@@ -1,38 +1,36 @@
-
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
-// API base URL - can be updated to switch between local and production
+// Base URL for your backend API
 export const API_BASE_URL = "https://bsl-tours-api-yqmyn.ondigitalocean.app";
 
-// Type definitions for API responses
-export interface TourPackage {
+// --- RAW API Type Definitions ---
+// These types reflect your raw Strapi response structures
+
+export interface RawTourPackage {
   id: number;
-  title: string;
-  slug: string | null;
-  description: string;
-  shortDescription: string | null;
-  excerpt?: string | null;
-  imageUrl: string;
-  price: number;
-  duration: number;
-  inclusions: string | null;
-  exclusions: string | null;
-  itinerary: string | null;
-  isFeatured: boolean;
-  destinationId: number | null;
-  activities: string | null;
-  includes: string | null;
-  excludes: string | null;
-  destinations: string | null;
-  galleryImages?: string[];
-  gallery?: string | null;
-  highlights?: string | null;
-  tourHighlights?: string | null;
-  highlightsSummary?: string | null;
-  groupSize?: string | null;
-  featured?: boolean;
-  rating?: number;
-  reviewCount?: number;
+  name: string;
+  slug: string;
+  summary: string;
+  duration: string;
+  startingFrom: number;
+  currency: string;
+  featured: boolean;
+  card?: {
+    header?: string;
+    heading?: string;
+    body?: string;
+    tags?: string[];
+    image?: {
+      publicId?: string;
+      alt?: string;
+      caption?: string;
+      orientation?: string;
+      baseUrl?: string;
+      small?: string;
+      medium?: string;
+      large?: string;
+    };
+  };
 }
 
 export interface Destination {
@@ -47,14 +45,10 @@ export interface Destination {
   latitude?: string;
   longitude?: string;
   recommendedDuration?: string;
-  
-  // Legacy properties for backward compatibility
   description?: string;
   imageUrl?: string;
   bestTimeToVisit?: string;
   weatherInfo?: string;
-  
-  // Allow any additional properties returned by the API
   [key: string]: any;
 }
 
@@ -77,7 +71,8 @@ export interface Testimonial {
   [key: string]: any;
 }
 
-// Helper function to handle response errors
+// --- LOW LEVEL HELPER ---
+
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = await res.text();
@@ -85,14 +80,14 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
-// API request function for mutations (POST, PUT, DELETE)
+// POST/PUT/DELETE request function (optional: useful for future admin features)
 export async function apiRequest(
   method: string,
   url: string,
   data?: unknown,
 ): Promise<Response> {
   const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
-  
+
   const res = await fetch(fullUrl, {
     method,
     headers: data ? { "Content-Type": "application/json" } : {},
@@ -103,25 +98,21 @@ export async function apiRequest(
   return res;
 }
 
-// Type for handling unauthorized behavior
+// --- GENERIC QUERY FUNCTION (Tanstack Query V5) ---
+
 type UnauthorizedBehavior = "returnNull" | "throw";
 
-// Query function factory for TanStack Query v5
 export const getQueryFn = <TData>(options: {
   on401: UnauthorizedBehavior;
 }): QueryFunction<TData> => {
   return async ({ queryKey }) => {
     const [basePath, ...params] = queryKey as string[];
     let path = basePath;
-    
+
     if (params.length > 0) {
-      if (basePath.includes('/destinations')) {
-        path = `${basePath}/${params[0]}`;
-      } else {
-        path = `${basePath}/${params[0]}`;
-      }
+      path = `${basePath}/${params[0]}`;
     }
-    
+
     const url = path.startsWith('http') ? path : `${API_BASE_URL}${path}`;
     const res = await fetch(url);
 
@@ -134,7 +125,8 @@ export const getQueryFn = <TData>(options: {
   };
 };
 
-// Configure the query client
+// --- GLOBAL QUERY CLIENT INSTANCE ---
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

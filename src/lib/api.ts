@@ -1,82 +1,109 @@
+import { API_BASE_URL } from './queryClient';
 
-import { API_BASE_URL, TourPackage } from './queryClient';
+// Raw API type matching your Strapi JSON response
+export interface RawTourPackage {
+  id: number;
+  name: string;
+  slug: string;
+  summary: string;
+  duration: string;
+  startingFrom: number;
+  currency: string;
+  featured: boolean;
+  card?: {
+    header?: string;
+    heading?: string;
+    body?: string;
+    tags?: string[];
+    image?: {
+      publicId?: string;
+      alt?: string;
+      caption?: string;
+      orientation?: string;
+      baseUrl?: string;
+      small?: string;
+      medium?: string;
+      large?: string;
+    };
+  };
+}
 
-// Enhanced type definitions for better type safety
+// Flattened DTO your frontend will consume
 export interface TourCardDto {
   id: number;
   title: string;
-  slug: string | null;
+  slug: string;
   description: string;
-  shortDescription: string | null;
+  shortDescription: string;
   imageUrl: string;
   price: number;
   duration: number;
-  destinations: string | null;
-  rating?: number;
-  reviewCount?: number;
+  destinations?: string | null;
+  rating?: number | null;
+  reviewCount?: number | null;
   isFeatured: boolean;
 }
 
+// Utility function for handling API errors
 export interface ApiError extends Error {
   status?: number;
   code?: string;
 }
 
-// Utility function to handle API errors
 async function handleApiResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
     const error = new Error(`API Error: ${response.status} ${response.statusText}`) as ApiError;
     error.status = response.status;
     throw error;
   }
-  
   return response.json();
 }
 
-// Map raw API response to standardized DTO
-function mapTourToDto(rawTour: TourPackage): TourCardDto {
+// Mapping function: converts raw API to clean DTO
+function mapTourToDto(rawTour: RawTourPackage): TourCardDto {
   return {
     id: rawTour.id,
-    title: rawTour.title,
+    title: rawTour.card?.header || rawTour.name || '',
     slug: rawTour.slug,
-    description: rawTour.description,
-    shortDescription: rawTour.shortDescription || rawTour.excerpt || rawTour.description,
-    imageUrl: rawTour.imageUrl,
-    price: rawTour.price,
-    duration: rawTour.duration,
-    destinations: rawTour.destinations,
-    rating: rawTour.rating,
-    reviewCount: rawTour.reviewCount,
-    isFeatured: rawTour.isFeatured || rawTour.featured || false,
+    description: rawTour.card?.body || rawTour.summary || '',
+    shortDescription: rawTour.card?.body || rawTour.summary || '',
+    imageUrl: rawTour.card?.image?.small || '',
+    price: rawTour.startingFrom,
+    duration: parseInt(rawTour.duration) || 0,
+    destinations: undefined, // You can map this if you expose destinations later
+    rating: null,
+    reviewCount: null,
+    isFeatured: rawTour.featured ?? false,
   };
 }
 
-// API functions
+// Fetchers
+
 export async function getFeaturedTours(): Promise<TourCardDto[]> {
   const response = await fetch(`${API_BASE_URL}/api/tours/featured`);
-  const rawTours = await handleApiResponse<TourPackage[]>(response);
+  const rawTours = await handleApiResponse<RawTourPackage[]>(response);
   return rawTours.map(mapTourToDto);
 }
 
 export async function getAllTours(): Promise<TourCardDto[]> {
   const response = await fetch(`${API_BASE_URL}/api/tours`);
-  const rawTours = await handleApiResponse<TourPackage[]>(response);
+  const rawTours = await handleApiResponse<RawTourPackage[]>(response);
   return rawTours.map(mapTourToDto);
 }
 
 export async function getTourById(id: number): Promise<TourCardDto> {
   const response = await fetch(`${API_BASE_URL}/api/tours/${id}`);
-  const rawTour = await handleApiResponse<TourPackage>(response);
+  const rawTour = await handleApiResponse<RawTourPackage>(response);
   return mapTourToDto(rawTour);
 }
 
 export async function getTourBySlug(slug: string): Promise<TourCardDto> {
   const response = await fetch(`${API_BASE_URL}/api/tours/slug/${slug}`);
-  const rawTour = await handleApiResponse<TourPackage>(response);
+  const rawTour = await handleApiResponse<RawTourPackage>(response);
   return mapTourToDto(rawTour);
 }
 
-// Additional API functions for destinations, testimonials, etc.
+// Example endpoints for destinations & testimonials
 export async function getFeaturedDestinations() {
   const response = await fetch(`${API_BASE_URL}/api/destinations/featured`);
   return handleApiResponse(response);
