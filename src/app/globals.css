@@ -191,6 +191,16 @@
     display: none;  /* Safari and Chrome */
   }
   
+  /* Scrollbar hide utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
   /* Background utility classes */
   .bg-cream {
     @apply bg-[var(--background)];

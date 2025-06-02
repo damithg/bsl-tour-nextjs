@@ -84,7 +84,7 @@ const FeaturedPackages = () => {
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
     return (
-      <div className="flex text-[#D4AF37]">
+      <div className="flex text-yellow-400">
         {Array(fullStars).fill(null).map((_, i) => (
           <svg key={`full-${i}`} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
             <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
@@ -94,7 +94,7 @@ const FeaturedPackages = () => {
           <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
             <defs>
               <linearGradient id="half-star">
-                <stop offset="50%" stopColor="#D4AF37"/>
+                <stop offset="50%" stopColor="#FBBF24"/>
                 <stop offset="50%" stopColor="#E5E7EB"/>
               </linearGradient>
             </defs>
@@ -115,7 +115,7 @@ const FeaturedPackages = () => {
       <section id="packages" className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#0F4C81] mx-auto"></div>
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
             <p className="mt-4 text-gray-600">Loading featured tours...</p>
           </div>
         </div>
@@ -127,10 +127,10 @@ const FeaturedPackages = () => {
     <section id="packages" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold mb-4 text-[#0F4C81]">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">
             Luxury Sri Lanka Tours
           </h2>
-          <p className="text-lg text-gray-700/80">
+          <p className="text-lg text-gray-700">
             Each journey is tailor-made to reflect your preferences, with private guides, luxury accommodations, and unforgettable experiences.
           </p>
         </div>
@@ -139,7 +139,7 @@ const FeaturedPackages = () => {
           {/* Navigation buttons */}
           <button
             onClick={scrollLeft}
-            className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-[#0F4C81] rounded-full p-2 shadow-md -ml-4 transition ${
+            className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-blue-900 rounded-full p-2 shadow-md -ml-4 transition ${
               !canScrollLeft ? "opacity-0 cursor-default" : "opacity-100 cursor-pointer"
             }`}
             disabled={!canScrollLeft}
@@ -150,7 +150,7 @@ const FeaturedPackages = () => {
 
           <button
             onClick={scrollRight}
-            className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-[#0F4C81] rounded-full p-2 shadow-md -mr-4 transition ${
+            className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-blue-900 rounded-full p-2 shadow-md -mr-4 transition ${
               !canScrollRight ? "opacity-0 cursor-default" : "opacity-100 cursor-pointer"
             }`}
             disabled={!canScrollRight}
@@ -162,13 +162,13 @@ const FeaturedPackages = () => {
           {/* Scroll container */}
           <div 
             ref={scrollContainerRef}
-            className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide"
+            className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory hide-scrollbar"
             onScroll={checkScrollable}
           >
             {displayTours.map((tour) => (
               <div 
                 key={tour.id} 
-                className="flex-none w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start bg-[#F8F5F0] rounded-lg overflow-hidden shadow-lg transition transform hover:scale-[1.02] hover:shadow-xl"
+                className="flex-none w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start bg-gray-50 rounded-lg overflow-hidden shadow-lg transition transform hover:scale-[1.02] hover:shadow-xl"
               >
                 <div className="relative h-64 flex items-center justify-center overflow-hidden">
                   <img 
@@ -177,18 +177,18 @@ const FeaturedPackages = () => {
                     className="w-full h-full object-cover object-center" 
                   />
                   <div className="absolute top-4 right-4">
-                    <span className="bg-[#0F4C81]/90 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-blue-900/90 text-white px-3 py-1 rounded-full text-sm font-medium">
                       {tour.duration} Days
                     </span>
                   </div>
                   <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                    <span className="bg-[#D4AF37]/90 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-yellow-500/90 text-white px-3 py-1 rounded-full text-sm font-medium">
                       Featured
                     </span>
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="font-['Playfair_Display'] text-xl font-semibold mb-2">
+                  <h3 className="text-xl font-semibold mb-2 text-blue-900">
                     {tour.title}
                   </h3>
                   <div className="flex items-center mb-4">
@@ -197,14 +197,14 @@ const FeaturedPackages = () => {
                       {tour.rating || 4.8} ({tour.reviewCount || 24} reviews)
                     </span>
                   </div>
-                  <p className="text-gray-700/70 mb-4">
+                  <p className="text-gray-600 mb-4">
                     {tour.description || tour.shortDescription || tour.excerpt}
                   </p>
                   <div className="flex justify-between items-center">
                     <div className="flex flex-col">
                       <span className="text-sm text-gray-500">Starting from</span>
                       <div className="flex items-baseline">
-                        <span className="text-xl font-semibold text-[#0F4C81]">
+                        <span className="text-xl font-semibold text-blue-900">
                           ${tour.price}
                         </span>
                         <span className="text-gray-500 text-sm ml-1.5">/ per person</span>
@@ -212,7 +212,7 @@ const FeaturedPackages = () => {
                     </div>
                     <Link 
                       href={`/tours/${tour.slug || tour.id}`} 
-                      className="inline-flex items-center bg-[#0F4C81] hover:bg-[#0F4C81]/90 text-white font-medium py-2 px-5 rounded-full transition group shadow-md"
+                      className="inline-flex items-center bg-blue-900 hover:bg-blue-800 text-white font-medium py-2 px-5 rounded-full transition group shadow-md"
                     >
                       Explore 
                       <ChevronRight className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-1" />
@@ -227,7 +227,7 @@ const FeaturedPackages = () => {
         <div className="text-center mt-12">
           <Link 
             href="/tours" 
-            className="inline-flex items-center bg-[#0F4C81] hover:bg-[#0F4C81]/90 text-white font-medium py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 group"
+            className="inline-flex items-center bg-blue-900 hover:bg-blue-800 text-white font-medium py-2.5 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 group"
           >
             View All Tours
             <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
