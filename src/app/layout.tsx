@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Providers } from "@/components/Providers";
+import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "Best Sri Lanka Tours - Luxury Sri Lanka Travel & Tour Packages",
