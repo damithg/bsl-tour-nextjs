@@ -137,7 +137,7 @@ export default function DestinationShowcase() {
             {destinations.map((destination: DestinationCardDto) => (
               <div key={destination.id} className="flex-none w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start">
                 <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100 h-[450px] flex flex-col">
-                  <div className="relative h-64 overflow-hidden flex-shrink-0"></div>
+                  <div className="relative h-64 overflow-hidden flex-shrink-0">
                     <img
                       src={destination.imageUrl}
                       alt={destination.name}
@@ -169,7 +169,7 @@ export default function DestinationShowcase() {
                         Explore
                       </Link>
                     </div>
-                  </div></div>
+                  </div>
                 </div>
               </div>
             ))}
