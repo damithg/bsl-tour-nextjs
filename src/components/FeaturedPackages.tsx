@@ -3,18 +3,9 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, Clock, Star } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-
-interface Tour {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  duration: string;
-  image: string;
-  location: string;
-}
+import { API_BASE_URL, TourPackage } from '@/lib/queryClient';
 
 const COLORS = {
   primary: '#0F4C81',
@@ -27,15 +18,8 @@ export default function FeaturedPackages() {
   const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const { data: tours = [], isLoading, error } = useQuery({
-    queryKey: ['featured-tours'],
-    queryFn: async () => {
-      const response = await fetch('https://bsl-tours-api-yqmyn.ondigitalocean.app/api/tours/featured');
-      if (!response.ok) {
-        throw new Error('Failed to fetch tours');
-      }
-      return response.json();
-    },
+  const { data: tours = [], isLoading, error } = useQuery<TourPackage[]>({
+    queryKey: [`${API_BASE_URL}/api/tours/featured`],
   });
 
   const checkScrollable = () => {
@@ -166,47 +150,58 @@ export default function FeaturedPackages() {
             className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
             onScroll={checkScrollable}
           >
-            {tours.map((tour: Tour) => (
+            {tours.map((tour: TourPackage) => (
               <div key={tour.id} className="flex-none w-80">
-                <div className="bg-[#F8F5F0] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100">
                   <div className="relative h-64 overflow-hidden">
                     <img
-                      src={tour.image}
+                      src={tour.imageUrl}
                       alt={tour.title}
                       className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                     <div 
-                      className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-semibold text-white"
-                      style={{ backgroundColor: COLORS.secondary }}
+                      className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-semibold text-white backdrop-blur-sm"
+                      style={{ backgroundColor: 'rgba(212, 175, 55, 0.9)' }}
                     >
-                      {tour.duration}
+                      <Clock className="inline w-3 h-3 mr-1" />
+                      {tour.duration} Days
                     </div>
+                    {tour.rating && (
+                      <div className="absolute top-4 left-4 flex items-center gap-1 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
+                        <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                        <span className="text-xs font-medium text-gray-700">{tour.rating}</span>
+                      </div>
+                    )}
                   </div>
                   <div className="p-6">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-xl font-semibold text-gray-900 line-clamp-2 font-['Playfair_Display']">
+                    <div className="mb-3">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2 font-['Playfair_Display']">
                         {tour.title}
                       </h3>
+                      {tour.destinations && (
+                        <div className="flex items-center text-gray-600 text-sm mb-3">
+                          <MapPin className="w-4 h-4 mr-1 flex-shrink-0" />
+                          <span className="line-clamp-1">{tour.destinations}</span>
+                        </div>
+                      )}
                     </div>
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                      {tour.location}
-                    </p>
-                    <p className="text-gray-700 mb-4 line-clamp-3 text-sm">
-                      {tour.description}
+                    <p className="text-gray-700 mb-4 line-clamp-3 text-sm leading-relaxed">
+                      {tour.shortDescription || tour.description}
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
-                        <p className="text-xs text-gray-500 uppercase tracking-wide">Starting from</p>
-                        <span className="text-2xl font-bold" style={{ color: COLORS.primary }}>
+                        <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">Starting from</p>
+                        <span className="text-2xl font-bold text-[#0F4C81]">
                           ${tour.price}
                         </span>
+                        <p className="text-xs text-gray-500">per person</p>
                       </div>
                       <Link
-                        href={`/tours/${tour.id}`}
-                        className="px-4 py-2 rounded-lg text-white hover:opacity-90 transition-opacity font-medium text-sm"
-                        style={{ backgroundColor: COLORS.primary }}
+                        href={`/tours/${tour.slug || tour.id}`}
+                        className="px-6 py-2.5 bg-[#0F4C81] text-white hover:bg-[#0F4C81]/90 rounded-lg transition-colors font-medium text-sm"
                       >
-                        View Details
+                        View Tour
                       </Link>
                     </div>
                   </div>
