@@ -1,68 +1,74 @@
+
 import Hero from '@/components/Hero';
+import AboutSection from '@/components/AboutSection';
+import ContactSection from '@/components/ContactSection';
 
 export default function Home() {
   return (
     <main>
       <Hero />
+      <AboutSection />
 
-      {/* About Section */}
-      <section className="section-padding bg-gray-50">
+      {/* Popular Destinations Section */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-bold mb-6 text-gray-900">
-                Why Choose BSL Tours?
-              </h2>
-              <p className="text-lg text-gray-600 mb-6">
-                With over a decade of experience in Sri Lankan tourism, BSL Tours offers 
-                authentic, personalized experiences that showcase the true beauty and culture of Ceylon.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-3 mt-1">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Local Expertise</h3>
-                    <p className="text-gray-600">Born and raised guides with intimate knowledge of Sri Lanka</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-3 mt-1">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Luxury Comfort</h3>
-                    <p className="text-gray-600">Premium accommodations and transport throughout your journey</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-3 mt-1">
-                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Personalized Service</h3>
-                    <p className="text-gray-600">Every tour is tailored to your interests and preferences</p>
-                  </div>
-                </div>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-6 text-gray-900">
+              Popular Destinations
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Discover the most breathtaking locations that Sri Lanka has to offer, 
+              from ancient cultural sites to pristine beaches and lush highlands.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Sigiriya */}
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <img 
+                src="/images/sigiriya-destination.jpg" 
+                alt="Sigiriya Rock Fortress" 
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2">Sigiriya Rock Fortress</h3>
+                <p className="text-gray-600 mb-4">Ancient rock fortress with stunning frescoes and panoramic views</p>
+                <span className="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">Cultural Heritage</span>
               </div>
             </div>
-            <div className="lg:pl-8">
+
+            {/* Kandy */}
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <img 
-                src="/images/about-us-image.jpg" 
-                alt="Sri Lankan landscape" 
-                className="rounded-lg shadow-xl w-full h-96 object-cover"
+                src="/images/kandy-destination.jpg" 
+                alt="Kandy Temple" 
+                className="w-full h-64 object-cover"
               />
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2">Kandy</h3>
+                <p className="text-gray-600 mb-4">Sacred city home to the Temple of the Tooth and rich cultural heritage</p>
+                <span className="inline-block bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full">Religious Sites</span>
+              </div>
+            </div>
+
+            {/* Ella */}
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <img 
+                src="/images/ella-destination.jpg" 
+                alt="Ella Rock" 
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2">Ella</h3>
+                <p className="text-gray-600 mb-4">Stunning hill country with tea plantations and scenic train rides</p>
+                <span className="inline-block bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full">Nature & Adventure</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+      <ContactSection />
     </main>
   );
 }
