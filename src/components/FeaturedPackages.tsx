@@ -14,8 +14,7 @@ const FeaturedPackages = () => {
 
   // Fetch tours from .NET API using queryClient
   const { data: tours = [], isLoading, error } = useQuery<TourPackage[]>({
-    queryKey: ['/api/TourPackages'],
-    select: (data) => data?.filter(tour => tour.isFeatured || tour.featured) || [],
+    queryKey: ['/api/tours/featured'],
   });
 
   // Fallback sample data if API is not available
