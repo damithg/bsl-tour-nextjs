@@ -1,33 +1,19 @@
-entrypoint = "src/app/page.tsx"
-modules = ["nodejs-22"]
-hidden = [".config", "package-lock.json"]
-
-[gitHubImport]
-requiredFiles = [".replit", "replit.nix", "package.json", "package-lock.json"]
+run = "npm run dev"
 
 [nix]
-channel = "stable-24_11"
+channel = "stable-24-05"
 
 [[ports]]
-localPort = 3001
+localPort = 5000
 externalPort = 80
 
-[deployment]
-run = ["npm", "run", "start"]
-deploymentTarget = "autoscale"
-ignorePorts = false
-
 [workflows]
-runButton = "Next.js Dev Server"
+runButton = "Run Development Server"
 
 [[workflows.workflow]]
-name = "Next.js Dev Server"
+name = "Run Development Server"
 author = 22062506
 mode = "sequential"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm install"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
