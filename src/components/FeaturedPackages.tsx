@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, MapPin, Clock, Star } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { API_BASE_URL, TourPackage } from '@/lib/queryClient';
+import { getFeaturedTours, TourCardDto } from '@/lib/api';
 
 const COLORS = {
   primary: '#0F4C81',
@@ -18,8 +18,9 @@ export default function FeaturedPackages() {
   const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const { data: tours = [], isLoading, error } = useQuery<TourPackage[]>({
-    queryKey: [`${API_BASE_URL}/api/tours/featured`],
+  const { data: tours = [], isLoading, error } = useQuery<TourCardDto[]>({
+    queryKey: ['featuredTours'],
+    queryFn: getFeaturedTours,
   });
 
   const checkScrollable = () => {
@@ -150,7 +151,7 @@ export default function FeaturedPackages() {
             className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
             onScroll={checkScrollable}
           >
-            {tours.map((tour: TourPackage) => (
+            {tours.map((tour: TourCardDto) => (
               <div key={tour.id} className="flex-none w-80">
                 <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100">
                   <div className="relative h-64 overflow-hidden">
