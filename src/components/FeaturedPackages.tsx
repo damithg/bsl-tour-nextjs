@@ -1,6 +1,4 @@
-The code adds the 'use client' directive to the FeaturedPackages component and updates the import statement for Lucide icons.
-```
-```replit_final_file
+
 'use client';
 
 import { useState, useRef } from 'react';
