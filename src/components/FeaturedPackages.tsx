@@ -4,48 +4,56 @@
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { TourPackage } from '@/lib/queryClient';
 
 const FeaturedPackages = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  // Sample tour data - replace with actual API data later
-  const tours = [
+  // Fetch tours from .NET API using queryClient
+  const { data: tours = [], isLoading, error } = useQuery<TourPackage[]>({
+    queryKey: ['/api/TourPackages'],
+    select: (data) => data?.filter(tour => tour.isFeatured || tour.featured) || [],
+  });
+
+  // Fallback sample data if API is not available
+  const fallbackTours = [
     {
       id: 1,
-      name: "Cultural Triangle Luxury Tour",
+      title: "Cultural Triangle Luxury Tour",
       slug: "cultural-triangle-luxury-tour",
-      duration: "7 Days",
-      startingFrom: 1200,
-      currency: "USD",
-      summary: "Explore ancient kingdoms, magnificent temples, and royal palaces in comfort and style.",
-      image: "/images/sigiriya-destination.jpg",
-      tags: ["Cultural", "Heritage"]
+      duration: 7,
+      price: 1200,
+      description: "Explore ancient kingdoms, magnificent temples, and royal palaces in comfort and style.",
+      imageUrl: "/images/sigiriya-destination.jpg",
+      isFeatured: true,
     },
     {
       id: 2,
-      name: "Southern Coast Beach Paradise",
+      title: "Southern Coast Beach Paradise",
       slug: "southern-coast-beach-paradise",
-      duration: "5 Days",
-      startingFrom: 850,
-      currency: "USD",
-      summary: "Relax on pristine beaches and discover coastal gems along Sri Lanka's stunning south coast.",
-      image: "/images/ella-destination.jpg",
-      tags: ["Beach", "Relaxation"]
+      duration: 5,
+      price: 850,
+      description: "Relax on pristine beaches and discover coastal gems along Sri Lanka's stunning south coast.",
+      imageUrl: "/images/ella-destination.jpg",
+      isFeatured: true,
     },
     {
       id: 3,
-      name: "Hill Country Adventure",
+      title: "Hill Country Adventure",
       slug: "hill-country-adventure",
-      duration: "6 Days",
-      startingFrom: 950,
-      currency: "USD",
-      summary: "Journey through tea plantations, misty mountains, and charming hill stations.",
-      image: "/images/kandy-destination.jpg",
-      tags: ["Adventure", "Nature"]
+      duration: 6,
+      price: 950,
+      description: "Journey through tea plantations, misty mountains, and charming hill stations.",
+      imageUrl: "/images/kandy-destination.jpg",
+      isFeatured: true,
     }
   ];
+
+  // Use API data if available, otherwise fallback to sample data
+  const displayTours = tours.length > 0 ? tours : fallbackTours;
 
   const checkScrollable = () => {
     const container = scrollContainerRef.current;
@@ -103,6 +111,19 @@ const FeaturedPackages = () => {
     );
   };
 
+  if (isLoading) {
+    return (
+      <section id="packages" className="py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#0F4C81] mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading featured tours...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="packages" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -145,55 +166,53 @@ const FeaturedPackages = () => {
             className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-hide"
             onScroll={checkScrollable}
           >
-            {tours.map((tour) => (
+            {displayTours.map((tour) => (
               <div 
                 key={tour.id} 
                 className="flex-none w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start bg-[#F8F5F0] rounded-lg overflow-hidden shadow-lg transition transform hover:scale-[1.02] hover:shadow-xl"
               >
                 <div className="relative h-64 flex items-center justify-center overflow-hidden">
                   <img 
-                    src={tour.image} 
-                    alt={tour.name} 
+                    src={tour.imageUrl} 
+                    alt={tour.title} 
                     className="w-full h-full object-cover object-center" 
                   />
                   <div className="absolute top-4 right-4">
                     <span className="bg-[#0F4C81]/90 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {tour.duration}
+                      {tour.duration} Days
                     </span>
                   </div>
                   <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                    {tour.tags.slice(0, 2).map((tag, i) => (
-                      <span key={i} className="bg-[#D4AF37]/90 text-white px-3 py-1 rounded-full text-sm font-medium">
-                        {tag}
-                      </span>
-                    ))}
+                    <span className="bg-[#D4AF37]/90 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      Featured
+                    </span>
                   </div>
                 </div>
                 <div className="p-6">
                   <h3 className="font-['Playfair_Display'] text-xl font-semibold mb-2">
-                    {tour.name}
+                    {tour.title}
                   </h3>
                   <div className="flex items-center mb-4">
-                    {formatRating(4.8)}
+                    {formatRating(tour.rating || 4.8)}
                     <span className="text-sm text-gray-500 ml-2">
-                      4.8 (24 reviews)
+                      {tour.rating || 4.8} ({tour.reviewCount || 24} reviews)
                     </span>
                   </div>
                   <p className="text-gray-700/70 mb-4">
-                    {tour.summary}
+                    {tour.description || tour.shortDescription || tour.excerpt}
                   </p>
                   <div className="flex justify-between items-center">
                     <div className="flex flex-col">
                       <span className="text-sm text-gray-500">Starting from</span>
                       <div className="flex items-baseline">
                         <span className="text-xl font-semibold text-[#0F4C81]">
-                          ${tour.startingFrom}
+                          ${tour.price}
                         </span>
                         <span className="text-gray-500 text-sm ml-1.5">/ per person</span>
                       </div>
                     </div>
                     <Link 
-                      href={`/tours/${tour.slug}`} 
+                      href={`/tours/${tour.slug || tour.id}`} 
                       className="inline-flex items-center bg-[#0F4C81] hover:bg-[#0F4C81]/90 text-white font-medium py-2 px-5 rounded-full transition group shadow-md"
                     >
                       Explore 
