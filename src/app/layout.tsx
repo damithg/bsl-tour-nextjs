@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display, Raleway } from 'next/font/google'
 import './globals.css'
-import ClientWrapper from '@/components/ClientWrapper'
+import Providers from '@/components/Providers'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
@@ -23,9 +23,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className={`${inter.variable} ${playfair.variable} ${raleway.variable} antialiased`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${playfair.variable} ${raleway.variable} antialiased`}>
         <div className="min-h-screen bg-background text-foreground">
-          <ClientWrapper>{children}</ClientWrapper>
+          <Providers>{children}</Providers>
         </div>
       </body>
     </html>
