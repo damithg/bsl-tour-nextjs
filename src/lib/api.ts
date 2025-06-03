@@ -9,6 +9,16 @@ export interface RawTour {
   startingFrom?: number;
   duration?: string;
   featured?: boolean;
+  currency?: string;  // ✅ added
+  tags?: string[];    // ✅ added (if sometimes top-level)
+  reviews?: {
+    id: number;
+    reviewer: string;
+    country: string;
+    comment: string;
+    rating: number;
+  }[];                // ✅ added
+
   card?: {
     header?: string;
     body?: string;
@@ -24,6 +34,7 @@ export interface RawTour {
     };
   };
 }
+
 
 export interface RawDestination {
   id: number;
@@ -125,17 +136,27 @@ async function handleApiResponse<T>(response: Response): Promise<T> {
 // 🔧 Mapping Functions
 //
 
-function mapTourToDto(raw: RawTour): TourCardDto {
+function mapTourToDto(rawTour: RawTour): TourCardDto {
+  const cardImage = rawTour.card?.image;
+  let imageUrl = cardImage?.medium || cardImage?.small || cardImage?.large || cardImage?.baseUrl || '';
+
+  if (!imageUrl && cardImage?.publicId) {
+    imageUrl = `https://res.cloudinary.com/best-sri-lanka-tours/image/upload/w_800,h_600,c_fill/${cardImage.publicId}`;
+  }
+
   return {
-    id: raw.id,
-    title: raw.card?.header || raw.name || '',
-    slug: raw.slug,
-    description: raw.card?.body || raw.summary || '',
-    shortDescription: raw.card?.body || raw.summary || '',
-    imageUrl: raw.card?.image?.medium || '',
-    price: raw.startingFrom ?? 0,
-    duration: parseInt(raw.duration || '0'),
-    isFeatured: raw.featured ?? false,
+    id: rawTour.id,
+    title: rawTour.name ?? '',
+    slug: rawTour.slug,
+    description: rawTour.summary ?? '',
+    imageUrl: imageUrl,
+    duration: parseInt(rawTour.duration ?? '0', 10),
+    price: rawTour.startingFrom ?? 0,
+    tags: rawTour.card?.tags || rawTour.tags || [],
+    rating: rawTour.reviews?.length
+      ? rawTour.reviews.reduce((sum, review) => sum + review.rating, 0) / rawTour.reviews.length
+      : null,
+    reviewCount: rawTour.reviews?.length || 0,
   };
 }
 

@@ -1,0 +1,88 @@
+import { Link } from "wouter";
+import { ChevronRight } from "lucide-react";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface MinimalHeroProps {
+  title: string;
+  description?: string;
+  breadcrumbs: BreadcrumbItem[];
+  className?: string;
+}
+
+export const MinimalHero = ({ 
+  title, 
+  description, 
+  breadcrumbs, 
+  className = "" 
+}: MinimalHeroProps) => {
+  return (
+    <section className={`relative pt-20 pb-8 bg-gradient-to-br from-gray-50 to-blue-50 ${className}`}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <nav className="flex text-gray-600 mb-6 pt-8" aria-label="Breadcrumb">
+          <ol className="inline-flex items-center space-x-1 md:space-x-3">
+            <li className="inline-flex items-center">
+              <Link
+                href="/"
+                className="inline-flex items-center text-sm font-medium hover:text-blue-600 transition-colors"
+              >
+                <svg
+                  className="w-4 h-4 mr-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                Home
+              </Link>
+            </li>
+            {breadcrumbs.map((crumb, index) => (
+              <li key={index} aria-current={index === breadcrumbs.length - 1 ? "page" : undefined}>
+                <div className="flex items-center">
+                  <ChevronRight className="w-5 h-5 text-gray-400 mx-1" />
+                  {crumb.href ? (
+                    <Link
+                      href={crumb.href}
+                      className="text-sm font-medium hover:text-blue-600 transition-colors"
+                    >
+                      {crumb.label}
+                    </Link>
+                  ) : (
+                    <span className="text-sm font-medium text-gray-900">
+                      {crumb.label}
+                    </span>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        {/* Page Header */}
+        <header className="mb-12">
+          <h1 className="font-['Playfair_Display'] text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+            {title}
+          </h1>
+
+          {description && (
+            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              {description}
+            </p>
+          )}
+        </header>
+      </div>
+    </section>
+  );
+};
+
+export default MinimalHero;
