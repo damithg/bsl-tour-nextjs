@@ -1,10 +1,15 @@
+The code is modified to fix the CurrencyContext import path and replace the original hero section with the MinimalHero component.
+```
+
+```replit_final_file
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
 import { getAllTours, TourCardDto } from '@/lib/api';
 import Link from 'next/link';
-import { ChevronRight, Clock, Star, Home } from 'lucide-react';
 import { useCurrency } from '@/contexts/CurrencyContext';
+import { ChevronRight, Clock, Star, MapPin } from 'lucide-react';
+import MinimalHero from '@/components/MinimalHero';
 
 export default function ToursPage() {
   const { currency } = useCurrency();
@@ -15,45 +20,15 @@ export default function ToursPage() {
   });
 
   return (
-    <main className="min-h-screen">
-      {/* ✅ Hero Section */}
-      <section className="relative pt-28 pb-20 bg-[#0F4C81]">
-        <div className="absolute inset-0 z-0 opacity-20">
-          <img 
-            src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743763343/features/hikkaduwa-marine-park.jpg" 
-            alt="Sri Lanka Tea Plantations" 
-            className="w-full h-full object-cover" 
-          />
-        </div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* ✅ Breadcrumb Navigation */}
-          <nav className="flex text-white/90 mb-6" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="inline-flex items-center text-sm font-medium hover:text-white">
-                  <Home className="w-4 h-4 mr-2" />
-                  Home
-                </Link>
-              </li>
-              <li aria-current="page">
-                <div className="flex items-center">
-                  <ChevronRight className="w-5 h-5 text-white/60 mx-1" />
-                  <span className="text-sm font-medium text-white/80">Tour Packages</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="font-['Playfair_Display'] text-4xl md:text-5xl font-bold text-white mb-6">
-              Luxury Sri Lanka Tour Packages
-            </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              Discover our handcrafted luxury experiences designed to showcase the best of Sri Lanka.
-            </p>
-          </div>
-        </div>
-      </section>
+    <main>
+      {/* ✅ Minimal Hero Section */}
+      <MinimalHero 
+        title="Discover Sri Lanka Tours"
+        description="Explore our handpicked collection of authentic Sri Lankan experiences"
+        breadcrumbs={[
+          { label: "Sri Lanka Tours" }
+        ]}
+      />
 
       {/* ✅ Tour Listing */}
       <section className="py-20 bg-white">
