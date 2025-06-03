@@ -134,7 +134,7 @@ export default function ExperienceShowcase() {
           >
             {experiences.map((experience: ExperienceCardDto) => (
               <div key={experience.id} className="flex-none w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start">
-                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100 h-[500px] flex flex-col">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100 h-[520px] flex flex-col">
                   <div className="relative h-64 overflow-hidden flex-shrink-0">
                     <img
                       src={experience.imageUrl}
