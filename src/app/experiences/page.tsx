@@ -16,29 +16,7 @@ export default function ExperiencesPage() {
     queryFn: getAllExperiences,
   });
 
-  // Key experience categories
-  const experienceCategories = [
-    {
-      title: "Cultural Immersion",
-      description: "Explore UNESCO World Heritage sites, ancient temples, and colonial architecture with expert guides.",
-      icon: "🏛️",
-    },
-    {
-      title: "Adventure Activities", 
-      description: "Thrilling outdoor adventures from wildlife safaris to water sports and mountain trekking.",
-      icon: "🏔️",
-    },
-    {
-      title: "Wellness & Spa",
-      description: "Rejuvenating spa treatments, yoga sessions, and wellness rituals in serene settings.",
-      icon: "🧘‍♀️",
-    },
-    {
-      title: "Culinary Experiences",
-      description: "Authentic cooking classes, spice garden tours, and traditional Sri Lankan dining experiences.",
-      icon: "🍛",
-    },
-  ];
+  
 
   // Render star rating
   const renderStars = (rating: number) => {
@@ -66,39 +44,10 @@ export default function ExperiencesPage() {
         ]}
       />
 
-      {/* ✅ Experience Categories */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-[#0F4C81] mb-4">
-              Authentic Experiences
-            </h2>
-            <p className="text-lg text-[#333333]/80">
-              From cultural immersions to thrilling adventures, discover the soul of Sri Lanka through carefully curated experiences that create lasting memories.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {experienceCategories.map((category, index) => (
-              <div
-                key={index}
-                className="bg-[#F8F5F0] p-8 rounded-lg text-center"
-              >
-                <div className="w-16 h-16 rounded-full bg-[#0F4C81]/10 flex items-center justify-center mx-auto mb-6">
-                  <span className="text-2xl">{category.icon}</span>
-                </div>
-                <h3 className="font-['Playfair_Display'] text-xl font-semibold mb-3">
-                  {category.title}
-                </h3>
-                <p className="text-[#333333]/70">{category.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* ✅ Experience Listing */}
-      <section className="py-20 bg-[#F8F5F0]">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-[#0F4C81] mb-4">
@@ -193,7 +142,7 @@ export default function ExperiencesPage() {
       </section>
 
       {/* ✅ Custom Experience Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-[#F8F5F0]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-[#0F4C81] to-[#0F4C81]/90 rounded-2xl overflow-hidden shadow-xl relative">
             <div className="flex flex-col md:flex-row">
