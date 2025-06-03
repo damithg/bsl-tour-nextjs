@@ -146,3 +146,42 @@ const Footer = () => {
 };
 
 export default Footer;
+import Link from 'next/link';
+
+export default function Footer() {
+  return (
+    <footer className="bg-[#0F4C81] text-white py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="md:col-span-2">
+            <h3 className="font-['Playfair_Display'] text-xl font-bold mb-4">Best Sri Lanka Tours</h3>
+            <p className="text-white/80 mb-4">
+              Experience the magic of Sri Lanka with our carefully curated luxury tours and authentic experiences.
+            </p>
+          </div>
+          
+          <div>
+            <h4 className="font-medium mb-4">Quick Links</h4>
+            <ul className="space-y-2 text-white/80">
+              <li><Link href="/tours" className="hover:text-white transition-colors">Tours</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+              <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="font-medium mb-4">Contact Info</h4>
+            <div className="text-white/80 space-y-2">
+              <p>Email: info@bestsrilankatours.com</p>
+              <p>Phone: +94 77 123 4567</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="border-t border-white/20 mt-8 pt-8 text-center text-white/60">
+          <p>&copy; 2024 Best Sri Lanka Tours. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
