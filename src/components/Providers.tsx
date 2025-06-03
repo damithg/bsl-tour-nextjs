@@ -1,21 +1,21 @@
 'use client';
 
+import { ReactNode, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { CurrencyProvider } from '../contexts/CurrencyContext';
+import { CurrencyProvider } from '@/contexts/CurrencyContext';
+import { Currency } from '@/lib/types';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 2,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+interface ProvidersProps {
+  children: ReactNode;
+  initialCurrency: Currency;
+}
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children, initialCurrency }: ProvidersProps) {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <QueryClientProvider client={queryClient}>
-      <CurrencyProvider>
+      <CurrencyProvider initialCurrency={initialCurrency}>
         {children}
       </CurrencyProvider>
     </QueryClientProvider>
