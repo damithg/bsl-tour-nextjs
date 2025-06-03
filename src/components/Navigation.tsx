@@ -50,19 +50,19 @@ const Navigation = () => {
           <div className="hidden md:flex items-center gap-6">
             {/* Desktop Navigation */}
             <nav className="flex space-x-6">
-              <Link href="/tours" className={`font-['Raleway'] font-medium ${pathname === '/tours' || pathname === '/packages' ? 'text-primary' : 'text-[#0F4C81]'} hover:text-primary transition`} onClick={handleNavClick}>
+              <Link href="/tours" className={`font-['Raleway'] font-medium ${pathname === '/tours' || pathname === '/packages' ? 'text-[#D4AF37] font-semibold' : 'text-[#0F4C81]'} hover:text-[#D4AF37] transition`} onClick={handleNavClick}>
                 Tours
               </Link>
-              <Link href="/destinations" className={`font-['Raleway'] font-medium ${pathname === '/destinations' || pathname === '/destination-map' ? 'text-primary' : 'text-[#0F4C81]'} hover:text-primary transition`} onClick={handleNavClick}>
+              <Link href="/destinations" className={`font-['Raleway'] font-medium ${pathname === '/destinations' || pathname === '/destination-map' ? 'text-[#D4AF37] font-semibold' : 'text-[#0F4C81]'} hover:text-[#D4AF37] transition`} onClick={handleNavClick}>
                 Destinations
               </Link>
-              <Link href="/experiences" className={`font-['Raleway'] font-medium ${pathname === '/experiences' ? 'text-primary' : 'text-[#0F4C81]'} hover:text-primary transition`} onClick={handleNavClick}>
+              <Link href="/experiences" className={`font-['Raleway'] font-medium ${pathname === '/experiences' ? 'text-[#D4AF37] font-semibold' : 'text-[#0F4C81]'} hover:text-[#D4AF37] transition`} onClick={handleNavClick}>
                 Experiences
               </Link>
-              <Link href="/about" className={`font-['Raleway'] font-medium ${pathname === '/about' ? 'text-primary' : 'text-[#0F4C81]'} hover:text-primary transition`} onClick={handleNavClick}>
+              <Link href="/about" className={`font-['Raleway'] font-medium ${pathname === '/about' ? 'text-[#D4AF37] font-semibold' : 'text-[#0F4C81]'} hover:text-[#D4AF37] transition`} onClick={handleNavClick}>
                 About
               </Link>
-              <Link href="/contact" className={`font-['Raleway'] font-medium ${pathname === '/contact' ? 'text-primary' : 'text-[#0F4C81]'} hover:text-primary transition`} onClick={handleNavClick}>
+              <Link href="/contact" className={`font-['Raleway'] font-medium ${pathname === '/contact' ? 'text-[#D4AF37] font-semibold' : 'text-[#0F4C81]'} hover:text-[#D4AF37] transition`} onClick={handleNavClick}>
                 Contact
               </Link>
             </nav>
@@ -94,19 +94,19 @@ const Navigation = () => {
         
         {/* Mobile Navigation Menu */}
         <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} bg-white pt-2 pb-4 px-4`}>
-          <Link href="/tours" className={`block py-2 font-medium ${pathname === '/tours' || pathname === '/packages' ? 'text-primary' : 'text-[#0F4C81]'} hover:text-primary`} onClick={handleNavClick}>
+          <Link href="/tours" className={`block py-2 font-medium ${pathname === '/tours' || pathname === '/packages' ? 'text-[#D4AF37] font-semibold' : 'text-[#0F4C81]'} hover:text-[#D4AF37]`} onClick={handleNavClick}>
             Tours
           </Link>
-          <Link href="/destinations" className={`block py-2 font-medium ${pathname === '/destinations' ? 'text-primary' : 'text-[#0F4C81]'} hover:text-primary`} onClick={handleNavClick}>
+          <Link href="/destinations" className={`block py-2 font-medium ${pathname === '/destinations' ? 'text-[#D4AF37] font-semibold' : 'text-[#0F4C81]'} hover:text-[#D4AF37]`} onClick={handleNavClick}>
             Destinations
           </Link>
-          <Link href="/experiences" className={`block py-2 font-medium ${pathname === '/experiences' ? 'text-primary' : 'text-[#0F4C81]'} hover:text-primary`} onClick={handleNavClick}>
+          <Link href="/experiences" className={`block py-2 font-medium ${pathname === '/experiences' ? 'text-[#D4AF37] font-semibold' : 'text-[#0F4C81]'} hover:text-[#D4AF37]`} onClick={handleNavClick}>
             Experiences
           </Link>
-          <Link href="/about" className={`block py-2 font-medium ${pathname === '/about' ? 'text-primary' : 'text-[#0F4C81]'} hover:text-primary`} onClick={handleNavClick}>
+          <Link href="/about" className={`block py-2 font-medium ${pathname === '/about' ? 'text-[#D4AF37] font-semibold' : 'text-[#0F4C81]'} hover:text-[#D4AF37]`} onClick={handleNavClick}>
             About
           </Link>
-          <Link href="/contact" className={`block py-2 font-medium ${pathname === '/contact' ? 'text-primary' : 'text-[#0F4C81]'} hover:text-primary`} onClick={handleNavClick}>
+          <Link href="/contact" className={`block py-2 font-medium ${pathname === '/contact' ? 'text-[#D4AF37] font-semibold' : 'text-[#0F4C81]'} hover:text-[#D4AF37]`} onClick={handleNavClick}>
             Contact
           </Link>
           
