@@ -73,7 +73,7 @@ const Navigation = () => {
             </div>
             
             {/* Book Now Button */}
-            <Link href="/contact" className="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-6 rounded-md transition">
+            <Link href="/contact" className="bg-[#0F4C81] hover:bg-[#0F4C81]/90 text-white font-medium py-2 px-6 rounded-md transition">
               Book Now
             </Link>
           </div>
@@ -115,7 +115,7 @@ const Navigation = () => {
             <CurrencySelector />
           </div>
           
-          <Link href="/contact" className="block mt-4 bg-primary hover:bg-primary/90 text-white text-center font-medium py-2 px-4 rounded-md transition" onClick={handleNavClick}>
+          <Link href="/contact" className="block mt-4 bg-[#0F4C81] hover:bg-[#0F4C81]/90 text-white text-center font-medium py-2 px-4 rounded-md transition" onClick={handleNavClick}>
             Book Now
           </Link>
         </div>
