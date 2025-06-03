@@ -1,7 +1,3 @@
-The code is modified to fix the CurrencyContext import path and replace the original hero section with the MinimalHero component.
-```
-
-```replit_final_file
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
@@ -26,7 +22,7 @@ export default function ToursPage() {
         title="Discover Sri Lanka Tours"
         description="Explore our handpicked collection of authentic Sri Lankan experiences"
         breadcrumbs={[
-          { label: "Sri Lanka Tours" }
+          { label: "Tours" }
         ]}
       />
 
