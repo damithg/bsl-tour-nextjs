@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { CurrencySelector } from './ui/CurrencySelector';
+import { CurrencySelector } from './CurrencySelector';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
