@@ -291,12 +291,12 @@ export default async function BlogDetailPage({
               <div
                 className="prose prose-lg max-w-none 
                 prose-headings:font-display prose-headings:font-bold prose-headings:text-gray-900
-                prose-h2:text-3xl prose-h2:mt-16 prose-h2:mb-8 prose-h2:leading-tight
-                prose-h3:text-xl prose-h3:mt-12 prose-h3:mb-6
-                prose-p:mb-8 prose-p:leading-relaxed prose-p:text-gray-700 prose-p:text-lg
-                prose-ul:mb-10 prose-ul:mt-6 prose-ul:space-y-3
-                prose-li:mb-2 prose-li:text-gray-700 prose-li:leading-relaxed
-                prose-img:rounded-xl prose-img:shadow-lg prose-img:my-12
+                prose-h2:text-3xl prose-h2:mt-20 prose-h2:mb-10 prose-h2:leading-tight prose-h2:font-bold
+                prose-h3:text-xl prose-h3:mt-16 prose-h3:mb-8 prose-h3:font-semibold
+                prose-p:mb-10 prose-p:mt-6 prose-p:leading-relaxed prose-p:text-gray-700 prose-p:text-lg prose-p:tracking-wide
+                prose-ul:mb-12 prose-ul:mt-8 prose-ul:space-y-4
+                prose-li:mb-3 prose-li:text-gray-700 prose-li:leading-relaxed prose-li:text-lg
+                prose-img:rounded-xl prose-img:shadow-lg prose-img:my-16
                 prose-strong:text-gray-900 prose-strong:font-semibold"
                 dangerouslySetInnerHTML={{ __html: sampleBlogPost.content }}
               />
