@@ -385,7 +385,7 @@ export default async function BlogDetailPage({
                 {/* Featured East Coast Tours */}
                 <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                   <h3
-                    className="font-['Playfair_Display'] text-xl font-bold mb-4"
+                    className="font-display text-xl font-bold mb-4"
                     style={{ color: COLORS.primary }}
                   >
                     Related Tours
@@ -468,7 +468,7 @@ export default async function BlogDetailPage({
                 {/* Free Travel Guide CTA */}
                 <div className="bg-gradient-to-br from-blue-50 to-teal-50 p-6 rounded-xl border border-blue-200">
                   <h3
-                    className="font-['Playfair_Display'] text-xl font-bold mb-3"
+                    className="font-display text-xl font-bold mb-3"
                     style={{ color: COLORS.primary }}
                   >
                     Free Sri Lanka Travel Guide
@@ -519,7 +519,7 @@ export default async function BlogDetailPage({
                 {/* Why Choose BSL Tours */}
                 <div className="bg-white p-6 rounded-xl border border-gray-200">
                   <h3
-                    className="font-['Playfair_Display'] text-xl font-bold mb-4"
+                    className="font-display text-xl font-bold mb-4"
                     style={{ color: COLORS.primary }}
                   >
                     Why Choose BSL Tours?
@@ -589,7 +589,7 @@ export default async function BlogDetailPage({
                 {/* Newsletter Signup */}
                 <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-6 rounded-xl border border-gray-200">
                   <h3
-                    className="font-['Playfair_Display'] text-xl font-bold mb-3"
+                    className="font-display text-xl font-bold mb-3"
                     style={{ color: COLORS.primary }}
                   >
                     Weekly Travel Insights

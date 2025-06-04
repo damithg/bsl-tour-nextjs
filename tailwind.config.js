@@ -29,7 +29,9 @@ module.exports = {
       },
 
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Raleway', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
+        body: ['Raleway', 'sans-serif'],
       },
 
       animation: {

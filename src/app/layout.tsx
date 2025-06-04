@@ -37,6 +37,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className={`${inter.variable} ${playfair.variable} ${raleway.variable} antialiased`}>
         <Providers initialCurrency={initialCurrency}>
           <Navigation />
