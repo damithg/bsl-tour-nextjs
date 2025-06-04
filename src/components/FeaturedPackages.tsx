@@ -168,24 +168,12 @@ export default function FeaturedPackages() {
                       <Clock className="inline w-3 h-3 mr-1" />
                       {tour.duration} Days
                     </div>
-                    {tour.rating && (
-                      <div className="absolute top-4 left-4 flex items-center gap-1 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
-                        <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                        <span className="text-xs font-medium text-gray-700">{tour.rating}</span>
-                      </div>
-                    )}
                   </div>
                   <div className="p-6">
                     <div className="mb-3">
                       <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2 font-['Playfair_Display']">
                         {tour.title}
                       </h3>
-                      {tour.destinations && (
-                        <div className="flex items-center text-gray-600 text-sm mb-3">
-                          <MapPin className="w-4 h-4 mr-1 flex-shrink-0" />
-                          <span className="line-clamp-1">{tour.destinations}</span>
-                        </div>
-                      )}
                     </div>
                     <p className="text-gray-700/70 mb-4 line-clamp-2">
                       {tour.shortDescription || tour.description}
