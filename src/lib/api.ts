@@ -152,9 +152,11 @@ function mapTourToDto(rawTour: RawTour): TourCardDto {
     title: rawTour.name ?? '',
     slug: rawTour.slug,
     description: rawTour.summary ?? '',
+    shortDescription: rawTour.summary ?? '', 
     imageUrl: imageUrl,
     duration: parseInt(rawTour.duration ?? '0', 10),
     price: rawTour.startingFrom ?? 0,
+    isFeatured: rawTour.featured ?? false,
     tags: rawTour.card?.tags || rawTour.tags || [],
     rating: rawTour.reviews?.length
       ? rawTour.reviews.reduce((sum, review) => sum + review.rating, 0) / rawTour.reviews.length
