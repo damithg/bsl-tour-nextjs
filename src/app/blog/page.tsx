@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -210,7 +209,7 @@ export default function BlogPage() {
                   <h3 className="font-['Playfair_Display'] text-2xl font-bold text-[#0F4C81]">
                     Latest Stories
                   </h3>
-                  
+
                   {regularPosts.slice(0, 3).map((post) => (
                     <article key={post.id} className="group">
                       <Link href={`/blog/${post.slug}`} className="flex gap-4 items-start">
