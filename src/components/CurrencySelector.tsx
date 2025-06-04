@@ -1,7 +1,8 @@
 
 import React, { useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { useCurrency, Currency } from '../contexts/CurrencyContext';
+import { useCurrency } from '../contexts/CurrencyContext';
+import { Currency } from '../lib/types';
 
 export function CurrencySelector() {
   const { currency, setCurrency, currencies } = useCurrency();
