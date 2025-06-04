@@ -225,19 +225,19 @@ export default async function BlogDetailPage({
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex text-gray-600 mb-6 pt-8" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
+              <li key="breadcrumb-home" className="inline-flex items-center">
                 <Link
                   href="/"
                   className="inline-flex items-center text-sm font-medium hover:text-blue-600 transition-colors"
                 >
-                  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                     <polyline points="9 22 9 12 15 12 15 22" />
                   </svg>
                   Home
                 </Link>
               </li>
-              <li>
+              <li key="breadcrumb-blog">
                 <div className="flex items-center">
                   <ChevronRight className="w-4 h-4 text-gray-400 mx-1" />
                   <Link
@@ -248,7 +248,7 @@ export default async function BlogDetailPage({
                   </Link>
                 </div>
               </li>
-              <li aria-current="page">
+              <li key="breadcrumb-category" aria-current="page">
                 <div className="flex items-center">
                   <ChevronRight className="w-4 h-4 text-gray-400 mx-1" />
                   <span className="text-sm font-medium text-gray-900">
@@ -376,9 +376,9 @@ export default async function BlogDetailPage({
               <div className="mt-12 pt-8 border-t border-gray-200">
                 <h3 className="font-semibold text-gray-900 mb-4">Tags</h3>
                 <div className="flex flex-wrap gap-3">
-                  {sampleBlogPost.tags.map((tag) => (
+                  {sampleBlogPost.tags.map((tag, index) => (
                     <span
-                      key={tag}
+                      key={`tag-${index}-${tag}`}
                       className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors cursor-pointer"
                     >
                       #{tag}
@@ -414,7 +414,7 @@ export default async function BlogDetailPage({
                   </h3>
 
                   <div className="space-y-4">
-                    <div className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                    <div key="east-coast-discovery" className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
                       <img
                         src="https://blog.bestsrilankatours.com/wp-content/uploads/2020/08/Beach-Holidays.jpg"
                         alt="East Coast Discovery Tour"
@@ -445,7 +445,7 @@ export default async function BlogDetailPage({
                       </div>
                     </div>
 
-                    <div className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                    <div key="cultural-coast-combo" className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
                       <img
                         src="https://blog.bestsrilankatours.com/wp-content/uploads/2018/04/highlights-1.jpg"
                         alt="Cultural & Coast Combo"
