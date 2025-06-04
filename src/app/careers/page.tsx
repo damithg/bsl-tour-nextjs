@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Mail, MapPin, BriefcaseBusiness } from 'lucide-react';
@@ -69,20 +68,20 @@ export default function CareersPage() {
               <h2 className="text-3xl font-semibold text-gray-800 mb-6 font-['Playfair_Display']">
                 Work With Us
               </h2>
-              
+
               <p className="text-lg text-gray-700 mb-6">
                 At Best Sri Lanka Tours, we're dedicated to providing exceptional travel experiences that showcase the beauty and culture of Sri Lanka. Our success depends on our team of passionate professionals who share our commitment to excellence, sustainability, and authentic travel experiences.
               </p>
-              
+
               <p className="text-lg text-gray-700 mb-6">
                 Working with us means being part of a diverse team that values creativity, integrity, and a customer-first approach. We offer competitive compensation, opportunities for professional growth, and the chance to contribute to sustainable tourism in Sri Lanka.
               </p>
-              
+
               <div className="bg-blue-50 p-6 rounded-lg mb-10">
                 <h3 className="text-xl font-semibold text-[#0077B6] mb-4">
                   Our Values
                 </h3>
-                
+
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <li className="flex items-start">
                     <div className="bg-[#0077B6]/10 p-2.5 rounded-full mr-4 mt-1 text-[#0077B6]">
@@ -95,7 +94,7 @@ export default function CareersPage() {
                       <p className="text-gray-600">We're enthusiastic about sharing Sri Lanka's natural beauty and cultural heritage.</p>
                     </div>
                   </li>
-                  
+
                   <li className="flex items-start">
                     <div className="bg-[#0077B6]/10 p-2.5 rounded-full mr-4 mt-1 text-[#0077B6]">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -108,7 +107,7 @@ export default function CareersPage() {
                       <p className="text-gray-600">We prioritize responsible tourism practices that benefit local communities.</p>
                     </div>
                   </li>
-                  
+
                   <li className="flex items-start">
                     <div className="bg-[#0077B6]/10 p-2.5 rounded-full mr-4 mt-1 text-[#0077B6]">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -120,7 +119,7 @@ export default function CareersPage() {
                       <p className="text-gray-600">We strive to exceed expectations with personalized, high-quality experiences.</p>
                     </div>
                   </li>
-                  
+
                   <li className="flex items-start">
                     <div className="bg-[#0077B6]/10 p-2.5 rounded-full mr-4 mt-1 text-[#0077B6]">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -137,18 +136,18 @@ export default function CareersPage() {
                 </ul>
               </div>
             </div>
-            
+
             {/* Current Openings */}
             <div className="mb-16">
               <h2 className="text-3xl font-semibold text-gray-800 mb-6 font-['Playfair_Display']">
                 Current Openings
               </h2>
-              
+
               {jobListings.map((job) => (
                 <div key={job.id} className="mb-8 border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
                   <div className="bg-gradient-to-r from-[#0077B6]/10 to-[#0077B6]/5 p-6">
                     <h3 className="text-xl font-semibold text-[#0077B6] mb-2">{job.title}</h3>
-                    
+
                     <div className="flex flex-wrap gap-4 mb-4">
                       <div className="flex items-center text-gray-600">
                         <MapPin className="w-4 h-4 mr-1" />
@@ -159,9 +158,9 @@ export default function CareersPage() {
                         <span>{job.type}</span>
                       </div>
                     </div>
-                    
+
                     <p className="text-gray-700 mb-4">{job.description}</p>
-                    
+
                     <div className="mt-4">
                       <h4 className="font-semibold text-gray-800 mb-2">Requirements:</h4>
                       <ul className="list-disc pl-5 text-gray-700 space-y-1">
@@ -171,7 +170,7 @@ export default function CareersPage() {
                       </ul>
                     </div>
                   </div>
-                  
+
                   <div className="bg-white p-4 border-t border-gray-200">
                     <button className="inline-flex items-center gap-2 bg-[#0077B6] hover:bg-[#0077B6]/90 text-white font-medium py-2 px-4 rounded-md transition-all duration-300">
                       <Mail className="w-4 h-4" />
@@ -181,13 +180,13 @@ export default function CareersPage() {
                 </div>
               ))}
             </div>
-            
+
             {/* Benefits */}
             <div>
               <h2 className="text-3xl font-semibold text-gray-800 mb-6 font-['Playfair_Display']">
                 Benefits of Working With Us
               </h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h3 className="text-xl font-semibold text-[#0077B6] mb-4">
@@ -220,7 +219,7 @@ export default function CareersPage() {
                     </li>
                   </ul>
                 </div>
-                
+
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h3 className="text-xl font-semibold text-[#0077B6] mb-4">
                     Comprehensive Benefits
