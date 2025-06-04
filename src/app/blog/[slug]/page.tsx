@@ -289,12 +289,20 @@ export default async function BlogDetailPage({
             {/* Main Content */}
             <article className="lg:col-span-8">
               <div
-                className="prose prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-8 prose-h3:text-xl prose-h3:mt-10 prose-h3:mb-6 prose-p:mb-8 prose-p:leading-relaxed prose-ul:mb-8 prose-ul:mt-6 prose-li:mb-3"
+                className="prose prose-lg max-w-none 
+                prose-headings:font-display prose-headings:font-bold prose-headings:text-gray-900
+                prose-h2:text-3xl prose-h2:mt-16 prose-h2:mb-8 prose-h2:leading-tight
+                prose-h3:text-xl prose-h3:mt-12 prose-h3:mb-6
+                prose-p:mb-8 prose-p:leading-relaxed prose-p:text-gray-700 prose-p:text-lg
+                prose-ul:mb-10 prose-ul:mt-6 prose-ul:space-y-3
+                prose-li:mb-2 prose-li:text-gray-700 prose-li:leading-relaxed
+                prose-img:rounded-xl prose-img:shadow-lg prose-img:my-12
+                prose-strong:text-gray-900 prose-strong:font-semibold"
                 dangerouslySetInnerHTML={{ __html: sampleBlogPost.content }}
               />
 
               {/* Tour Promotion - Mid Content */}
-              <div className="my-12 p-8 bg-gradient-to-r from-blue-50 to-teal-50 border border-blue-200 rounded-2xl">
+              <div className="my-16 p-8 md:p-10 bg-gradient-to-r from-blue-50 to-teal-50 border border-blue-200 rounded-2xl">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                   <div>
                     <h3
@@ -303,28 +311,28 @@ export default async function BlogDetailPage({
                     >
                       Experience the East Coast with BSL Tours
                     </h3>
-                    <p className="text-gray-700 mb-6">
+                    <p className="text-gray-700 mb-8 text-lg leading-relaxed">
                       Ready to explore these incredible destinations? Our
                       expert-crafted East Coast Discovery tour takes you to all
                       the places mentioned in this article, with luxury
                       accommodations and local guides.
                     </p>
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-primary"></div>
-                        <span className="text-gray-700">
+                    <div className="space-y-4 mb-8">
+                      <div className="flex items-center gap-4">
+                        <div className="w-3 h-3 rounded-full bg-primary flex-shrink-0"></div>
+                        <span className="text-gray-700 text-base">
                           Private chauffeur and luxury vehicle
                         </span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-primary"></div>
-                        <span className="text-gray-700">
+                      <div className="flex items-center gap-4">
+                        <div className="w-3 h-3 rounded-full bg-primary flex-shrink-0"></div>
+                        <span className="text-gray-700 text-base">
                           Hand-picked boutique accommodations
                         </span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-primary"></div>
-                        <span className="text-gray-700">
+                      <div className="flex items-center gap-4">
+                        <div className="w-3 h-3 rounded-full bg-primary flex-shrink-0"></div>
+                        <span className="text-gray-700 text-base">
                           Expert local guides and authentic experiences
                         </span>
                       </div>
@@ -373,9 +381,9 @@ export default async function BlogDetailPage({
               <AffiliateAd placement="Mid Article" size="large" />
 
               {/* Tags */}
-              <div className="mt-12 pt-8 border-t border-gray-200">
-                <h3 className="font-semibold text-gray-900 mb-4">Tags</h3>
-                <div className="flex flex-wrap gap-3">
+              <div className="mt-16 pt-10 border-t border-gray-200">
+                <h3 className="font-semibold text-gray-900 mb-6 text-lg">Tags</h3>
+                <div className="flex flex-wrap gap-4">
                   {sampleBlogPost.tags.map((tag, index) => (
                     <span
                       key={`tag-${index}-${tag}`}
@@ -388,24 +396,24 @@ export default async function BlogDetailPage({
               </div>
 
               {/* Author Bio */}
-              <div className="mt-12 p-6 bg-gray-50 rounded-xl">
-                <h3 className="font-['Playfair_Display'] text-xl font-bold mb-4">
+              <div className="mt-16 p-8 bg-gray-50 rounded-xl">
+                <h3 className="font-['Playfair_Display'] text-xl font-bold mb-6">
                   About the Author
                 </h3>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
+                  <h4 className="font-semibold text-gray-900 mb-3 text-lg">
                     {sampleBlogPost.author.name}
                   </h4>
-                  <p className="text-gray-600">{sampleBlogPost.author.bio}</p>
+                  <p className="text-gray-600 leading-relaxed text-base">{sampleBlogPost.author.bio}</p>
                 </div>
               </div>
             </article>
 
             {/* Sidebar */}
             <aside className="lg:col-span-4">
-              <div className="sticky top-24 space-y-8">
+              <div className="sticky top-24 space-y-10">
                 {/* Featured East Coast Tours */}
-                <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm">
                   <h3
                     className="font-display text-xl font-bold mb-4"
                     style={{ color: COLORS.primary }}
@@ -413,18 +421,18 @@ export default async function BlogDetailPage({
                     Related Tours
                   </h3>
 
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <div key="east-coast-discovery" className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
                       <img
                         src="https://blog.bestsrilankatours.com/wp-content/uploads/2020/08/Beach-Holidays.jpg"
                         alt="East Coast Discovery Tour"
                         className="w-full h-32 object-cover"
                       />
-                      <div className="p-4">
-                        <h4 className="font-semibold text-gray-900 mb-2">
+                      <div className="p-5">
+                        <h4 className="font-semibold text-gray-900 mb-3 text-base">
                           East Coast Discovery
                         </h4>
-                        <p className="text-sm text-gray-600 mb-3">
+                        <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                           7 days exploring Trincomalee, Arugam Bay & Batticaloa
                         </p>
                         <div className="flex items-center justify-between">
@@ -451,11 +459,11 @@ export default async function BlogDetailPage({
                         alt="Cultural & Coast Combo"
                         className="w-full h-32 object-cover"
                       />
-                      <div className="p-4">
-                        <h4 className="font-semibold text-gray-900 mb-2">
+                      <div className="p-5">
+                        <h4 className="font-semibold text-gray-900 mb-3 text-base">
                           Cultural & Coast Combo
                         </h4>
-                        <p className="text-sm text-gray-600 mb-3">
+                        <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                           Ancient cities + pristine east coast beaches
                         </p>
                         <div className="flex items-center justify-between">
@@ -488,18 +496,18 @@ export default async function BlogDetailPage({
                 </div>
 
                 {/* Free Travel Guide CTA */}
-                <div className="bg-gradient-to-br from-blue-50 to-teal-50 p-6 rounded-xl border border-blue-200">
+                <div className="bg-gradient-to-br from-blue-50 to-teal-50 p-8 rounded-xl border border-blue-200">
                   <h3
                     className="font-display text-xl font-bold mb-3"
                     style={{ color: COLORS.primary }}
                   >
                     Free Sri Lanka Travel Guide
                   </h3>
-                  <p className="text-gray-700 mb-4">
+                  <p className="text-gray-700 mb-6 leading-relaxed">
                     Get our comprehensive 47-page travel guide with insider
                     tips, hidden gems, and detailed itineraries.
                   </p>
-                  <div className="space-y-3 mb-4">
+                  <div className="space-y-4 mb-6">
                     <div className="flex items-center gap-2">
                       <Check
                         className="w-4 h-4"
@@ -539,15 +547,15 @@ export default async function BlogDetailPage({
                 </div>
 
                 {/* Why Choose BSL Tours */}
-                <div className="bg-white p-6 rounded-xl border border-gray-200">
+                <div className="bg-white p-8 rounded-xl border border-gray-200">
                   <h3
                     className="font-display text-xl font-bold mb-4"
                     style={{ color: COLORS.primary }}
                   >
                     Why Choose BSL Tours?
                   </h3>
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3">
+                  <div className="space-y-6">
+                    <div className="flex items-start gap-4">
                       <div
                         className="w-6 h-6 rounded-full flex items-center justify-center mt-0.5"
                         style={{ backgroundColor: COLORS.primary }}
@@ -609,14 +617,14 @@ export default async function BlogDetailPage({
                 </div>
 
                 {/* Newsletter Signup */}
-                <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-6 rounded-xl border border-gray-200">
+                <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 rounded-xl border border-gray-200">
                   <h3
                     className="font-display text-xl font-bold mb-3"
                     style={{ color: COLORS.primary }}
                   >
                     Weekly Travel Insights
                   </h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-600 mb-6 leading-relaxed">
                     Join 15,000+ travelers getting exclusive tips, hidden gems,
                     and special offers.
                   </p>
@@ -642,8 +650,8 @@ export default async function BlogDetailPage({
       </section>
 
       {/* Back Button */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4 text-center">
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 rounded-lg hover:shadow-md transition-all"

@@ -22,4 +22,4 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run dev -- -p 3000"
+args = "npm run dev -- -p 5000"
