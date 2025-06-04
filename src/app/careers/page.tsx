@@ -57,7 +57,7 @@ export default function CareersPage() {
         title="Careers"
         description="Join our team of passionate travel professionals and help create unforgettable Sri Lankan experiences."
         breadcrumbs={[
-          { label: 'Company', path: '/about' },
+          { label: 'Company', href: '/about' },
           { label: 'Careers' }
         ]}
       />
