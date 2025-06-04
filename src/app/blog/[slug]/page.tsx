@@ -423,9 +423,9 @@ export default function BlogDetailPage() {
           <div className="mt-8 pt-6 border-t border-gray-200">
             <h3 className="font-semibold text-gray-900 mb-4">Tags</h3>
             <div className="flex flex-wrap gap-2">
-              {sampleBlogPost.tags.map((tag, index) => (
+              {sampleBlogPost.tags.map((tag) => (
                 <span
-                  key={index}
+                  key={tag}
                   className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors cursor-pointer"
                 >
                   {tag}
@@ -458,25 +458,28 @@ export default function BlogDetailPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 {
+                  id: "cuisine-guide",
                   title: "Ultimate Guide to Sri Lankan Cuisine",
                   date: "March 12, 2024",
                   image: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1747699564/resources/regional-food.jpg",
                   excerpt: "Discover the flavors of Sri Lanka from street food to fine dining."
                 },
                 {
+                  id: "yala-photography",
                   title: "Wildlife Photography in Yala",
                   date: "March 10, 2024", 
                   image: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1744094008/activities/yala-leopard.jpg",
                   excerpt: "Tips for capturing stunning wildlife photos in Sri Lanka's premier national park."
                 },
                 {
+                  id: "tea-country",
                   title: "Tea Country Adventures",
                   date: "March 5, 2024",
                   image: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1744007986/activities/ella-nine-arch-train.jpg",
                   excerpt: "Journey through the misty hills and emerald tea plantations of central Sri Lanka."
                 }
-              ].map((post, index) => (
-                <div key={index} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+              ].map((post) => (
+                <div key={post.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                   <img 
                     src={post.image} 
                     alt={post.title}
