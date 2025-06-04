@@ -3,288 +3,659 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Calendar, Clock, ArrowLeft, Share2, BookOpen, ChevronRight } from 'lucide-react';
 import { useParams } from 'next/navigation';
+import {
+  Calendar,
+  Clock,
+  User,
+  Share2,
+  ArrowLeft,
+  Tag,
+  Facebook,
+  Twitter,
+  Linkedin,
+  Copy,
+  ChevronRight,
+  ArrowRight,
+  Check,
+} from 'lucide-react';
+
+// Blog post interface
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  featuredImage: string;
+  author: {
+    name: string;
+    avatar: string;
+    bio: string;
+  };
+  publishedAt: string;
+  readTime: number;
+  category: string;
+  tags: string[];
+}
+
+// Ad Component for monetization
+const AffiliateAd = ({
+  placement,
+  size = "medium",
+}: {
+  placement: string;
+  size?: "small" | "medium" | "large";
+}) => {
+  const adSizes = {
+    small: "h-24",
+    medium: "h-32",
+    large: "h-48",
+  };
+
+  return (
+    <div
+      className={`w-full ${adSizes[size]} bg-gradient-to-r from-blue-50 to-teal-50 border border-gray-200 rounded-lg flex items-center justify-center my-8`}
+    >
+      <div className="text-center">
+        <p className="text-sm text-gray-500 mb-2">Advertisement</p>
+        <p className="text-xs text-gray-400">
+          {placement} - {size}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+// Sample blog post data with enhanced content
+const sampleBlogPost: BlogPost = {
+  id: 1,
+  title: "Fantastic Places to Go in the Beautiful East Coast",
+  slug: "fantastic-places-to-go-in-the-beautiful-east-coast",
+  excerpt:
+    "Discover the pristine beaches, vibrant marine life, and cultural treasures that make Sri Lanka's east coast a must-visit destination.",
+  content: `
+    <p>Sri Lanka's east coast is a hidden gem that offers some of the most breathtaking coastal experiences in the Indian Ocean. From pristine beaches to vibrant marine ecosystems, this region provides an authentic glimpse into the island's natural beauty and cultural heritage.</p>
+
+    <div class="my-8">
+      <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743666036/destinations/arugam-bay-vibes.jpg" />
+      <p class="text-sm text-gray-600 text-center mt-3 italic">Golden sunrise over Arugam Bay's pristine coastline</p>
+    </div>
+
+    <h2>Arugam Bay: The Surfer's Paradise</h2>
+    <p>Arugam Bay stands as one of the world's premier surfing destinations. The consistent swells and perfect waves make it ideal for both beginners and experienced surfers. The bay's crescent-shaped coastline creates optimal wave conditions from April to October.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+      <div>
+        <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743665999/destinations/arugam-bay-surfing.jpg" alt="Surfing at Arugam Bay" class="w-full h-48 object-cover rounded-lg shadow-md" />
+        <p class="text-sm text-gray-600 text-center mt-2">World-class surfing waves</p>
+      </div>
+      <div>
+        <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1744094008/activities/arugam-bay-beach.jpg" alt="Arugam Bay Beach" class="w-full h-48 object-cover rounded-lg shadow-md" />
+        <p class="text-sm text-gray-600 text-center mt-2">Crystal clear waters and golden sand</p>
+      </div>
+    </div>
+
+    <p>Beyond surfing, Arugam Bay offers:</p>
+    <ul>
+      <li>Stunning sunset views from the main beach</li>
+      <li>Fresh seafood at beachfront restaurants</li>
+      <li>Wildlife watching at nearby Kumana National Park</li>
+      <li>Cultural visits to ancient temples</li>
+    </ul>
+
+    <div class="my-8">
+      <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743644784/destinations/arugam-bay-hero.jpg" alt="Sunset at Arugam Bay" class="w-full h-64 md:h-80 object-cover rounded-xl shadow-lg" />
+      <p class="text-sm text-gray-600 text-center mt-3 italic">Spectacular sunset views that make Arugam Bay unforgettable</p>
+    </div>
+
+    <h2>Trincomalee: Ancient Harbor City</h2>
+    <p>Trincomalee boasts one of the world's finest natural harbors and a rich history spanning over 2,000 years. The city combines colonial architecture, ancient Hindu temples, and pristine beaches.</p>
+
+    <div class="my-8">
+      <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743638597/activities/trincomalee-temple.jpg" alt="Koneswaram Temple" class="w-full h-64 md:h-96 object-cover rounded-xl shadow-lg" />
+      <p class="text-sm text-gray-600 text-center mt-3 italic">The ancient Koneswaram Temple perched dramatically on Swami Rock</p>
+    </div>
+
+    <p>Must-visit attractions include:</p>
+    <ul>
+      <li>Koneswaram Temple perched on Swami Rock</li>
+      <li>Nilaveli Beach with its crystal-clear waters</li>
+      <li>Whale watching excursions (seasonal)</li>
+      <li>Marble Beach for snorkeling</li>
+    </ul>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-8">
+      <div>
+        <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743727734/destinations/nilaveli-snorkeling.jpg" alt="Nilaveli Beach" class="w-full h-40 object-cover rounded-lg shadow-md" />
+        <p class="text-sm text-gray-600 text-center mt-2">Nilaveli's turquoise waters</p>
+      </div>
+      <div>
+        <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743727955/features/nilaveli-whale-watching.jpg" alt="Whale watching" class="w-full h-40 object-cover rounded-lg shadow-md" />
+        <p class="text-sm text-gray-600 text-center mt-2">Blue whale encounters</p>
+      </div>
+      <div>
+        <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743773362/destinations/nilaveli-overview.jpg" alt="Marble Beach" class="w-full h-40 object-cover rounded-lg shadow-md" />
+        <p class="text-sm text-gray-600 text-center mt-2">Marble Beach snorkeling</p>
+      </div>
+    </div>
+
+    <h2>Batticaloa: The Land of Singing Fish</h2>
+    <p>Batticaloa offers a unique cultural experience with its lagoons, bridges, and the mysterious phenomenon of "singing fish" that can be heard on quiet nights near the Kallady Bridge.</p>
+
+    <div class="my-8">
+      <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743664436/destinations/kalpitiya-lagoon.jpg" alt="Batticaloa Lagoon" class="w-full h-64 md:h-80 object-cover rounded-xl shadow-lg" />
+      <p class="text-sm text-gray-600 text-center mt-3 italic">The serene lagoons of Batticaloa at twilight</p>
+    </div>
+
+    <h2>Best Time to Visit</h2>
+    <p>The east coast enjoys a different monsoon pattern than the west and south coasts. The ideal time to visit is from April to September when the weather is dry and perfect for beach activities.</p>
+
+    <div class="bg-blue-50 p-6 rounded-xl my-8 border-l-4 border-blue-500">
+      <h3 class="font-bold text-lg mb-3 text-blue-900">Pro Tip: Weather Patterns</h3>
+      <p class="text-blue-800">Unlike the west coast, the east coast is at its best during the southwest monsoon period. Plan your visit between April and September for calm seas and sunny skies.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+      <div>
+        <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743984780/tours/sandy-beach.jpg" alt="Perfect weather on east coast" class="w-full h-48 object-cover rounded-lg shadow-md" />
+        <p class="text-sm text-gray-600 text-center mt-2">Perfect beach weather from April to September</p>
+      </div>
+      <div>
+        <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743786028/tour/beach-holiday-srilanka.jpg" alt="Beach activities" class="w-full h-48 object-cover rounded-lg shadow-md" />
+        <p class="text-sm text-gray-600 text-center mt-2">Ideal conditions for water sports and beach activities</p>
+      </div>
+    </div>
+
+    <h2>Planning Your Visit</h2>
+    <p>To make the most of your east coast adventure, consider staying 5-7 days to explore multiple destinations. Many visitors combine their east coast trip with visits to ancient cities like Polonnaruwa or wildlife parks like Yala.</p>
+
+    <div class="my-8">
+      <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1744094008/activities/east-coast-itinerary.jpg" alt="East coast travel map" class="w-full h-64 md:h-80 object-cover rounded-xl shadow-lg" />
+      <p class="text-sm text-gray-600 text-center mt-3 italic">A suggested route for exploring Sri Lanka's magnificent east coast</p>
+    </div>
+
+    <div class="bg-gradient-to-r from-teal-50 to-blue-50 p-6 rounded-xl my-8">
+      <h3 class="font-bold text-lg mb-3 text-teal-900">7-Day East Coast Itinerary</h3>
+      <ul class="text-teal-800 space-y-2">
+        <li><strong>Days 1-3:</strong> Trincomalee - Temples, beaches, and whale watching</li>
+        <li><strong>Days 4-5:</strong> Arugam Bay - Surfing and sunset vibes</li>
+        <li><strong>Days 6-7:</strong> Batticaloa - Cultural immersion and lagoon exploration</li>
+      </ul>
+    </div>
+  `,
+  featuredImage:
+    "https://res.cloudinary.com/drsjp6bqz/image/upload/v1744002024/activities/unawatuna-bay.jpg",
+  author: {
+    name: "Sarah Johnson",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+    bio: "Travel writer and Sri Lanka specialist with over 8 years of experience exploring the island's hidden gems.",
+  },
+  publishedAt: "2024-03-15",
+  readTime: 8,
+  category: "Destinations",
+  tags: ["East Coast", "Beaches", "Travel Tips", "Arugam Bay", "Trincomalee"],
+};
 
 export default function BlogDetailPage() {
   const params = useParams();
   const slug = params.slug;
-
-  // Sample blog post data - in a real app, this would be fetched based on the slug
-  const blogPost = {
-    id: 1,
-    title: "Fantastic Places to Go in the Beautiful East Coast",
-    slug: "fantastic-places-to-go-in-the-beautiful-east-coast",
-    content: `
-      <p>Sri Lanka's east coast is a hidden gem waiting to be discovered. With pristine beaches, crystal-clear waters, and vibrant marine life, this region offers some of the most spectacular coastal experiences in the country.</p>
-      
-      <h3>Arugam Bay: Surfing Paradise</h3>
-      <p>Known as one of the top surfing destinations in Asia, Arugam Bay attracts wave riders from around the world. The consistent waves and laid-back atmosphere make it perfect for both beginners and experienced surfers.</p>
-      
-      <h3>Batticaloa: Cultural Heritage</h3>
-      <p>Explore the rich cultural heritage of Batticaloa, with its historic Dutch fort, singing fish phenomenon, and beautiful lagoons. The town offers a unique blend of Tamil, Muslim, and Sinhalese cultures.</p>
-      
-      <h3>Pasikudah: Pristine Beaches</h3>
-      <p>With shallow, calm waters extending far into the ocean, Pasikudah is perfect for families and those seeking relaxation. The golden sand beaches are ideal for sunbathing and water sports.</p>
-      
-      <h3>Trincomalee: Historical Significance</h3>
-      <p>Home to one of the world's finest natural harbors, Trincomalee offers a perfect combination of history, culture, and natural beauty. Visit the ancient Koneswaram Temple and enjoy whale watching opportunities.</p>
-    `,
-    excerpt: "Discover the pristine beaches, vibrant marine life, and cultural treasures that make Sri Lanka's east coast a must-visit destination.",
-    featuredImage: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1744094008/activities/mirissa-beach.jpg",
-    author: {
-      name: "Sarah Johnson",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
-      bio: "Travel writer and photographer specializing in South Asian destinations"
-    },
-    publishedAt: "2024-03-15",
-    readTime: 8,
-    category: "Destinations",
-    tags: ["East Coast", "Beaches", "Travel Tips", "Surfing", "Culture"]
-  };
-
-  const relatedPosts = [
-    {
-      id: 2,
-      title: "The Ultimate Guide to Sri Lankan Cuisine",
-      slug: "ultimate-guide-sri-lankan-cuisine",
-      featuredImage: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1747699564/resources/regional-food.jpg",
-      category: "Culture",
-      readTime: 12
-    },
-    {
-      id: 3,
-      title: "Hidden Waterfalls in Sri Lanka's Hill Country",
-      slug: "hidden-waterfalls-hill-country",
-      featuredImage: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1744007986/activities/ella-nine-arch-train.jpg",
-      category: "Adventure",
-      readTime: 10
-    }
-  ];
+  const [shareMenuOpen, setShareMenuOpen] = useState(false);
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
+  };
+
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const shareTitle = sampleBlogPost.title;
+
+  const shareLinks = {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(shareUrl);
+    setShareMenuOpen(false);
   };
 
   return (
     <main className="min-h-screen bg-white">
-      {/* Breadcrumb Navigation */}
-      <nav className="pt-24 pb-8 bg-gray-50" aria-label="Breadcrumb">
+      {/* Hero Section */}
+      <section className="relative pt-20 pb-16 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <ol className="inline-flex items-center space-x-1 md:space-x-3">
-            <li className="inline-flex items-center">
-              <Link href="/" className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
-                <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                Home
-              </Link>
-            </li>
-            <li>
-              <div className="flex items-center">
-                <ChevronRight className="w-4 h-4 text-gray-400 mx-1" />
-                <Link href="/blog" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
-                  Blog
+          {/* Breadcrumb Navigation */}
+          <nav className="flex text-gray-600 mb-6 pt-8" aria-label="Breadcrumb">
+            <ol className="inline-flex items-center space-x-1 md:space-x-3">
+              <li className="inline-flex items-center">
+                <Link href="/" className="inline-flex items-center text-sm font-medium hover:text-blue-600 transition-colors">
+                  <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  Home
                 </Link>
-              </div>
-            </li>
-            <li aria-current="page">
-              <div className="flex items-center">
-                <ChevronRight className="w-4 h-4 text-gray-400 mx-1" />
-                <span className="text-sm font-medium text-gray-900 truncate">
-                  {blogPost.title}
-                </span>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </nav>
-
-      {/* Article Header */}
-      <article className="pb-16">
-        <header className="relative h-[60vh] overflow-hidden">
-          <img
-            src={blogPost.featuredImage}
-            alt={blogPost.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-          
-          <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="max-w-4xl">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-[#D4AF37] text-white">
-                    {blogPost.category}
+              </li>
+              <li>
+                <div className="flex items-center">
+                  <ChevronRight className="w-4 h-4 text-gray-400 mx-1" />
+                  <Link href="/blog" className="text-sm font-medium hover:text-blue-600 transition-colors">
+                    Travel Journal
+                  </Link>
+                </div>
+              </li>
+              <li aria-current="page">
+                <div className="flex items-center">
+                  <ChevronRight className="w-4 h-4 text-gray-400 mx-1" />
+                  <span className="text-sm font-medium text-gray-900">
+                    {sampleBlogPost.category}
                   </span>
-                  <div className="flex items-center gap-4 text-sm">
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      {formatDate(blogPost.publishedAt)}
-                    </div>
+                </div>
+              </li>
+            </ol>
+          </nav>
+
+          {/* Article Header */}
+          <header className="mb-12">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="px-4 py-2 rounded-full text-sm font-medium text-white bg-[#0F4C81]">
+                {sampleBlogPost.category}
+              </span>
+              <span className="text-gray-500">
+                {formatDate(sampleBlogPost.publishedAt)}
+              </span>
+            </div>
+
+            <h1 className="font-['Playfair_Display'] text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              {sampleBlogPost.title}
+            </h1>
+
+            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              {sampleBlogPost.excerpt}
+            </p>
+
+            {/* Author & Meta Info */}
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-4">
+                <div>
+                  <h3 className="font-semibold text-gray-900">
+                    {sampleBlogPost.author.name}
+                  </h3>
+                  <div className="flex items-center gap-3 text-sm text-gray-500">
                     <div className="flex items-center gap-1">
                       <Clock className="w-4 h-4" />
-                      {blogPost.readTime} min read
+                      <span>{sampleBlogPost.readTime} min read</span>
                     </div>
                   </div>
                 </div>
-                
-                <h1 className="font-['Playfair_Display'] text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-                  {blogPost.title}
-                </h1>
-                
-                <p className="text-xl opacity-90 max-w-3xl">
-                  {blogPost.excerpt}
-                </p>
+              </div>
+
+              {/* Share Button */}
+              <div className="relative">
+                <button
+                  onClick={() => setShareMenuOpen(!shareMenuOpen)}
+                  className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <Share2 className="w-4 h-4" />
+                  Share
+                </button>
+
+                {shareMenuOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                    <div className="py-2">
+                      <a
+                        href={shareLinks.facebook}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors"
+                      >
+                        <Facebook className="w-4 h-4 text-blue-600" />
+                        Facebook
+                      </a>
+                      <a
+                        href={shareLinks.twitter}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors"
+                      >
+                        <Twitter className="w-4 h-4 text-blue-400" />
+                        Twitter
+                      </a>
+                      <a
+                        href={shareLinks.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors"
+                      >
+                        <Linkedin className="w-4 h-4 text-blue-700" />
+                        LinkedIn
+                      </a>
+                      <button
+                        onClick={copyToClipboard}
+                        className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors w-full text-left"
+                      >
+                        <Copy className="w-4 h-4 text-gray-600" />
+                        Copy Link
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
+          </header>
+
+          {/* Featured Image */}
+          <div className="relative mb-12">
+            <img
+              src={sampleBlogPost.featuredImage}
+              alt={sampleBlogPost.title}
+              className="w-full h-64 md:h-96 object-cover rounded-2xl"
+            />
           </div>
-        </header>
+        </div>
+      </section>
 
-        {/* Article Content */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-              
-              {/* Main Content */}
-              <div className="lg:col-span-8">
-                {/* Author Info */}
-                <div className="flex items-center gap-4 p-6 bg-gray-50 rounded-xl mb-8">
-                  <img
-                    src={blogPost.author.avatar}
-                    alt={blogPost.author.name}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
+      {/* Article Content */}
+      <section className="py-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Main Content */}
+            <article className="lg:col-span-8">
+              <div
+                className="prose prose-lg max-w-none prose-headings:font-['Playfair_Display'] prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-p:mb-6 prose-p:leading-relaxed prose-ul:mb-6 prose-li:mb-2"
+                dangerouslySetInnerHTML={{ __html: sampleBlogPost.content }}
+              />
+
+              {/* Tour Promotion - Mid Content */}
+              <div className="my-12 p-8 bg-gradient-to-r from-blue-50 to-teal-50 border border-blue-200 rounded-2xl">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                   <div>
-                    <h3 className="font-semibold text-gray-900">{blogPost.author.name}</h3>
-                    <p className="text-gray-600 text-sm">{blogPost.author.bio}</p>
-                  </div>
-                </div>
-
-                {/* Article Body */}
-                <div 
-                  className="prose prose-lg max-w-none"
-                  dangerouslySetInnerHTML={{ __html: blogPost.content }}
-                />
-
-                {/* Tags */}
-                <div className="mt-12 pt-8 border-t border-gray-200">
-                  <h4 className="font-semibold text-gray-900 mb-4">Tags:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {blogPost.tags.map((tag, index) => (
-                      <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Share Buttons */}
-                <div className="mt-8 pt-8 border-t border-gray-200">
-                  <div className="flex items-center justify-between">
-                    <Link 
-                      href="/blog"
-                      className="inline-flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors"
-                    >
-                      <ArrowLeft className="w-4 h-4" />
-                      Back to Blog
-                    </Link>
-                    
-                    <button className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                      <Share2 className="w-4 h-4" />
-                      Share Article
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Sidebar */}
-              <aside className="lg:col-span-4">
-                <div className="sticky top-24 space-y-8">
-                  {/* Related Articles */}
-                  <div className="bg-white border border-gray-200 rounded-xl p-6">
-                    <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#0F4C81] mb-6">
-                      Related Articles
+                    <h3 className="font-['Playfair_Display'] text-2xl font-bold mb-4 text-[#0F4C81]">
+                      Experience the East Coast with BSL Tours
                     </h3>
-                    
-                    <div className="space-y-6">
-                      {relatedPosts.map((post) => (
-                        <article key={post.id}>
-                          <Link href={`/blog/${post.slug}`} className="group block">
-                            <div className="flex gap-4">
-                              <img
-                                src={post.featuredImage}
-                                alt={post.title}
-                                className="w-20 h-20 object-cover rounded-lg group-hover:shadow-md transition-shadow"
-                              />
-                              <div className="flex-1">
-                                <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2">
-                                  {post.title}
-                                </h4>
-                                <div className="flex items-center gap-2 text-sm text-gray-500">
-                                  <span className="px-2 py-1 bg-gray-100 rounded text-xs">
-                                    {post.category}
-                                  </span>
-                                  <span>{post.readTime} min</span>
-                                </div>
-                              </div>
-                            </div>
-                          </Link>
-                        </article>
-                      ))}
+                    <p className="text-gray-700 mb-6">
+                      Ready to explore these incredible destinations? Our
+                      expert-crafted East Coast Discovery tour takes you to all
+                      the places mentioned in this article, with luxury
+                      accommodations and local guides.
+                    </p>
+                    <div className="space-y-3 mb-6">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-[#0F4C81]"></div>
+                        <span className="text-gray-700">
+                          Private chauffeur and luxury vehicle
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-[#0F4C81]"></div>
+                        <span className="text-gray-700">
+                          Hand-picked boutique accommodations
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-[#0F4C81]"></div>
+                        <span className="text-gray-700">
+                          Expert local guides and authentic experiences
+                        </span>
+                      </div>
                     </div>
-                  </div>
-
-                  {/* Newsletter Signup */}
-                  <div className="bg-gradient-to-br from-blue-50 to-teal-50 rounded-xl p-6">
-                    <div className="text-center">
-                      <BookOpen className="w-12 h-12 text-[#0F4C81] mx-auto mb-4" />
-                      <h3 className="font-['Playfair_Display'] text-lg font-bold text-[#0F4C81] mb-2">
-                        Stay Updated
-                      </h3>
-                      <p className="text-gray-600 text-sm mb-4">
-                        Get the latest travel stories and Sri Lanka insights delivered to your inbox.
-                      </p>
-                      <Link 
-                        href="/newsletter"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-[#0F4C81] text-white rounded-lg hover:bg-[#0F4C81]/90 transition-colors text-sm"
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <Link
+                        href="/tours"
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white font-medium hover:shadow-lg transition-all bg-[#0F4C81]"
                       >
-                        Subscribe Now
+                        View East Coast Tours
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
+                      <Link
+                        href="/contact"
+                        className="inline-flex items-center gap-2 px-6 py-3 border-2 border-[#0F4C81] rounded-lg font-medium hover:shadow-md transition-all text-[#0F4C81]"
+                      >
+                        Get Custom Quote
                       </Link>
                     </div>
                   </div>
+                  <div className="relative">
+                    <img
+                      src="https://images.mrandmrssmith.com/images/698x522/3802504-amanwella-hotel-tangalle-sri-lanka.jpg"
+                      alt="BSL Tours luxury vehicle"
+                      className="w-full h-64 object-cover rounded-xl shadow-lg"
+                    />
+                    <div className="absolute top-4 left-4 bg-white px-3 py-2 rounded-lg shadow-md">
+                      <p className="text-sm font-semibold text-[#0F4C81]">From $899</p>
+                      <p className="text-xs text-gray-600">7-day package</p>
+                    </div>
+                  </div>
                 </div>
-              </aside>
-            </div>
+              </div>
+
+              {/* Ad Placement - After Tour Promotion */}
+              <AffiliateAd placement="Mid Article" size="large" />
+
+              {/* Tags */}
+              <div className="mt-12 pt-8 border-t border-gray-200">
+                <h3 className="font-semibold text-gray-900 mb-4">Tags</h3>
+                <div className="flex flex-wrap gap-3">
+                  {sampleBlogPost.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors cursor-pointer"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Author Bio */}
+              <div className="mt-12 p-6 bg-gray-50 rounded-xl">
+                <h3 className="font-['Playfair_Display'] text-xl font-bold mb-4">
+                  About the Author
+                </h3>
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">
+                    {sampleBlogPost.author.name}
+                  </h4>
+                  <p className="text-gray-600">{sampleBlogPost.author.bio}</p>
+                </div>
+              </div>
+            </article>
+
+            {/* Sidebar */}
+            <aside className="lg:col-span-4">
+              <div className="sticky top-24 space-y-8">
+                {/* Featured East Coast Tours */}
+                <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                  <h3 className="font-['Playfair_Display'] text-xl font-bold mb-4 text-[#0F4C81]">
+                    Related Tours
+                  </h3>
+
+                  <div className="space-y-4">
+                    <div className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                      <img
+                        src="https://blog.bestsrilankatours.com/wp-content/uploads/2020/08/Beach-Holidays.jpg"
+                        alt="East Coast Discovery Tour"
+                        className="w-full h-32 object-cover"
+                      />
+                      <div className="p-4">
+                        <h4 className="font-semibold text-gray-900 mb-2">
+                          East Coast Discovery
+                        </h4>
+                        <p className="text-sm text-gray-600 mb-3">
+                          7 days exploring Trincomalee, Arugam Bay & Batticaloa
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-[#0F4C81]">From $899</span>
+                          <Link
+                            href="/tours"
+                            className="text-sm font-medium hover:underline text-[#0F4C81]"
+                          >
+                            View Details
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                      <img
+                        src="https://blog.bestsrilankatours.com/wp-content/uploads/2018/04/highlights-1.jpg"
+                        alt="Cultural & Coast Combo"
+                        className="w-full h-32 object-cover"
+                      />
+                      <div className="p-4">
+                        <h4 className="font-semibold text-gray-900 mb-2">
+                          Cultural & Coast Combo
+                        </h4>
+                        <p className="text-sm text-gray-600 mb-3">
+                          Ancient cities + pristine east coast beaches
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-[#0F4C81]">From $1,299</span>
+                          <Link
+                            href="/tours"
+                            className="text-sm font-medium hover:underline text-[#0F4C81]"
+                          >
+                            View Details
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Link
+                    href="/tours"
+                    className="inline-flex items-center gap-2 px-4 py-3 mt-4 w-full justify-center rounded-lg text-white font-medium hover:shadow-lg transition-all bg-[#0F4C81]"
+                  >
+                    View All East Coast Tours
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+
+                {/* Free Travel Guide CTA */}
+                <div className="bg-gradient-to-br from-blue-50 to-teal-50 p-6 rounded-xl border border-blue-200">
+                  <h3 className="font-['Playfair_Display'] text-xl font-bold mb-3 text-[#0F4C81]">
+                    Free Sri Lanka Travel Guide
+                  </h3>
+                  <p className="text-gray-700 mb-4">
+                    Get our comprehensive 47-page travel guide with insider
+                    tips, hidden gems, and detailed itineraries.
+                  </p>
+                  <div className="space-y-3 mb-4">
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-[#0F4C81]" />
+                      <span className="text-sm text-gray-700">
+                        Best time to visit each region
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-[#0F4C81]" />
+                      <span className="text-sm text-gray-700">
+                        Budget planning worksheets
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-[#0F4C81]" />
+                      <span className="text-sm text-gray-700">
+                        Local restaurant recommendations
+                      </span>
+                    </div>
+                  </div>
+                  <Link
+                    href="/newsletter"
+                    className="inline-flex items-center gap-2 px-4 py-3 w-full justify-center rounded-lg text-white font-medium hover:shadow-lg transition-all bg-[#0F4C81]"
+                  >
+                    Download Free Guide
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+
+                {/* Why Choose BSL Tours */}
+                <div className="bg-white p-6 rounded-xl border border-gray-200">
+                  <h3 className="font-['Playfair_Display'] text-xl font-bold mb-4 text-[#0F4C81]">
+                    Why Choose BSL Tours?
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center mt-0.5 bg-[#0F4C81]">
+                        <Check className="w-3 h-3 text-white" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Local Expertise</p>
+                        <p className="text-sm text-gray-600">
+                          8+ years of Sri Lanka travel experience
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center mt-0.5 bg-[#0F4C81]">
+                        <Check className="w-3 h-3 text-white" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Personalized Service</p>
+                        <p className="text-sm text-gray-600">
+                          Tailored itineraries for every traveler
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center mt-0.5 bg-[#0F4C81]">
+                        <Check className="w-3 h-3 text-white" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">24/7 Support</p>
+                        <p className="text-sm text-gray-600">
+                          Local assistance throughout your journey
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <Link
+                    href="/about"
+                    className="inline-flex items-center gap-2 px-4 py-2 mt-4 border-2 border-[#0F4C81] rounded-lg font-medium hover:shadow-md transition-all w-full justify-center text-[#0F4C81]"
+                  >
+                    Learn More About Us
+                  </Link>
+                </div>
+
+                {/* Newsletter Signup */}
+                <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-6 rounded-xl border border-gray-200">
+                  <h3 className="font-['Playfair_Display'] text-xl font-bold mb-3 text-[#0F4C81]">
+                    Weekly Travel Insights
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    Join 15,000+ travelers getting exclusive tips, hidden gems,
+                    and special offers.
+                  </p>
+                  <Link
+                    href="/newsletter"
+                    className="inline-flex items-center gap-2 px-4 py-3 w-full justify-center rounded-lg font-medium hover:shadow-md transition-all border-2 border-[#0F4C81] text-[#0F4C81]"
+                  >
+                    Subscribe Now
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+
+                {/* Ad Placement - Sidebar Bottom */}
+                <AffiliateAd placement="Sidebar Bottom" size="medium" />
+              </div>
+            </aside>
           </div>
         </div>
-      </article>
+      </section>
 
-      {/* Call to Action */}
-      <section className="py-16 bg-gradient-to-r from-blue-50 to-teal-50">
+      {/* Back to Blog */}
+      <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-['Playfair_Display'] text-3xl font-bold mb-4 text-[#0F4C81]">
-            Ready to Explore Sri Lanka?
-          </h2>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Turn these travel stories into your own unforgettable experiences. Browse our curated tour packages.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/tours"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-[#0F4C81] text-white rounded-lg hover:bg-[#0F4C81]/90 transition-colors font-medium"
-            >
-              Explore Tours
-            </Link>
-            <Link 
-              href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3 border-2 border-[#0F4C81] text-[#0F4C81] rounded-lg hover:bg-[#0F4C81]/10 transition-colors font-medium"
-            >
-              Plan Your Trip
-            </Link>
-          </div>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 rounded-lg hover:shadow-md transition-all"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Travel Journal
+          </Link>
         </div>
       </section>
     </main>
