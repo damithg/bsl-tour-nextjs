@@ -289,28 +289,19 @@ export default async function BlogDetailPage({
                     </p>
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center gap-3">
-                        <div
-                          className="w-2 h-2 rounded-full"
-                          style={{ backgroundColor: COLORS.primary }}
-                        ></div>
+                        <div className="w-2 h-2 rounded-full bg-primary"></div>
                         <span className="text-gray-700">
                           Private chauffeur and luxury vehicle
                         </span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <div
-                          className="w-2 h-2 rounded-full"
-                          style={{ backgroundColor: COLORS.primary }}
-                        ></div>
+                        <div className="w-2 h-2 rounded-full bg-primary"></div>
                         <span className="text-gray-700">
                           Hand-picked boutique accommodations
                         </span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <div
-                          className="w-2 h-2 rounded-full"
-                          style={{ backgroundColor: COLORS.primary }}
-                        ></div>
+                        <div className="w-2 h-2 rounded-full bg-primary"></div>
                         <span className="text-gray-700">
                           Expert local guides and authentic experiences
                         </span>
