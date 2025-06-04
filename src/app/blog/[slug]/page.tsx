@@ -210,18 +210,18 @@ export default function BlogDetailPage() {
     <main className="min-h-screen bg-white">
       {/* Navigation Breadcrumb */}
       <div className="bg-white border-b border-gray-100 py-4">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex text-sm text-gray-600" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1">
               <li className="inline-flex items-center">
-                <Link href="/" className="hover:text-blue-600 transition-colors">
+                <Link href="/" className="hover:text-[#0F4C81] transition-colors">
                   Home
                 </Link>
               </li>
               <li>
                 <div className="flex items-center">
                   <ChevronRight className="w-4 h-4 text-gray-400 mx-1" />
-                  <Link href="/blog" className="hover:text-blue-600 transition-colors">
+                  <Link href="/blog" className="hover:text-[#0F4C81] transition-colors">
                     Blog
                   </Link>
                 </div>
@@ -239,57 +239,67 @@ export default function BlogDetailPage() {
         </div>
       </div>
 
-      {/* Article Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      {/* Article Content - Single Column Layout */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <article>
           
-          {/* Main Content */}
-          <article className="lg:col-span-3">
-            
-            {/* Article Header */}
-            <header className="mb-8">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
-                  {sampleBlogPost.category}
-                </span>
-                <span className="text-sm text-gray-500">
-                  {formatDate(sampleBlogPost.publishedAt)}
-                </span>
-              </div>
+          {/* Article Header */}
+          <header className="mb-8">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="px-3 py-1 bg-[#0F4C81] text-white text-sm font-medium rounded">
+                {sampleBlogPost.category}
+              </span>
+              <span className="text-sm text-gray-500">
+                {formatDate(sampleBlogPost.publishedAt)}
+              </span>
+            </div>
 
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-                {sampleBlogPost.title}
-              </h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+              {sampleBlogPost.title}
+            </h1>
 
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                {sampleBlogPost.excerpt}
-              </p>
+            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+              {sampleBlogPost.excerpt}
+            </p>
 
-              {/* Author & Meta Info */}
-              <div className="flex items-center justify-between flex-wrap gap-4 pb-6 border-b border-gray-200">
-                <div className="flex items-center gap-3">
-                  <img 
-                    src={sampleBlogPost.author.avatar} 
-                    alt={sampleBlogPost.author.name}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                  <div>
-                    <p className="font-medium text-gray-900">
-                      {sampleBlogPost.author.name}
-                    </p>
-                    <div className="flex items-center gap-3 text-sm text-gray-500">
-                      <span>{sampleBlogPost.readTime} min read</span>
-                      <span>•</span>
-                      <span>{sampleBlogPost.views?.toLocaleString()} views</span>
-                    </div>
+            {/* Author & Meta Info */}
+            <div className="flex items-center justify-between flex-wrap gap-4 pb-6 border-b border-gray-200">
+              <div className="flex items-center gap-3">
+                <img 
+                  src={sampleBlogPost.author.avatar} 
+                  alt={sampleBlogPost.author.name}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div>
+                  <p className="font-medium text-gray-900">
+                    {sampleBlogPost.author.name}
+                  </p>
+                  <div className="flex items-center gap-3 text-sm text-gray-500">
+                    <span>{sampleBlogPost.readTime} min read</span>
+                    <span>•</span>
+                    <span>{sampleBlogPost.views?.toLocaleString()} views</span>
                   </div>
                 </div>
+              </div>
 
-                {/* Share Button */}
+              {/* Share and Like Buttons */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setLiked(!liked)}
+                  className={`flex items-center gap-2 px-3 py-2 border rounded-lg transition-colors text-sm ${
+                    liked 
+                      ? 'bg-red-50 border-red-200 text-red-600' 
+                      : 'border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  <Heart className={`w-4 h-4 ${liked ? 'fill-current' : ''}`} />
+                  {liked ? 'Liked' : 'Like'}
+                </button>
+
                 <div className="relative">
                   <button
                     onClick={() => setShareMenuOpen(!shareMenuOpen)}
-                    className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                    className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
                   >
                     <Share2 className="w-4 h-4" />
                     Share
@@ -337,192 +347,165 @@ export default function BlogDetailPage() {
                   )}
                 </div>
               </div>
-            </header>
-
-            {/* Featured Image */}
-            <div className="mb-8">
-              <img
-                src={sampleBlogPost.featuredImage}
-                alt={sampleBlogPost.title}
-                className="w-full h-64 md:h-96 object-cover rounded-lg"
-              />
             </div>
+          </header>
 
-            {/* Article Body */}
-            <div
-              className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-li:text-gray-700 prose-img:rounded-lg"
-              dangerouslySetInnerHTML={{ __html: sampleBlogPost.content }}
+          {/* Featured Image */}
+          <div className="mb-8">
+            <img
+              src={sampleBlogPost.featuredImage}
+              alt={sampleBlogPost.title}
+              className="w-full h-64 md:h-96 object-cover rounded-lg"
             />
+          </div>
 
-            {/* Tags */}
-            <div className="mt-8 pt-6 border-t border-gray-200">
-              <h3 className="font-semibold text-gray-900 mb-4">Tags</h3>
-              <div className="flex flex-wrap gap-2">
-                {sampleBlogPost.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors cursor-pointer"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+          {/* Article Body */}
+          <div
+            className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-li:text-gray-700 prose-img:rounded-lg"
+            dangerouslySetInnerHTML={{ __html: sampleBlogPost.content }}
+          />
 
-            {/* Author Bio */}
-            <div className="mt-8 p-6 bg-gray-50 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4">About the Author</h3>
-              <div className="flex items-start gap-4">
-                <img 
-                  src={sampleBlogPost.author.avatar} 
-                  alt={sampleBlogPost.author.name}
-                  className="w-16 h-16 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    {sampleBlogPost.author.name}
-                  </h4>
-                  <p className="text-gray-600">{sampleBlogPost.author.bio}</p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          {/* Sidebar */}
-          <aside className="lg:col-span-1">
-            <div className="sticky top-8 space-y-6">
-              
-              {/* Related Tours */}
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  Related Tours
+          {/* Tour Promotion Box */}
+          <div className="my-12 p-6 bg-gradient-to-r from-[#0F4C81] to-[#1a5aa0] rounded-lg text-white">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+              <div>
+                <h3 className="text-2xl font-bold mb-4">
+                  Explore the East Coast with BSL Tours
                 </h3>
-
-                <div className="space-y-4">
-                  <div className="border border-gray-100 rounded-lg overflow-hidden">
-                    <img
-                      src="https://blog.bestsrilankatours.com/wp-content/uploads/2020/08/Beach-Holidays.jpg"
-                      alt="East Coast Discovery Tour"
-                      className="w-full h-24 object-cover"
-                    />
-                    <div className="p-3">
-                      <h4 className="font-medium text-gray-900 mb-1 text-sm">
-                        East Coast Discovery
-                      </h4>
-                      <p className="text-xs text-gray-600 mb-2">
-                        7 days exploring Trincomalee & Arugam Bay
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-blue-600 text-sm">From $899</span>
-                        <Link
-                          href="/tours"
-                          className="text-xs text-blue-600 hover:underline"
-                        >
-                          View Details
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="border border-gray-100 rounded-lg overflow-hidden">
-                    <img
-                      src="https://blog.bestsrilankatours.com/wp-content/uploads/2018/04/highlights-1.jpg"
-                      alt="Cultural & Coast Combo"
-                      className="w-full h-24 object-cover"
-                    />
-                    <div className="p-3">
-                      <h4 className="font-medium text-gray-900 mb-1 text-sm">
-                        Cultural & Coast Combo
-                      </h4>
-                      <p className="text-xs text-gray-600 mb-2">
-                        Ancient cities + pristine beaches
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-blue-600 text-sm">From $1,299</span>
-                        <Link
-                          href="/tours"
-                          className="text-xs text-blue-600 hover:underline"
-                        >
-                          View Details
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <Link
-                  href="/tours"
-                  className="inline-flex items-center justify-center gap-2 w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-                >
-                  View All Tours
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-
-              {/* Newsletter Signup */}
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-blue-900 mb-3">
-                  Weekly Travel Insights
-                </h3>
-                <p className="text-blue-800 text-sm mb-4">
-                  Join 15,000+ travelers getting exclusive tips and special offers.
+                <p className="mb-4 text-blue-100">
+                  Ready to experience these incredible destinations? Our East Coast Discovery tour covers all the highlights mentioned in this article.
                 </p>
-                <Link
-                  href="/newsletter"
-                  className="inline-flex items-center justify-center gap-2 w-full px-4 py-2 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors text-sm"
-                >
-                  Subscribe Now
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
+                <div className="space-y-2 mb-6 text-sm">
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4" />
+                    <span>Private vehicle with chauffeur</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4" />
+                    <span>Handpicked accommodations</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4" />
+                    <span>Expert local guides</span>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Link
+                    href="/tours"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#0F4C81] rounded-lg font-medium hover:bg-gray-100 transition-colors"
+                  >
+                    View Tours
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white text-white rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    Get Quote
+                  </Link>
+                </div>
               </div>
-
-              {/* Recent Posts */}
-              <div className="bg-white border border-gray-200 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  Recent Posts
-                </h3>
-                <div className="space-y-3">
-                  {[
-                    {
-                      title: "Ultimate Guide to Sri Lankan Cuisine",
-                      date: "March 12, 2024",
-                      image: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1747699564/resources/regional-food.jpg"
-                    },
-                    {
-                      title: "Wildlife Photography in Yala",
-                      date: "March 10, 2024", 
-                      image: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1744094008/activities/yala-leopard.jpg"
-                    },
-                    {
-                      title: "Tea Country Adventures",
-                      date: "March 5, 2024",
-                      image: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1744007986/activities/ella-nine-arch-train.jpg"
-                    }
-                  ].map((post, index) => (
-                    <div key={index} className="flex gap-3">
-                      <img 
-                        src={post.image} 
-                        alt={post.title}
-                        className="w-16 h-12 object-cover rounded"
-                      />
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900 text-sm line-clamp-2 mb-1">
-                          {post.title}
-                        </h4>
-                        <p className="text-xs text-gray-500">{post.date}</p>
-                      </div>
-                    </div>
-                  ))}
+              <div className="relative">
+                <img
+                  src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743666036/destinations/arugam-bay-vibes.jpg"
+                  alt="East Coast Tour"
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+                <div className="absolute top-4 left-4 bg-white px-3 py-2 rounded-lg shadow-lg">
+                  <p className="text-sm font-semibold text-[#0F4C81]">From $899</p>
+                  <p className="text-xs text-gray-600">7-day package</p>
                 </div>
               </div>
             </div>
-          </aside>
-        </div>
+          </div>
+
+          {/* Tags */}
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <h3 className="font-semibold text-gray-900 mb-4">Tags</h3>
+            <div className="flex flex-wrap gap-2">
+              {sampleBlogPost.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors cursor-pointer"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Author Bio */}
+          <div className="mt-8 p-6 bg-gray-50 rounded-lg">
+            <h3 className="text-lg font-semibold mb-4">About the Author</h3>
+            <div className="flex items-start gap-4">
+              <img 
+                src={sampleBlogPost.author.avatar} 
+                alt={sampleBlogPost.author.name}
+                className="w-16 h-16 rounded-full object-cover"
+              />
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  {sampleBlogPost.author.name}
+                </h4>
+                <p className="text-gray-600">{sampleBlogPost.author.bio}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Related Articles */}
+          <div className="mt-12 pt-8 border-t border-gray-200">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Related Articles</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Ultimate Guide to Sri Lankan Cuisine",
+                  date: "March 12, 2024",
+                  image: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1747699564/resources/regional-food.jpg",
+                  excerpt: "Discover the flavors of Sri Lanka from street food to fine dining."
+                },
+                {
+                  title: "Wildlife Photography in Yala",
+                  date: "March 10, 2024", 
+                  image: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1744094008/activities/yala-leopard.jpg",
+                  excerpt: "Tips for capturing stunning wildlife photos in Sri Lanka's premier national park."
+                },
+                {
+                  title: "Tea Country Adventures",
+                  date: "March 5, 2024",
+                  image: "https://res.cloudinary.com/drsjp6bqz/image/upload/v1744007986/activities/ella-nine-arch-train.jpg",
+                  excerpt: "Journey through the misty hills and emerald tea plantations of central Sri Lanka."
+                }
+              ].map((post, index) => (
+                <div key={index} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                  <img 
+                    src={post.image} 
+                    alt={post.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-4">
+                    <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+                      {post.title}
+                    </h4>
+                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">{post.date}</span>
+                      <Link href="/blog" className="text-sm text-[#0F4C81] hover:underline">
+                        Read More
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </article>
       </div>
 
       {/* Back to Blog */}
       <div className="bg-gray-50 py-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 rounded-lg hover:shadow-md transition-all"
