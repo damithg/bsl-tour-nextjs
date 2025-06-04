@@ -7,6 +7,7 @@ interface CurrencyContextProps {
   currency: Currency;
   setCurrency: (currency: Currency) => void;
   currencies: Currency[];
+  formatPrice: (amount: number) => string;
 }
 
 const CurrencyContext = createContext<CurrencyContextProps | undefined>(undefined);
@@ -27,8 +28,12 @@ export function CurrencyProvider({
     { code: 'EUR', symbol: '€', flag: '/images/flags/eu.svg' },
   ];
 
+  const formatPrice = (amount: number): string => {
+    return `${currency.symbol}${amount.toLocaleString()}`;
+  };
+
   return (
-    <CurrencyContext.Provider value={{ currency, setCurrency, currencies }}>
+    <CurrencyContext.Provider value={{ currency, setCurrency, currencies, formatPrice }}>
       {children}
     </CurrencyContext.Provider>
   );
