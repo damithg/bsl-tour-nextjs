@@ -179,12 +179,15 @@ const sampleBlogPost: BlogPost = {
 export default async function BlogDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  // Eventually: fetch data from API using params.slug
+  // Await params for Next.js 15 compatibility
+  const { slug } = await params;
+  
+  // Eventually: fetch data from API using slug
   const blog = sampleBlogPost;
 
-  if (!blog || blog.slug !== params.slug) {
+  if (!blog || blog.slug !== slug) {
     notFound();
   }
 
@@ -267,7 +270,7 @@ export default async function BlogDetailPage({
             {/* Main Content */}
             <article className="lg:col-span-8">
               <div
-                className="prose prose-lg max-w-none prose-headings:font-['Playfair_Display'] prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-p:mb-6 prose-p:leading-relaxed prose-ul:mb-6 prose-li:mb-2"
+                className="prose prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-8 prose-h3:text-xl prose-h3:mt-10 prose-h3:mb-6 prose-p:mb-8 prose-p:leading-relaxed prose-ul:mb-8 prose-ul:mt-6 prose-li:mb-3"
                 dangerouslySetInnerHTML={{ __html: sampleBlogPost.content }}
               />
 
