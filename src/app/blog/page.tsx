@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -114,7 +113,7 @@ export default function BlogPage() {
   }, []);
 
   const categories = ['All', 'Destinations', 'Culture', 'Adventure', 'Photography'];
-  
+
   const filteredPosts = blogPosts.filter(post => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
@@ -124,7 +123,7 @@ export default function BlogPage() {
 
   const featuredPost = blogPosts.find(post => post.featured);
   const regularPosts = blogPosts.filter(post => !post.featured);
-  
+
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
   const startIndex = (currentPage - 1) * postsPerPage;
   const currentPosts = filteredPosts.slice(startIndex, startIndex + postsPerPage);
@@ -150,7 +149,7 @@ export default function BlogPage() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            
+
             {/* Main Content */}
             <div className="lg:col-span-2">
               {/* Featured Post */}
@@ -280,7 +279,7 @@ export default function BlogPage() {
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
-                  
+
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                     <button
                       key={page}
@@ -294,7 +293,7 @@ export default function BlogPage() {
                       {page}
                     </button>
                   ))}
-                  
+
                   <button
                     onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                     disabled={currentPage === totalPages}

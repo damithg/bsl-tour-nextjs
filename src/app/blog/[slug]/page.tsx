@@ -78,7 +78,7 @@ const sampleBlogPost: BlogPost = {
     <p>Sri Lanka's east coast is a hidden gem that offers some of the most breathtaking coastal experiences in the Indian Ocean. From pristine beaches to vibrant marine ecosystems, this region provides an authentic glimpse into the island's natural beauty and cultural heritage.</p>
 
     <div class="my-8">
-      <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743666036/destinations/arugam-bay-vibes.jpg" />
+      <img src="https://res.cloudinary.com/drsjp6bqz/image/upload/v1743666036/destinations/arugam-bay-vibes.jpg" class="w-full h-64 md:h-80 object-cover rounded-xl shadow-lg" />
       <p class="text-sm text-gray-600 text-center mt-3 italic">Golden sunrise over Arugam Bay's pristine coastline</p>
     </div>
 
@@ -151,9 +151,9 @@ const sampleBlogPost: BlogPost = {
     <h2>Best Time to Visit</h2>
     <p>The east coast enjoys a different monsoon pattern than the west and south coasts. The ideal time to visit is from April to September when the weather is dry and perfect for beach activities.</p>
 
-    <div class="bg-blue-50 p-6 rounded-xl my-8 border-l-4 border-blue-500">
-      <h3 class="font-bold text-lg mb-3 text-blue-900">Pro Tip: Weather Patterns</h3>
-      <p class="text-blue-800">Unlike the west coast, the east coast is at its best during the southwest monsoon period. Plan your visit between April and September for calm seas and sunny skies.</p>
+    <div class="bg-[#F8F5F0] p-6 rounded-xl my-8 border-l-4 border-[#0F4C81]">
+      <h3 class="font-bold text-lg mb-3 text-[#0F4C81]">Pro Tip: Weather Patterns</h3>
+      <p class="text-gray-700">Unlike the west coast, the east coast is at its best during the southwest monsoon period. Plan your visit between April and September for calm seas and sunny skies.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
@@ -175,9 +175,9 @@ const sampleBlogPost: BlogPost = {
       <p class="text-sm text-gray-600 text-center mt-3 italic">A suggested route for exploring Sri Lanka's magnificent east coast</p>
     </div>
 
-    <div class="bg-gradient-to-r from-teal-50 to-blue-50 p-6 rounded-xl my-8">
-      <h3 class="font-bold text-lg mb-3 text-teal-900">7-Day East Coast Itinerary</h3>
-      <ul class="text-teal-800 space-y-2">
+    <div class="bg-gradient-to-r from-[#F8F5F0] to-blue-50 p-6 rounded-xl my-8">
+      <h3 class="font-['Playfair_Display'] font-bold text-lg mb-3 text-[#0F4C81]">7-Day East Coast Itinerary</h3>
+      <ul class="text-gray-700 space-y-2">
         <li><strong>Days 1-3:</strong> Trincomalee - Temples, beaches, and whale watching</li>
         <li><strong>Days 4-5:</strong> Arugam Bay - Surfing and sunset vibes</li>
         <li><strong>Days 6-7:</strong> Batticaloa - Cultural immersion and lagoon exploration</li>
@@ -228,13 +228,13 @@ export default function BlogDetailPage() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative pt-20 pb-16 bg-gradient-to-br from-gray-50 to-blue-50">
+      <section className="relative pt-20 pb-16 bg-gradient-to-br from-[#F8F5F0] to-blue-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
           <nav className="flex text-gray-600 mb-6 pt-8" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-3">
               <li className="inline-flex items-center">
-                <Link href="/" className="inline-flex items-center text-sm font-medium hover:text-blue-600 transition-colors">
+                <Link href="/" className="inline-flex items-center text-sm font-medium hover:text-[#0F4C81] transition-colors">
                   <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                   Home
                 </Link>
@@ -242,7 +242,7 @@ export default function BlogDetailPage() {
               <li>
                 <div className="flex items-center">
                   <ChevronRight className="w-4 h-4 text-gray-400 mx-1" />
-                  <Link href="/blog" className="text-sm font-medium hover:text-blue-600 transition-colors">
+                  <Link href="/blog" className="text-sm font-medium hover:text-[#0F4C81] transition-colors">
                     Travel Journal
                   </Link>
                 </div>
@@ -269,7 +269,7 @@ export default function BlogDetailPage() {
               </span>
             </div>
 
-            <h1 className="font-['Playfair_Display'] text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+            <h1 className="font-['Playfair_Display'] text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
               {sampleBlogPost.title}
             </h1>
 
@@ -352,7 +352,7 @@ export default function BlogDetailPage() {
             <img
               src={sampleBlogPost.featuredImage}
               alt={sampleBlogPost.title}
-              className="w-full h-64 md:h-96 object-cover rounded-2xl"
+              className="w-full h-64 md:h-96 object-cover rounded-2xl shadow-lg"
             />
           </div>
         </div>
@@ -365,12 +365,12 @@ export default function BlogDetailPage() {
             {/* Main Content */}
             <article className="lg:col-span-8">
               <div
-                className="prose prose-lg max-w-none prose-headings:font-['Playfair_Display'] prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-p:mb-6 prose-p:leading-relaxed prose-ul:mb-6 prose-li:mb-2"
+                className="prose prose-lg max-w-none prose-headings:font-['Playfair_Display'] prose-headings:font-bold prose-headings:text-[#0F4C81] prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-p:mb-6 prose-p:leading-relaxed prose-ul:mb-6 prose-li:mb-2 prose-img:rounded-xl prose-img:shadow-md"
                 dangerouslySetInnerHTML={{ __html: sampleBlogPost.content }}
               />
 
               {/* Tour Promotion - Mid Content */}
-              <div className="my-12 p-8 bg-gradient-to-r from-blue-50 to-teal-50 border border-blue-200 rounded-2xl">
+              <div className="my-12 p-8 bg-gradient-to-r from-[#F8F5F0] to-blue-50 border border-gray-200 rounded-2xl">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                   <div>
                     <h3 className="font-['Playfair_Display'] text-2xl font-bold mb-4 text-[#0F4C81]">
@@ -405,14 +405,14 @@ export default function BlogDetailPage() {
                     <div className="flex flex-col sm:flex-row gap-3">
                       <Link
                         href="/tours"
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white font-medium hover:shadow-lg transition-all bg-[#0F4C81]"
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white font-medium hover:shadow-lg transition-all bg-[#0F4C81] hover:bg-[#0F4C81]/90"
                       >
                         View East Coast Tours
                         <ArrowRight className="w-4 h-4" />
                       </Link>
                       <Link
                         href="/contact"
-                        className="inline-flex items-center gap-2 px-6 py-3 border-2 border-[#0F4C81] rounded-lg font-medium hover:shadow-md transition-all text-[#0F4C81]"
+                        className="inline-flex items-center gap-2 px-6 py-3 border-2 border-[#0F4C81] rounded-lg font-medium hover:shadow-md transition-all text-[#0F4C81] hover:bg-[#0F4C81]/10"
                       >
                         Get Custom Quote
                       </Link>
@@ -451,7 +451,7 @@ export default function BlogDetailPage() {
               </div>
 
               {/* Author Bio */}
-              <div className="mt-12 p-6 bg-gray-50 rounded-xl">
+              <div className="mt-12 p-6 bg-[#F8F5F0] rounded-xl">
                 <h3 className="font-['Playfair_Display'] text-xl font-bold mb-4">
                   About the Author
                 </h3>
@@ -527,7 +527,7 @@ export default function BlogDetailPage() {
 
                   <Link
                     href="/tours"
-                    className="inline-flex items-center gap-2 px-4 py-3 mt-4 w-full justify-center rounded-lg text-white font-medium hover:shadow-lg transition-all bg-[#0F4C81]"
+                    className="inline-flex items-center gap-2 px-4 py-3 mt-4 w-full justify-center rounded-lg text-white font-medium hover:shadow-lg transition-all bg-[#0F4C81] hover:bg-[#0F4C81]/90"
                   >
                     View All East Coast Tours
                     <ArrowRight className="w-4 h-4" />
@@ -535,7 +535,7 @@ export default function BlogDetailPage() {
                 </div>
 
                 {/* Free Travel Guide CTA */}
-                <div className="bg-gradient-to-br from-blue-50 to-teal-50 p-6 rounded-xl border border-blue-200">
+                <div className="bg-gradient-to-br from-[#F8F5F0] to-blue-50 p-6 rounded-xl border border-gray-200">
                   <h3 className="font-['Playfair_Display'] text-xl font-bold mb-3 text-[#0F4C81]">
                     Free Sri Lanka Travel Guide
                   </h3>
@@ -565,7 +565,7 @@ export default function BlogDetailPage() {
                   </div>
                   <Link
                     href="/newsletter"
-                    className="inline-flex items-center gap-2 px-4 py-3 w-full justify-center rounded-lg text-white font-medium hover:shadow-lg transition-all bg-[#0F4C81]"
+                    className="inline-flex items-center gap-2 px-4 py-3 w-full justify-center rounded-lg text-white font-medium hover:shadow-lg transition-all bg-[#0F4C81] hover:bg-[#0F4C81]/90"
                   >
                     Download Free Guide
                     <ArrowRight className="w-4 h-4" />
@@ -614,7 +614,7 @@ export default function BlogDetailPage() {
                   </div>
                   <Link
                     href="/about"
-                    className="inline-flex items-center gap-2 px-4 py-2 mt-4 border-2 border-[#0F4C81] rounded-lg font-medium hover:shadow-md transition-all w-full justify-center text-[#0F4C81]"
+                    className="inline-flex items-center gap-2 px-4 py-2 mt-4 border-2 border-[#0F4C81] rounded-lg font-medium hover:shadow-md transition-all w-full justify-center text-[#0F4C81] hover:bg-[#0F4C81]/10"
                   >
                     Learn More About Us
                   </Link>
@@ -631,7 +631,7 @@ export default function BlogDetailPage() {
                   </p>
                   <Link
                     href="/newsletter"
-                    className="inline-flex items-center gap-2 px-4 py-3 w-full justify-center rounded-lg font-medium hover:shadow-md transition-all border-2 border-[#0F4C81] text-[#0F4C81]"
+                    className="inline-flex items-center gap-2 px-4 py-3 w-full justify-center rounded-lg font-medium hover:shadow-md transition-all border-2 border-[#0F4C81] text-[#0F4C81] hover:bg-[#0F4C81]/10"
                   >
                     Subscribe Now
                     <ArrowRight className="w-4 h-4" />
@@ -647,7 +647,7 @@ export default function BlogDetailPage() {
       </section>
 
       {/* Back to Blog */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 bg-[#F8F5F0]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Link
             href="/blog"
