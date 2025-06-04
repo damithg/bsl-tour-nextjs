@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -26,10 +25,10 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     setIsSubmitting(false);
     setSubmitted(true);
   };
@@ -44,7 +43,7 @@ export default function ContactPage() {
             { label: 'Contact' }
           ]}
         />
-        
+
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl text-center">
             <div className="bg-green-50 border border-green-200 rounded-lg p-8">
@@ -81,7 +80,7 @@ export default function ContactPage() {
       <section className="py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            
+
             {/* Contact Information */}
             <div className="space-y-8">
               <div>
@@ -149,7 +148,7 @@ export default function ContactPage() {
               <h3 className="font-['Playfair_Display'] text-2xl font-bold text-[#0F4C81] mb-6">
                 Send us a Message
               </h3>
-              
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -167,7 +166,7 @@ export default function ContactPage() {
                       placeholder="Your full name"
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                       Email Address *
@@ -200,7 +199,7 @@ export default function ContactPage() {
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
                       Subject *
