@@ -94,6 +94,9 @@ export interface TourCardDto {
   price: number;
   duration: number;
   isFeatured: boolean;
+  tags: string[];
+  rating: number | null;   
+  reviewCount: number;       
 }
 
 export interface DestinationCardDto {
