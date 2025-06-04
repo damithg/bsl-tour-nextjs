@@ -1,6 +1,25 @@
 // app/blog/[slug]/page.tsx
 
 import React from "react";
+
+// Blog post interface
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  featuredImage: string;
+  author: {
+    name: string;
+    avatar: string;
+    bio: string;
+  };
+  publishedAt: string;
+  readTime: number;
+  category: string;
+  tags: string[];
+}
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
