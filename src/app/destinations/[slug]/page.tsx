@@ -1,27 +1,24 @@
 // src/app/destinations/[slug]/page.tsx
 
 import { Metadata } from 'next';
-import { fetchDestinationBySlug } from '@/lib/api';
-import DestinationDetailView from '@/components/DestinationDetails/DestinationDetailView';
+import DestinationDetailView from '@/components/Destinations/DestinationDetailView';
+import { getDestinationDetailBySlug } from '@/lib/api/destinations/getDestinationDetailBySlug';
 
-interface DestinationDetailPageProps {
+interface PageProps {
   params: { slug: string };
 }
 
-export async function generateMetadata({ params }: DestinationDetailPageProps): Promise<Metadata> {
-  const destination = await fetchDestinationBySlug(params.slug);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const destination = await getDestinationDetailBySlug(params.slug);
   return {
-    title: destination?.Seo?.MetaTitle || destination?.Name,
-    description: destination?.Seo?.MetaDescription || destination?.ShortSummary,
+    title: destination?.name,
+    description: destination?.shortDescription,
   };
 }
 
-export default async function DestinationDetailPage({ params }: DestinationDetailPageProps) {
-  const destination = await fetchDestinationBySlug(params.slug);
-
-  if (!destination) {
-    return <div className="p-8 text-center text-gray-500">Destination not found</div>;
-  }
+export default async function DestinationDetailPage({ params }: PageProps) {
+  const destination = await getDestinationDetailBySlug(params.slug);
+  if (!destination) return <div>Destination not found</div>;
 
   return <DestinationDetailView destination={destination} />;
 }

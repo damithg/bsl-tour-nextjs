@@ -1,4 +1,5 @@
 import { API_BASE_URL } from './queryClient';
+import { ExperienceDto } from './types';
 
 // 🔧 Base raw types matching your real API response
 export interface RawTour {
@@ -118,6 +119,30 @@ export interface ExperienceCardDto {
   duration: string;
   price: number;
   tags: string[];
+}
+
+export interface DestinationDetailDto {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  imageUrl: string;
+  tags: string[];
+  highlights?: string[];
+  inclusions?: string[];
+  whatToBring?: string[];
+  location?: {
+    address?: string;
+    postcode?: string;
+    region?: string;
+    latitude?: number;
+    longitude?: number;
+  };
+  galleryImages?: {
+    baseUrl?: string;
+    medium?: string;
+    publicId?: string;
+  }[];
 }
 
 export interface ApiError extends Error {
