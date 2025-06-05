@@ -1,25 +1,26 @@
 'use client';
 
 import React, { createContext, useContext, useState } from 'react';
-import { Currency } from '@/lib/types';
 
-interface CurrencyContextProps {
+export type Currency = {
+  code: string;
+  symbol: string;
+  flag: string;
+};
+
+type CurrencyContextType = {
   currency: Currency;
   setCurrency: (currency: Currency) => void;
   currencies: Currency[];
   formatPrice: (amount: number) => string;
-}
+};
 
-const CurrencyContext = createContext<CurrencyContextProps | undefined>(undefined);
+const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
-export function CurrencyProvider({
-  initialCurrency,
-  children,
-}: {
-  initialCurrency: Currency;
-  children: React.ReactNode;
-}) {
-  const [currency, setCurrency] = useState(initialCurrency);
+export function CurrencyProvider({ initialCurrency, children }: { initialCurrency?: Currency; children: React.ReactNode }) {
+  const defaultCurrency: Currency = { code: 'USD', symbol: '$', flag: '/images/flags/us.svg' };
+
+  const [currency, setCurrency] = useState<Currency>(initialCurrency || defaultCurrency);
 
   const currencies: Currency[] = [
     { code: 'USD', symbol: '$', flag: '/images/flags/us.svg' },
@@ -42,7 +43,7 @@ export function CurrencyProvider({
 export function useCurrency() {
   const context = useContext(CurrencyContext);
   if (!context) {
-    throw new Error('useCurrency must be used within CurrencyProvider');
+    throw new Error('useCurrency must be used within a CurrencyProvider');
   }
   return context;
 }
