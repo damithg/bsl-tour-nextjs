@@ -1,53 +1,31 @@
-import './globals.css';
-import { Inter, Playfair_Display, Raleway } from 'next/font/google';
-import { Providers } from '@/components/Providers';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
-import { Currency } from '@/lib/types';
-import { cookies } from 'next/headers';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import Providers from '@/components/Providers';
+import '@/styles/globals.css';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
-const raleway = Raleway({ subsets: ['latin'], variable: '--font-raleway' });
+const inter = Inter({ subsets: ['latin'] });
 
-export const metadata = {
-  title: 'Best Sri Lanka Tours',
-  description: 'Discover the beauty of Sri Lanka with our curated tours',
+export const metadata: Metadata = {
+  title: 'Best Sri Lanka Tours - Luxury Travel Experiences',
+  description: 'Discover the enchanting beauty of Sri Lanka with our expertly crafted tours and personalized experiences.',
 };
 
-async function detectCurrencyServerSide(): Promise<Currency> {
-  const cookieStore = await cookies();
-  const currencyCookie = cookieStore.get('currency');
-
-  if (currencyCookie) {
-    try {
-      return JSON.parse(currencyCookie.value);
-    } catch (e) {}
-  }
-
-  return {
-    code: 'USD',
-    symbol: '$',
-    flag: '/images/flags/us.svg',
-  };
-}
-
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const initialCurrency = await detectCurrencyServerSide();
-
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className={`${inter.variable} ${playfair.variable} ${raleway.variable} antialiased`}>
-        <Providers initialCurrency={initialCurrency}>
-          <Navigation />
-          <main>{children}</main>
-          <Footer />  {/* ✅ Footer also inside Providers */}
+    <html lang="en">
+      <body className={inter.className}>
+        <Providers>
+          <Header />
+          <main className="pt-16">
+            {children}
+          </main>
+          <Footer />
         </Providers>
       </body>
     </html>

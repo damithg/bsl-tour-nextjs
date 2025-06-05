@@ -1,21 +1,22 @@
-import Hero from '@/components/Hero';
+
+import HeroSection from '@/components/shared/HeroSection';
+import FeaturedPackages from '@/components/showcase/FeaturedPackages';
+import DestinationShowcase from '@/components/showcase/DestinationShowcase';
+import ExperienceShowcase from '@/components/showcase/ExperienceShowcase';
 import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
-import FeaturedPackages from '@/components/FeaturedPackages';
-import DestinationShowcase from '@/components/DestinationShowcase';
-import ExperienceShowcase from '@/components/ExperienceShowcase';
 import CTASection from '@/components/CTASection';
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main>
-      <Hero />
+    <div className="min-h-screen">
+      <HeroSection />
       <FeaturedPackages />
       <DestinationShowcase />
       <ExperienceShowcase />
       <AboutSection />
-      <CTASection />
       <ContactSection />
-    </main>
+      <CTASection />
+    </div>
   );
 }
