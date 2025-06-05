@@ -32,6 +32,7 @@ module.exports = {
         sans: ['Raleway', 'sans-serif'],
         display: ['Playfair Display', 'serif'],
         body: ['Raleway', 'sans-serif'],
+        raleway: ['Raleway', 'sans-serif'],
       },
 
       animation: {
