@@ -1,7 +1,7 @@
 'use client';
 
 import { Mail, MapPin, BriefcaseBusiness } from 'lucide-react';
-import MinimalHero from '@/components/MinimalHero';
+import MinimalHero from '@/components/common/MinimalHero';
 
 export default function CareersPage() {
   // Sample job listings

@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import MinimalHero from '@/components/MinimalHero';
+import MinimalHero from '@/components/common/MinimalHero';
 
 export default function AboutPage() {
   // Our values

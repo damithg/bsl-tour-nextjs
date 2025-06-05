@@ -6,7 +6,7 @@ import { getAllExperiences, ExperienceCardDto } from '@/lib/api';
 import Link from 'next/link';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { ChevronRight, Clock, Star, Calendar, Users } from 'lucide-react';
-import MinimalHero from '@/components/MinimalHero';
+import MinimalHero from '@/components/common/MinimalHero';
 
 export default function ExperiencesPage() {
   const { currency } = useCurrency();

@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Mail, Check, ArrowRight, MapPin, Users, Globe, Calendar } from 'lucide-react';
-import MinimalHero from '@/components/MinimalHero';
+import MinimalHero from '@/components/common/MinimalHero';
 
 export default function NewsletterPage() {
   const [email, setEmail] = useState('');
