@@ -1,6 +1,6 @@
 
 import React from 'react';
-import MinimalHero from '@/components/MinimalHero';
+import MinimalHero from '@/components/common/MinimalHero';
 import { 
   FileText, 
   Calendar, 
