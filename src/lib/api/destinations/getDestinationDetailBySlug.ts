@@ -1,9 +1,10 @@
-import { API_BASE_URL } from '@/lib/shared/queryClient';
+import { apiClient } from '@/lib/api/shared/apiClient';
 import { DestinationDetailDto, RawDestination } from './types';
 import { mapDestinationDetailDto } from './mapDestinationDetailDto';
-import { apiClient } from '@/lib/api/shared/apiClient';
 
 export async function getDestinationDetailBySlug(slug: string): Promise<DestinationDetailDto> {
-  const data = await apiClient<RawDestination>(`${API_BASE_URL}/api/destinations/${slug}`);
-  return mapDestinationDetailDto(data);
+  const url = `/api/destinations/${slug}`;
+  const rawData = await apiClient<RawDestination>(url);
+  return mapDestinationDetailDto(rawData);
 }
+
