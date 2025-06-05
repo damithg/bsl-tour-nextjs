@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
-import { CurrencySelector } from '@/components/shared/CurrencySelector';
+import CurrencySelector from '@/components/shared/CurrencySelector';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

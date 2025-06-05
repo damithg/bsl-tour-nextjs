@@ -1,10 +1,8 @@
-'use client';
-
 import React, { useRef, useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useCurrency, Currency } from '@/contexts/CurrencyContext';
 
-export function CurrencySelector() {
+export default function CurrencySelector() {
   const { currency, setCurrency, currencies } = useCurrency();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -15,46 +13,85 @@ export function CurrencySelector() {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleOutsideClick = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
   }, []);
-
-  // Defensive render: if currency not yet loaded
-  if (!currency) {
-    return <div>Loading currency...</div>;
-  }
 
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        onClick={() => setIsOpen(prev => !prev)}
-        className="flex items-center gap-2 px-3 py-2 rounded bg-gray-100 hover:bg-gray-200 transition"
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-1.5 rounded-md py-2.5 px-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors h-10"
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
       >
-        <span className="text-lg">{currency.flag}</span>
-        <span className="font-semibold">{currency.code}</span>
-        <ChevronDown className="w-4 h-4" />
+        <div className="flex items-center gap-2">
+          {currency.flag ? (
+            <img 
+              src={currency.flag} 
+              alt={currency.code}
+              className="h-4 w-5 object-contain rounded-sm"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
+            />
+          ) : (
+            <span className="h-4 w-5 flex items-center justify-center bg-gray-100 rounded-sm text-[10px] font-bold">
+              {currency.code.substring(0, 2)}
+            </span>
+          )}
+          <span className="font-medium">{currency.code}</span>
+        </div>
+        <ChevronDown className="h-3.5 w-3.5 text-gray-500 ml-0.5" />
       </button>
 
       {isOpen && (
-        <ul className="absolute right-0 mt-2 bg-white border rounded shadow-md z-10">
-          {currencies.map(c => (
-            <li key={c.code}>
-              <button
-                onClick={() => handleSelect(c)}
-                className={`flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100 ${currency.code === c.code ? 'font-bold text-blue-600' : ''}`}
+        <div className="absolute right-0 z-10 mt-1 w-28 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <ul
+            className="py-1 max-h-60 overflow-auto"
+            role="listbox"
+            aria-labelledby="currency-selector"
+          >
+            {currencies.map((option) => (
+              <li
+                key={option.code}
+                className={`flex items-center px-3 py-3 text-sm cursor-pointer transition-colors
+                  ${currency.code === option.code 
+                    ? 'bg-gray-50 text-[#0F4C81] font-medium' 
+                    : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                role="option"
+                aria-selected={currency.code === option.code}
+                onClick={() => handleSelect(option)}
               >
-                <span>{c.flag}</span>
-                <span>{c.code}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
+                <div className="flex items-center gap-2 w-full justify-start">
+                  {option.flag ? (
+                    <img 
+                      src={option.flag} 
+                      alt={option.code}
+                      className="h-4 w-5 object-contain rounded-sm"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <span className="h-4 w-5 flex items-center justify-center bg-gray-100 rounded-sm text-[10px] font-bold">
+                      {option.code.substring(0, 2)}
+                    </span>
+                  )}
+                  <span className="font-medium">{option.code}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );
