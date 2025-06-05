@@ -220,6 +220,12 @@ export async function getAllDestinations(): Promise<DestinationCardDto[]> {
   return data.map(mapDestinationToDto);
 }
 
+export async function getDestinationBySlug(slug: string): Promise<DestinationCardDto> {
+  const res = await fetch(`${API_BASE_URL}/api/destinations/slug/${slug}`);
+  const data = await handleApiResponse<RawDestination>(res);
+  return mapDestinationToDto(data);
+}
+
 // --- Experiences ---
 export async function getFeaturedExperiences(): Promise<ExperienceCardDto[]> {
   const res = await fetch(`${API_BASE_URL}/api/experiences/featured`);
