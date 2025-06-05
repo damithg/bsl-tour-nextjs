@@ -1,14 +1,18 @@
-
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { useCurrency } from '@/contexts/CurrencyContext';
+import { useCurrency, Currency } from '@/contexts/CurrencyContext';
 
-export default function CurrencySelector() {
-  const { currentCurrency, setCurrency, currencies } = useCurrency();
+export function CurrencySelector() {
+  const { currency, setCurrency, currencies } = useCurrency();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handleSelect = (selected: Currency) => {
+    setCurrency(selected);
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -21,42 +25,36 @@ export default function CurrencySelector() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleCurrencyChange = (currencyCode: string) => {
-    setCurrency(currencyCode);
-    setIsOpen(false);
-  };
+  // Defensive render: if currency not yet loaded
+  if (!currency) {
+    return <div>Loading currency...</div>;
+  }
 
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-[#0F4C81] hover:text-[#D4AF37] transition-colors focus:outline-none focus:ring-2 focus:ring-[#0F4C81] focus:ring-opacity-20 rounded-md"
-        aria-expanded={isOpen}
-        aria-haspopup="true"
+        onClick={() => setIsOpen(prev => !prev)}
+        className="flex items-center gap-2 px-3 py-2 rounded bg-gray-100 hover:bg-gray-200 transition"
       >
-        <span className="text-lg">{currentCurrency.flag}</span>
-        <span>{currentCurrency.code}</span>
-        <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <span className="text-lg">{currency.flag}</span>
+        <span className="font-semibold">{currency.code}</span>
+        <ChevronDown className="w-4 h-4" />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-100 z-50">
-          <div className="py-1">
-            {currencies.map((currency) => (
+        <ul className="absolute right-0 mt-2 bg-white border rounded shadow-md z-10">
+          {currencies.map(c => (
+            <li key={c.code}>
               <button
-                key={currency.code}
-                onClick={() => handleCurrencyChange(currency.code)}
-                className={`flex items-center space-x-3 w-full px-4 py-2 text-sm text-left hover:bg-gray-50 transition-colors ${
-                  currentCurrency.code === currency.code ? 'bg-blue-50 text-[#0F4C81]' : 'text-gray-700'
-                }`}
+                onClick={() => handleSelect(c)}
+                className={`flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100 ${currency.code === c.code ? 'font-bold text-blue-600' : ''}`}
               >
-                <span className="text-lg">{currency.flag}</span>
-                <span className="font-medium">{currency.code}</span>
-                <span className="text-gray-500">{currency.symbol}</span>
+                <span>{c.flag}</span>
+                <span>{c.code}</span>
               </button>
-            ))}
-          </div>
-        </div>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );

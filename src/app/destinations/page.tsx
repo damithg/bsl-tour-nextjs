@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAllDestinations, DestinationCardDto } from '@/lib/api';
 import Link from 'next/link';
 import { MapPin, Clock, Star, Camera } from 'lucide-react';
-import MinimalHero from '@/components/MinimalHero';
+import MinimalHero from '@/components/common/MinimalHero';
 
 export default function DestinationsPage() {
   const { data: destinations = [], isLoading, error } = useQuery<DestinationCardDto[]>({
