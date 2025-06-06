@@ -37,7 +37,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <Header />
-          <main className="pt-16">{children}</main>
+          <main className="pt-24">{children}</main>
           <Footer />
         </Providers>
       </body>
