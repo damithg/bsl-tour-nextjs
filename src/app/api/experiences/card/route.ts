@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const API_BASE_URL = "https://bsl-tours-api-yqmyn.ondigitalocean.app";
 
 export async function GET(req: NextRequest) {
-  const upstreamUrl = `${API_BASE_URL}/api/tours/card`;
+  const upstreamUrl = `${API_BASE_URL}/api/experiences/card`;
   try {
     const response = await fetch(upstreamUrl, { cache: 'no-store' });
     if (!response.ok) {

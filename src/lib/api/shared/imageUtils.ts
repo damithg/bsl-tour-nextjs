@@ -1,12 +1,18 @@
-export function getOptimizedImage(image?: { publicId?: string; baseUrl?: string }, width: number = 800, height: number = 600): string {
-  if (!image || !image.publicId) return '';
+// src/lib/api/shared/imageUtils.ts
 
-  return `https://res.cloudinary.com/drsjp6bqz/image/upload/w_${width},h_${height},c_fill/${image.publicId}.jpg`;
+const CLOUDINARY_BASE = 'https://res.cloudinary.com/drsjp6bqz/image/upload';
+
+export function buildCloudinaryUrl(publicId: string, width: number, height: number): string {
+  return `${CLOUDINARY_BASE}/w_${width},h_${height},c_fill/${publicId}.jpg`;
+}
+
+export function getOptimizedImage(image?: { publicId?: string }, width = 800, height = 600): string {
+  if (!image?.publicId) return '';
+  return buildCloudinaryUrl(image.publicId, width, height);
 }
 
 export function getThumbnail(image?: { publicId?: string }): string {
-  if (!image?.publicId) return '';
-  return `https://res.cloudinary.com/drsjp6bqz/image/upload/w_400,h_300,c_fill/${image.publicId}.jpg`;
+  return getOptimizedImage(image, 400, 300);
 }
 
 export function getDefaultImage(image?: { baseUrl?: string }): string {

@@ -5,7 +5,7 @@ import { mapRawDestinationCardToDto } from './mapRawDestinationCardToDto';
 
 export async function getFeaturedDestinations(): Promise<DestinationCardDto[]> {
   const baseUrl = getApiBaseUrl();
-  const url = `${baseUrl}/api/destinations/featured/card`;
+  const url = `${baseUrl}/api/destinations/card/featured`;
   const raw = await apiClient<RawDestinationCard[]>(url);
   return raw.map(mapRawDestinationCardToDto);
 }

@@ -1,14 +1,24 @@
+export interface RawTourCard {
+  id: number;
+  slug: string;
+  duration?: string;
+  startingFrom?: number;
+  currency?: string;
+  card: {
+    header?: string;
+    body?: string;
+    tags?: string[];
+    image?: { publicId?: string; };
+  };
+}
 export interface TourCardDto {
   id: number;
-  title: string;
   slug: string;
+  title: string;
   description: string;
-  shortDescription: string;
   imageUrl: string;
+  duration: string;
   price: number;
-  duration: number;
-  isFeatured: boolean;
+  currency: string;
   tags: string[];
-  rating: number | null;
-  reviewCount: number;
 }

@@ -14,9 +14,9 @@ export default function HomePage() {
       <FeaturedPackages />
       <DestinationShowcase />
       <ExperienceShowcase />
-      <AboutSection />
-      <ContactSection />
+      <AboutSection />      
       <CTASection />
+      <ContactSection />
     </div>
   );
 }

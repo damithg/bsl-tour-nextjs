@@ -11,9 +11,23 @@ export interface RawDestinationCard {
       alt?: string;
       caption?: string;
       orientation?: string;
+      baseUrl?: string;
+      small?: string;
+      medium?: string;
+      large?: string;
     };
   };
 }
+
+export interface DestinationCardDto {
+  id: number;
+  slug: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  tags: string[];
+}
+
 
 // Dto for frontend consumption
 export interface DestinationCardDto {

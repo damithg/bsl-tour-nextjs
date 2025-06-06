@@ -2,7 +2,9 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { getAllExperiences, ExperienceCardDto } from '@/lib/api';
+import { getAllExperiences } from '@/lib/api/experiences/getAllExperiences';
+import type { ExperienceCardDto } from '@/lib/api/experiences/types';
+
 import Link from 'next/link';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { ChevronRight, Clock, Star, Calendar, Users } from 'lucide-react';
