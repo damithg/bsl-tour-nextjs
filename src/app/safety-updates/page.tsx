@@ -2,7 +2,7 @@
 'use client';
 
 import { AlertTriangle, Shield, Phone, Info, Calendar, MapPin } from 'lucide-react';
-import MinimalHero from '@/components/MinimalHero';
+import MinimalHero from '@/components/common/MinimalHero';
 
 export default function SafetyUpdatesPage() {
   const safetyUpdates = [
