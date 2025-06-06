@@ -48,10 +48,10 @@ export default function HeroSection() {
       ))}
 
       {/* Content */}
-      <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto -mt-16"></div>
+      <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto -mt-16">
         <h1 className="font-['Playfair_Display'] text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
           Discover the Magic of{' '}
-          <span style={{ color: COLORS.secondary }}>Sri Lanka</span>
+          <span style={{ color: COLORS.secondary }}>Sri Lanka</span></h1>
         </h1>
         <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto leading-relaxed">
           Experience luxury tours, cultural wonders, and breathtaking landscapes in the Pearl of the Indian Ocean
