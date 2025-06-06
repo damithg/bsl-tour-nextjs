@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const API_BASE_URL = "https://bsl-tours-api-yqmyn.ondigitalocean.app";
 
 export async function GET(
-  req: NextRequest,
+  request: NextRequest,
   context: { params: { slug: string } }
 ) {
   const { slug } = context.params;

@@ -1,475 +1,269 @@
-
 'use client';
 
-import { useState, useMemo, useEffect, useRef } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { useCurrency } from '@/contexts/CurrencyContext';
-import { 
-  Calendar, 
-  Clock, 
-  Map, 
-  Users, 
-  DollarSign, 
-  Award, 
-  Check, 
-  X, 
-  ChevronRight, 
-  ChevronLeft, 
-  Heart, 
-  Home, 
-  MapPin, 
-  Star 
-} from 'lucide-react';
+import { useEffect, useState, useCallback, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useCurrency, formatPrice } from "@/contexts/CurrencyContext";
+//import { ScrollToTop } from "@/components/ScrollToTop";
+import { Skeleton } from "@/components/ui/skeleton";
+//import { StarRating } from "@/components/StarRating";
+import DetailHero from "@/components/common/DetailHero";
+//import ContactForm from "@/components/ContactForm";
+//import EnhancedItineraryItem from "@/components/EnhancedItineraryItem";
+//import AsymmetricalGallery from "@/components/AsymmetricalGallery";
+//import AnimatedRouteMap from "@/components/AnimatedRouteMap";
+import { Button } from "@/components/ui/button";
+import { Info, Map, Camera, List, Check, X, Calendar, Clock, Compass, Users, PiggyBank, ChevronDown, Phone, Mail } from "lucide-react";
 
-// Tour data interface
+interface TourImage {
+  publicId?: string;
+  alt?: string;
+  caption?: string;
+  orientation?: string;
+  baseUrl?: string;
+  small?: string;
+  medium?: string;
+  large?: string;
+}
+
+interface ItineraryDay {
+  day: number;
+  title: string;
+  description: string;
+  image?: TourImage;
+}
+
+interface MapPoint {
+  id: number | string;
+  name: string;
+  x: number;
+  y: number;
+  day?: number;
+}
+
 interface TourData {
   id: number;
-  documentId?: string;
-  name: string;
-  title?: string;
   slug: string;
-  summary: string;
-  description?: string;
+  name: string;
   duration: string;
   startingFrom: number;
   currency: string;
-  inclusions: string[];
-  exclusions: string[];
-  accommodationInfo?: string;
-  operatedBy?: string;
-  category?: string;
-  tags?: string[];
-  minGroupSize?: number;
-  maxGroupSize?: number;
-  heroImage?: {
-    publicId?: string;
-    alt?: string;
-    medium?: string;
-    small?: string;
-    large?: string;
-    baseUrl?: string;
-  };
-  cardImage?: {
-    publicId?: string;
-    alt?: string;
-    medium?: string;
-    small?: string;
-    large?: string;
-    baseUrl?: string;
-  };
-  galleryImages?: Array<{
-    publicId?: string;
-    alt?: string;
-    medium?: string;
-    small?: string;
-    large?: string;
-    baseUrl?: string;
-  }>;
-  itineraryDays?: Array<{
-    day: number;
-    title: string;
-    description: string;
-    accommodation?: string;
-    imageUrl?: string;
-  }>;
-  tourHighlights?: string[];
-  reviews?: Array<{
-    id: number;
-    reviewer: string;
-    country: string;
-    comment: string;
-    rating: number;
-  }>;
+  summary: string;
+  highlights?: string[];
+  inclusions?: string[];
+  exclusions?: string[];
+  heroImage?: TourImage;
+  galleryImages?: TourImage[];
+  itinerary?: ItineraryDay[];
+  mapImage?: string;
+  mapPoints?: MapPoint[];
 }
 
-export default function TourDetailPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const { formatPrice } = useCurrency();
-  
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [isInWishlist, setIsInWishlist] = useState(false);
+interface Props {
+  params: { slug: string };
+}
 
-  // Fetch tour data
+export default function TourDetailPage({ params }: Props) {
+  const slug = params.slug;
+  const { currency } = useCurrency();
+
+  const [activeDay, setActiveDay] = useState(1);
+  const [activeSection, setActiveSection] = useState('overview');
+
+  const overviewRef = useRef<HTMLDivElement>(null);
+  const itineraryRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const inclusionsRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+
   const { data: tourData, isLoading, error } = useQuery<TourData>({
     queryKey: ['tour', slug],
     queryFn: async () => {
-      const response = await fetch(`https://bsl-dg-adf2awanb4etgsap.uksouth-01.azurewebsites.net/api/tours/${slug}`);
-      if (!response.ok) {
-        throw new Error('Tour not found');
+      const res = await fetch(`/api/tours/${slug}`);
+      if (!res.ok) {
+        throw new Error("Failed to fetch tour");
       }
-      return response.json();
+      return res.json();
     },
-    enabled: !!slug,
+    enabled: !!slug
   });
 
-  // Get hero image URL
-  const heroImageUrl = useMemo(() => {
-    if (!tourData) return '';
-    
-    if (tourData.heroImage) {
-      return tourData.heroImage.large || 
-        tourData.heroImage.medium || 
-        tourData.heroImage.small || 
-        tourData.heroImage.baseUrl || 
-        (tourData.heroImage.publicId ? `https://res.cloudinary.com/drsjp6bqz/image/upload/${tourData.heroImage.publicId}.jpg` : '');
-    } else if (tourData.cardImage) {
-      return tourData.cardImage.large || 
-        tourData.cardImage.medium || 
-        tourData.cardImage.small || 
-        tourData.cardImage.baseUrl || 
-        (tourData.cardImage.publicId ? `https://res.cloudinary.com/drsjp6bqz/image/upload/${tourData.cardImage.publicId}.jpg` : '');
+  useEffect(() => {
+    if (tourData?.itinerary && tourData.itinerary.length > 0) {
+      setActiveDay(tourData.itinerary[0].day);
     }
-    
-    return '';
   }, [tourData]);
 
-  // Process gallery images
-  const galleryImages = useMemo(() => {
-    if (!tourData) return [];
-    
-    const images: string[] = [];
-    
-    if (tourData.galleryImages && Array.isArray(tourData.galleryImages)) {
-      tourData.galleryImages.forEach(img => {
-        const imgUrl = img.large || img.medium || img.small || img.baseUrl || 
-          (img.publicId ? `https://res.cloudinary.com/drsjp6bqz/image/upload/${img.publicId}.jpg` : '');
-        if (imgUrl) images.push(imgUrl);
-      });
-    }
-    
-    if (images.length === 0 && heroImageUrl) {
-      images.push(heroImageUrl);
-    }
-    
-    return images;
-  }, [tourData, heroImageUrl]);
+  // Gallery preparation
+  const galleryImages = tourData?.galleryImages?.map(img => ({
+    ...img,
+    url: img.large || img.medium || img.small || img.baseUrl,
+  })) || [];
 
-  // Handle image navigation
-  const handleImageNav = (direction: 'prev' | 'next') => {
-    if (direction === 'prev') {
-      setActiveImageIndex((prev) => (prev === 0 ? galleryImages.length - 1 : prev - 1));
-    } else {
-      setActiveImageIndex((prev) => (prev === galleryImages.length - 1 ? 0 : prev + 1));
-    }
-  };
+  if (tourData?.heroImage && !galleryImages.some(img => img.publicId === tourData.heroImage?.publicId)) {
+    galleryImages.unshift({
+      ...tourData.heroImage,
+      url: tourData.heroImage.large || tourData.heroImage.medium || tourData.heroImage.small || tourData.heroImage.baseUrl
+    });
+  }
 
-  // Handle wishlist toggle
-  const handleAddToWishlist = () => {
-    setIsInWishlist(!isInWishlist);
-  };
-
-  // Format rating
-  const formatRating = (rating: number | null) => {
-    if (rating === null) return null;
-    
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
-    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    
-    return (
-      <div className="text-amber-400 flex">
-        {Array.from({length: fullStars}, (_, i) => (
-          <Star key={`full-${i}`} className="w-4 h-4 fill-current" />
-        ))}
-        {hasHalfStar && <Star className="w-4 h-4 fill-current opacity-50" />}
-        {Array.from({length: emptyStars}, (_, i) => (
-          <Star key={`empty-${i}`} className="w-4 h-4" />
-        ))}
-      </div>
-    );
-  };
-
-  // Default highlights
-  const defaultHighlights = [
-    "Visit UNESCO World Heritage sites",
-    "Private transportation and guide",
-    "Luxury accommodations",
-    "Authentic cultural experiences",
-    "24/7 support during your journey"
-  ];
-
-  // Default inclusions
-  const defaultInclusions = [
-    "Luxury accommodations throughout the journey",
-    "Private transportation in an air-conditioned vehicle",
-    "English-speaking chauffeur guide",
-    "Daily breakfast and selected meals",
-    "All entrance fees to sites mentioned in the itinerary",
-    "Welcome and farewell dinners",
-    "24/7 concierge support",
-    "All government taxes"
-  ];
-
-  // Default exclusions
-  const defaultExclusions = [
-    "International airfare",
-    "Personal expenses",
-    "Meals not mentioned in the itinerary",
-    "Travel insurance",
-    "Visa fees",
-    "Optional activities"
-  ];
-
-  // Loading state
+  // Loading State
   if (isLoading) {
     return (
-      <main className="pt-28 pb-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-8">
-            <div className="w-full h-96 bg-gray-200 animate-pulse rounded-lg"></div>
-            <div className="flex flex-col gap-4">
-              <div className="h-10 bg-gray-200 animate-pulse rounded w-1/2"></div>
-              <div className="h-6 bg-gray-200 animate-pulse rounded w-1/4"></div>
-              <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
-              <div className="h-4 bg-gray-200 animate-pulse rounded"></div>
-              <div className="h-4 bg-gray-200 animate-pulse rounded w-3/4"></div>
-            </div>
-          </div>
-        </div>
-      </main>
+      <div className="container mx-auto px-4 py-20">
+        <Skeleton className="h-[300px] w-full mb-10" />
+        <Skeleton className="h-10 w-1/3 mb-4" />
+        <Skeleton className="h-5 w-2/3 mb-3" />
+      </div>
     );
   }
 
-  // Error state
+  // Error State
   if (error || !tourData) {
     return (
-      <main className="pt-28 pb-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="max-w-xl mx-auto">
-            <h1 className="font-['Playfair_Display'] text-3xl font-bold text-[#0F4C81] mb-4">Tour Not Found</h1>
-            <p className="text-lg text-gray-600 mb-6">We couldn't find the tour you're looking for.</p>
-            <Link href="/tours" className="inline-flex items-center bg-[#0F4C81] text-white px-6 py-3 rounded-lg hover:bg-[#0F4C81]/90 transition-colors">
-              View All Sri Lanka Tours
-            </Link>
-          </div>
-        </div>
-      </main>
+      <div className="container mx-auto px-4 py-20 text-center">
+        <h1 className="text-3xl font-bold text-red-500 mb-4">Tour Not Found</h1>
+        <Button variant="default" onClick={() => window.location.href = "/tours"}>
+          Back to Tours
+        </Button>
+      </div>
     );
   }
 
   return (
-    <main>
-      {/* Hero Section */}
-      <section className="relative h-[380px]">
-        <div 
-          className="absolute inset-0 w-full h-full bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImageUrl || '/images/tours/scenic-sri-lanka-hero.jpg'})` }}
-        >
-          <div className="absolute inset-0 bg-black/40"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-28">
-          {/* Breadcrumb */}
-          <nav className="flex text-white/90 mb-6" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="inline-flex items-center text-sm font-medium hover:text-white">
-                  <Home className="w-4 h-4 mr-2" />
-                  Home
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <ChevronRight className="w-5 h-5 text-white/60" />
-                  <Link href="/tours" className="ml-1 text-sm font-medium hover:text-white">
-                    Sri Lanka Tours
-                  </Link>
-                </div>
-              </li>
-              <li aria-current="page">
-                <div className="flex items-center">
-                  <ChevronRight className="w-5 h-5 text-white/60" />
-                  <span className="ml-1 text-sm font-medium text-white/80">
-                    {tourData.title || tourData.name}
-                  </span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-          
-          {/* Tour Title and Info */}
-          <div className="text-white">
-            <h1 className="font-['Playfair_Display'] text-2xl md:text-3xl font-bold text-white mb-6 leading-tight">
-              {tourData.title || tourData.name}
-            </h1>
-            
-            <div className="flex flex-wrap gap-4 mb-4">
-              <div className="flex items-center text-white/80">
-                <Calendar className="w-4 h-4 mr-2" />
-                <span className="text-sm">{tourData.duration} Days</span>
-              </div>
-              <div className="flex items-center text-white/80">
-                <Users className="w-4 h-4 mr-2" />
-                <span className="text-sm">Private Tour</span>
-              </div>
-              <div className="flex items-center text-white/80">
-                <Star className="w-4 h-4 mr-2 text-amber-400" />
-                <span className="text-sm">5.0 (23 reviews)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Main Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Main Content - Left Column */}
-          <div className="lg:w-2/3">
-            {/* Gallery */}
-            <div className="relative mb-8 overflow-hidden rounded-lg">
-              {galleryImages.length > 0 ? (
-                <>
-                  <div className="w-full h-[400px] md:h-[500px] relative overflow-hidden">
-                    <img 
-                      src={galleryImages[activeImageIndex]}
-                      alt={`${tourData.title || tourData.name} - Gallery image ${activeImageIndex + 1}`}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                  {galleryImages.length > 1 && (
-                    <div className="absolute inset-0 flex items-center justify-between px-4">
-                      <button 
-                        onClick={() => handleImageNav('prev')}
-                        className="bg-black/30 text-white p-2 rounded-full hover:bg-black/50 transition-colors"
-                      >
-                        <ChevronLeft className="w-6 h-6" />
-                      </button>
-                      <button 
-                        onClick={() => handleImageNav('next')}
-                        className="bg-black/30 text-white p-2 rounded-full hover:bg-black/50 transition-colors"
-                      >
-                        <ChevronRight className="w-6 h-6" />
-                      </button>
-                    </div>
-                  )}
-                  <div className="absolute bottom-4 right-4 bg-black/50 text-white text-sm px-3 py-1 rounded-full">
-                    {activeImageIndex + 1} / {galleryImages.length}
-                  </div>
-                </>
-              ) : (
-                <div className="w-full h-[400px] bg-gray-200 flex items-center justify-center">
-                  <p className="text-gray-500">No gallery images available</p>
-                </div>
-              )}
-            </div>
-            
-            {/* Tour Overview */}
-            <div className="mb-8">
-              <h2 className="font-['Playfair_Display'] text-2xl font-bold text-[#0F4C81] mb-4">Tour Overview</h2>
-              <div className="prose prose-lg max-w-none text-gray-600">
-                <p>{tourData.description || tourData.summary}</p>
-              </div>
-            </div>
-            
-            {/* Tour Highlights */}
-            <div className="mb-8 bg-[#0F4C81]/5 p-6 rounded-lg">
-              <h2 className="font-['Playfair_Display'] text-xl font-bold text-[#0F4C81] mb-4 flex items-center">
-                <Award className="w-5 h-5 mr-2" />
-                Tour Highlights
-              </h2>
-              <ul className="grid md:grid-cols-2 gap-3">
-                {(tourData.tourHighlights || defaultHighlights).map((highlight, index) => (
-                  <li key={index} className="flex items-start">
+    <div className="pb-20 bg-gray-50">
+      {/*<ScrollToTop />*/}
+
+      {/* Hero */}
+      <DetailHero
+        imageUrl={tourData.heroImage?.large || tourData.heroImage?.baseUrl}
+        imageAlt={tourData.heroImage?.alt || tourData.name}
+        title={tourData.name}
+        subtitle={tourData.heroImage?.caption}
+        breadcrumbItems={[
+          { label: "Tours", href: "/tours" },
+          { label: tourData.name, isCurrentPage: true }
+        ]}
+        rating={5}
+        reviewCount={50}
+        duration={tourData.duration}
+        overlayOpacity={0}
+        aspectRatio="wide"
+      />
+
+      <div className="container mx-auto px-4 py-12">
+        <div className="flex flex-col lg:flex-row gap-12">
+          {/* Left Content */}
+          <div className="lg:w-8/12">
+            <section className="mb-12">
+              <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">Overview</h2>
+              <p className="text-lg text-gray-600">{tourData.summary}</p>
+
+              {/* Highlights */}
+              {tourData.highlights && tourData.highlights.length > 0 ? (
+                tourData.highlights.map((highlight, idx) => (
+                  <li key={idx} className="flex items-start">
                     <Check className="w-5 h-5 text-[#0F4C81]/80 mr-2 mt-1" />
                     <span>{highlight}</span>
                   </li>
-                ))}
-              </ul>
-            </div>
-            
-            {/* Inclusions/Exclusions */}
-            <div className="mb-8">
-              <div className="grid md:grid-cols-2 gap-8">
+                ))
+              ) : (
+                <li className="text-gray-500">No highlights specified.</li>
+              )}
+
+            </section>
+
+            {/* Itinerary 
+            {tourData.itinerary?.length > 0 && (
+              <section className="mb-12">
+                <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">Itinerary</h2>
+                <div className="space-y-6">
+                  {tourData.itinerary.map(day => (
+                    <EnhancedItineraryItem key={day.day} day={day} />
+                  ))}
+                </div>
+              </section>
+            )}
+            */}
+            {/* Gallery */}
+            {galleryImages.length > 0 && (
+              <section className="mb-12">
+                <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">Gallery</h2>
+                {/*<AsymmetricalGallery images={galleryImages} />*/}
+              </section>
+            )}
+
+            {/* Inclusions / Exclusions */}
+            <section className="mb-12">
+              <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">Tour Details</h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Inclusions */}
                 <div>
-                  <h3 className="font-['Playfair_Display'] text-lg font-bold text-[#0F4C81] mb-4 flex items-center">
-                    <Check className="w-5 h-5 mr-2 text-green-600" />
-                    Package Includes
+                  <h3 className="font-semibold flex items-center mb-4">
+                    <Check className="w-5 h-5 mr-2 text-green-600" /> Inclusions
                   </h3>
                   <ul className="space-y-2">
-                    {(tourData.inclusions?.length > 0 ? tourData.inclusions : defaultInclusions).map((item, index) => (
-                      <li key={index} className="flex items-start">
-                        <Check className="w-4 h-4 text-green-600 mr-2 mt-1" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
+                    {tourData.inclusions && tourData.inclusions.length > 0 ? (
+                      tourData.inclusions.map((item, idx) => (
+                        <li key={idx} className="flex items-start">
+                          <Check className="w-4 h-4 text-green-600 mr-2 mt-1" />
+                          {item}
+                        </li>
+                      ))
+                    ) : (
+                      <li className="text-gray-500">No inclusions specified.</li>
+                    )}
                   </ul>
+
                 </div>
-                
+
                 {/* Exclusions */}
                 <div>
-                  <h3 className="font-['Playfair_Display'] text-lg font-bold text-[#0F4C81] mb-4 flex items-center">
-                    <X className="w-5 h-5 mr-2 text-red-500" />
-                    Package Excludes
+                  <h3 className="font-semibold flex items-center mb-4">
+                    <X className="w-5 h-5 mr-2 text-red-600" /> Exclusions
                   </h3>
                   <ul className="space-y-2">
-                    {(tourData.exclusions?.length > 0 ? tourData.exclusions : defaultExclusions).map((item, index) => (
-                      <li key={index} className="flex items-start">
-                        <X className="w-4 h-4 text-red-500 mr-2 mt-1" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
+                    {tourData.exclusions && tourData.exclusions.length > 0 ? (
+                      tourData.exclusions.map((item, idx) => (
+                        <li key={idx} className="flex items-start">
+                          <X className="w-4 h-4 text-red-500 mr-2 mt-1" />
+                          <span>{item}</span>
+                        </li>
+                      ))
+                    ) : (
+                      <li className="text-gray-500">No exclusions specified.</li>
+                    )}
                   </ul>
                 </div>
               </div>
-            </div>
+            </section>
+
+            {/* Contact */}
+            <section>
+              <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">Request a Quote</h2>
+              {/*<ContactForm tourName={tourData.name} /> */}
+            </section>
           </div>
-          
-          {/* Sidebar - Right Column */}
-          <div className="lg:w-1/3">
-            {/* Booking Card */}
-            <div className="border border-gray-200 rounded-lg p-6 mb-8 sticky top-24">
-              {/* Price */}
+
+          {/* Sidebar */}
+          <div className="lg:w-4/12">
+            <div className="sticky top-24 bg-white p-6 rounded-lg shadow">
               <div className="mb-4">
-                <div className="text-sm text-gray-500">Starting from</div>
+                <div className="text-sm text-gray-500">Starting From</div>
                 <div className="text-3xl font-bold text-[#0F4C81]">
-                  {formatPrice(tourData.startingFrom || 0)}
+                  {formatPrice(tourData.startingFrom, currency)}
                 </div>
                 <div className="text-sm text-gray-500">per person</div>
               </div>
-              
-              {/* Quick Info */}
-              <div className="border-t border-b border-gray-200 py-4 mb-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-2 text-[#0F4C81]/70" />
-                    <span className="text-sm">{tourData.duration} Days</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Users className="w-4 h-4 mr-2 text-[#0F4C81]/70" />
-                    <span className="text-sm">Private Tour</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Actions */}
-              <div className="space-y-3">
-                <Link href="/contact" className="w-full bg-[#0F4C81] text-white px-6 py-3 rounded-lg hover:bg-[#0F4C81]/90 transition-colors flex items-center justify-center">
-                  <DollarSign className="w-4 h-4 mr-2" />
-                  Request Quote
-                </Link>
-                <button 
-                  onClick={handleAddToWishlist}
-                  className="w-full border border-[#0F4C81] text-[#0F4C81] px-6 py-3 rounded-lg hover:bg-[#0F4C81]/5 transition-colors flex items-center justify-center"
-                >
-                  <Heart className={`w-4 h-4 mr-2 ${isInWishlist ? 'fill-current' : ''}`} />
-                  {isInWishlist ? 'Saved to Wishlist' : 'Add to Wishlist'}
-                </button>
-              </div>
-              
-              {/* Operated By */}
-              <div className="mt-6 text-center text-sm text-gray-500">
-                <p>Operated by <strong>{tourData.operatedBy || "Best Sri Lanka Tours"}</strong></p>
-              </div>
+
+              <Button className="w-full mt-4" onClick={() => contactRef.current?.scrollIntoView({ behavior: 'smooth' })}>
+                Request Quote
+              </Button>
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
