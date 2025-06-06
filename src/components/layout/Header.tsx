@@ -30,7 +30,7 @@ export default function Header() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <header className={`fixed w-full bg-white bg-opacity-95 shadow-md z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
+    <header className={`fixed w-full bg-white/95 backdrop-blur-sm shadow-md z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         <Link href="/">
           <Image src="/images/bsl_logo.png" alt="Best Sri Lanka Tours Logo" width={150} height={50} priority />
