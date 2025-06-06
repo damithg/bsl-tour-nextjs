@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
@@ -18,7 +17,7 @@ export default function ExperiencesPage() {
     queryFn: getAllExperiences,
   });
 
-  
+
 
   // Render star rating
   const renderStars = (rating: number) => {
@@ -46,7 +45,7 @@ export default function ExperiencesPage() {
         ]}
       />
 
-      
+
 
       {/* ✅ Experience Listing */}
       <section className="py-20 bg-white">
@@ -87,7 +86,7 @@ export default function ExperiencesPage() {
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                    
+
                     {/* Duration tag */}
                     <div className="absolute top-4 right-4 bg-[#D4AF37]/90 text-white px-3 py-1 rounded-full text-sm font-semibold">
                       <Clock className="inline w-3 h-3 mr-1" /> {experience.duration}
@@ -109,7 +108,7 @@ export default function ExperiencesPage() {
 
                   <div className="p-6">
                     <h3 className="font-['Playfair_Display'] text-xl font-semibold mb-3">{experience.title}</h3>
-                    
+
                     {/* Rating - show if available */}
                     <div className="flex items-center mb-4">
                       <div className="flex mr-2">
@@ -119,7 +118,7 @@ export default function ExperiencesPage() {
                         4.8 (125 reviews)
                       </span>
                     </div>
-                    
+
                     <p className="text-gray-700 mb-4 line-clamp-2">{experience.description}</p>
 
                     <div className="flex justify-between items-center">
@@ -150,7 +149,7 @@ export default function ExperiencesPage() {
           <div className="bg-white rounded-2xl overflow-hidden shadow-xl relative border border-gray-100">
             {/* Subtle decorative element */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-full -translate-y-16 translate-x-16"></div>
-            
+
             <div className="flex flex-col md:flex-row">
               {/* Image Side */}
               <div className="md:w-2/5 relative min-h-[400px] md:min-h-[500px]">
@@ -180,7 +179,7 @@ export default function ExperiencesPage() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Content Side */}
               <div className="md:w-3/5 p-8 md:p-12 lg:p-16 relative">
                 <div className="max-w-2xl">
@@ -195,7 +194,7 @@ export default function ExperiencesPage() {
                       Our expert travel designers craft completely personalized journeys that reflect your unique interests, travel style, and dreams. Every detail is thoughtfully curated just for you.
                     </p>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 gap-6 mb-10">
                     <div className="bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors">
                       <div className="flex items-start space-x-4">
@@ -210,7 +209,7 @@ export default function ExperiencesPage() {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors">
                       <div className="flex items-start space-x-4">
                         <div className="w-12 h-12 rounded-xl bg-[#0F4C81]/10 flex items-center justify-center flex-shrink-0">
@@ -225,7 +224,7 @@ export default function ExperiencesPage() {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link 
                       href="/contact" 
