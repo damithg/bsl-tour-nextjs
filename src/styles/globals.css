@@ -29,6 +29,8 @@
 
     /* Optional spacing */
     --radius: 0.5rem;
+
+    --header-height: 96px;
   }
 
   /* Dark mode (optional, if you want later) */
@@ -80,3 +82,7 @@
 .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; overflow: hidden; -webkit-box-orient: vertical; }
 .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden; -webkit-box-orient: vertical; }
 .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; overflow: hidden; -webkit-box-orient: vertical; }
+
+.pt-header {
+  padding-top: var(--header-height);
+}

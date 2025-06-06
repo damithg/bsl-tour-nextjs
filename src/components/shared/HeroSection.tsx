@@ -26,12 +26,9 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen pt-24 flex items-center justify-center overflow-hidden">
       {heroImages.map((image, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
-        >
+        <div key={index} className={`absolute inset-0 transition-opacity duration-1000 ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}>
           <img src={image} alt={`Sri Lanka ${index + 1}`} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/40" />
         </div>
@@ -51,12 +48,6 @@ export default function HeroSection() {
           <Link href="/destinations" className="px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white/10 rounded-lg transition-colors duration-300 font-semibold text-lg">
             View Destinations
           </Link>
-        </div>
-      </div>
-
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white/50 rounded-full mt-2"></div>
         </div>
       </div>
     </section>

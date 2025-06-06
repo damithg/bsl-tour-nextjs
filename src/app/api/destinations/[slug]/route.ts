@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const API_BASE_URL = "https://bsl-tours-api-yqmyn.ondigitalocean.app";
 
-export async function GET(req: NextRequest) {
-  const url = new URL(req.url);
-  const slug = url.pathname.split('/').slice(-1)[0];  // safely extract slug from URL
-
+export async function GET(
+  req: NextRequest,
+  context: { params: { slug: string } }
+) {
+  const { slug } = context.params;
   const upstreamUrl = `${API_BASE_URL}/api/destinations/${slug}`;
 
   try {
