@@ -2,11 +2,14 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { getAllTours, TourCardDto } from '@/lib/api';
 import Link from 'next/link';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { ChevronRight, Clock, Star, MapPin } from 'lucide-react';
-import MinimalHero from '@/components/MinimalHero';
+import MinimalHero from '@/components/common/MinimalHero';
+
+import { getAllTours } from '@/lib/api/tours/getAllTours';
+import type { TourCardDto } from '@/lib/api/tours/types';
+
 
 export default function ToursPage() {
   const { currency } = useCurrency();

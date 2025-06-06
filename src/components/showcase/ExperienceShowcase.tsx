@@ -5,7 +5,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ChevronRight, Clock, Users, Star, ArrowRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { getFeaturedExperiences, ExperienceCardDto } from '@/lib/api';
+import { getFeaturedExperiences } from '@/lib/api/experiences/getFeaturedExperiences';
+import type { ExperienceCardDto } from '@/lib/api/experiences/types';
 
 const COLORS = {
   primary: '#0F4C81',

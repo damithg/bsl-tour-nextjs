@@ -1,3 +1,31 @@
+//Raw data types from API
+export interface RawDestinationCard {
+  id: number;
+  slug: string;
+  card: {
+    header?: string;
+    body?: string;
+    tags?: string[];
+    image?: {
+      publicId?: string;
+      alt?: string;
+      caption?: string;
+      orientation?: string;
+    };
+  };
+}
+
+// Dto for frontend consumption
+export interface DestinationCardDto {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  imageUrl: string;
+  tags: string[];
+}
+
+
 export interface RawDestination {
   id: number;
   documentId: string;

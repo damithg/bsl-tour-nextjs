@@ -1,5 +1,3 @@
-
-// API Error wrapper
 export class ApiError extends Error {
   status?: number;
 
@@ -16,5 +14,5 @@ export async function apiClient<T>(url: string, options: RequestInit = {}): Prom
     const message = await res.text();
     throw new ApiError(`${res.status} ${res.statusText} - ${message}`, res.status);
   }
-  return res.json();
+  return res.json() as Promise<T>;
 }

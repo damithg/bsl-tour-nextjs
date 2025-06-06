@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function DestinationDetailPage({ params }: PageProps) {
+  console.log('Slug value:', params.slug); 
   const destination = await getDestinationDetailBySlug(params.slug);
   if (!destination) return <div>Destination not found</div>;
 

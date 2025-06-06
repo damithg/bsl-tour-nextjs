@@ -5,7 +5,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ChevronRight, MapPin, ArrowRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { getFeaturedDestinations, DestinationCardDto } from '@/lib/api';
+
+import { getFeaturedDestinations } from '@/lib/api/destinations/getFeaturedDestinations';
+import type { DestinationCardDto } from '@/lib/api/destinations/types';
 
 const COLORS = {
   primary: '#0F4C81',

@@ -1,7 +1,8 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { getAllDestinations, DestinationCardDto } from '@/lib/api';
+import { getAllDestinations } from '@/lib/api/destinations/getAllDestinations';
+import DestinationsShowcase from '@/components/Showcase/DestinationsShowcase';
 import Link from 'next/link';
 import { MapPin, Clock, Star, Camera } from 'lucide-react';
 import MinimalHero from '@/components/common/MinimalHero';
