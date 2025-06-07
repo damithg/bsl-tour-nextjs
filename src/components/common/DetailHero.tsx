@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Home, Clock, MapPin } from 'lucide-react';
-import RatingStars from '@/components/shared/RatingStars';
 
 export interface BreadcrumbItem {
   label: string;
@@ -120,18 +119,6 @@ const DetailHero: React.FC<DetailHeroProps> = ({
               {/* Description */}
               {description && (
                 <p className="text-base text-white/80 mb-6">{description}</p>
-              )}
-
-              {/* Rating */}
-              {rating && (
-                <div className="flex items-center mb-4">
-                  <RatingStars rating={rating} size="md" />
-                  {reviewCount && (
-                    <span className="ml-2 font-medium text-white">
-                      {rating.toFixed(1)} ({reviewCount} reviews)
-                    </span>
-                  )}
-                </div>
               )}
 
               {/* Duration & Location */}
