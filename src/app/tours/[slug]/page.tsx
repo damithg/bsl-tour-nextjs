@@ -160,15 +160,18 @@ export default function TourDetailPage({ params }: Props) {
               <p className="text-lg text-gray-600">{tourData.summary}</p>
 
               {/* Highlights */}
-              {tourData.highlights && tourData.highlights.length > 0 ? (
-                tourData.highlights.map((highlight, idx) => (
-                  <li key={idx} className="flex items-start">
-                    <Check className="w-5 h-5 text-[#0F4C81]/80 mr-2 mt-1" />
-                    <span>{highlight}</span>
-                  </li>
-                ))
-              ) : (
-                <li className="text-gray-500">No highlights specified.</li>
+              {tourData.highlights && tourData.highlights.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-xl font-semibold mb-4 text-[#0F4C81]">Highlights</h3>
+                  <ul className="space-y-2">
+                    {tourData.highlights.map((highlight, idx) => (
+                      <li key={idx} className="flex items-start">
+                        <Check className="w-5 h-5 text-[#0F4C81]/80 mr-2 mt-1" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
 
             </section>
