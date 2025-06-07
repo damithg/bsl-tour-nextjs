@@ -1,11 +1,11 @@
+
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import DetailHero from '@/components/common/DetailHero';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { MapPin, Clock, Camera, Users, Star } from 'lucide-react';
+import { MapPin, Clock, Camera, Users, Star, Check } from 'lucide-react';
 
 interface DestinationImage {
   publicId?: string;
@@ -84,7 +84,7 @@ export default function DestinationDetailPage({ params }: Props) {
           { label: destinationData.name, isCurrentPage: true }
         ]}
         rating={5}
-        reviewCount={35}
+        reviewCount={100}
         overlayOpacity={0}
         aspectRatio="wide"
       />
@@ -97,21 +97,10 @@ export default function DestinationDetailPage({ params }: Props) {
               <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">About {destinationData.name}</h2>
               <p className="text-lg text-gray-600 mb-6">{destinationData.description}</p>
 
-              {/* Location Info */}
-              {destinationData.location && (
-                <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
-                  <div className="flex items-center">
-                    <MapPin className="w-5 h-5 text-[#0F4C81] mr-2" />
-                    <span className="font-medium">Location: </span>
-                    <span className="ml-1">{destinationData.location}</span>
-                  </div>
-                </div>
-              )}
-
               {/* Tags */}
               {destinationData.tags && destinationData.tags.length > 0 && (
                 <div className="mb-8">
-                  <h3 className="text-xl font-semibold mb-4 text-[#0F4C81]">What to Expect</h3>
+                  <h3 className="text-xl font-semibold mb-4 text-[#0F4C81]">Destination Features</h3>
                   <div className="flex flex-wrap gap-2">
                     {destinationData.tags.map((tag, index) => (
                       <span key={index} className="px-3 py-1 bg-[#0F4C81]/10 text-[#0F4C81] rounded-full text-sm font-medium">
@@ -125,11 +114,11 @@ export default function DestinationDetailPage({ params }: Props) {
               {/* Highlights */}
               {destinationData.highlights && destinationData.highlights.length > 0 && (
                 <div className="mb-8">
-                  <h3 className="text-xl font-semibold mb-4 text-[#0F4C81]">Highlights</h3>
+                  <h3 className="text-xl font-semibold mb-4 text-[#0F4C81]">What to See & Do</h3>
                   <ul className="space-y-2">
                     {destinationData.highlights.map((highlight, idx) => (
                       <li key={idx} className="flex items-start">
-                        <Star className="w-5 h-5 text-[#D4AF37] mr-2 mt-1" />
+                        <Check className="w-5 h-5 text-[#0F4C81] mr-2 mt-1" />
                         <span>{highlight}</span>
                       </li>
                     ))}
@@ -161,14 +150,14 @@ export default function DestinationDetailPage({ params }: Props) {
               <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">Plan Your Visit</h2>
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <p className="text-gray-600 mb-4">
-                  Ready to explore {destinationData.name}? Let us help you plan the perfect visit with our expert local knowledge.
+                  Ready to explore {destinationData.name}? Contact us to plan your perfect visit or browse our curated tours.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button className="flex-1">
-                    View Tours to {destinationData.name}
+                    View Tours
                   </Button>
                   <Button variant="outline" className="flex-1">
-                    Contact Our Experts
+                    Contact Us
                   </Button>
                 </div>
               </div>
@@ -190,6 +179,12 @@ export default function DestinationDetailPage({ params }: Props) {
                   <div className="flex justify-between">
                     <span className="text-gray-600">Features:</span>
                     <span className="font-medium">{destinationData.tags.length} highlights</span>
+                  </div>
+                )}
+                {destinationData.highlights && destinationData.highlights.length > 0 && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Attractions:</span>
+                    <span className="font-medium">{destinationData.highlights.length} things to do</span>
                   </div>
                 )}
               </div>
