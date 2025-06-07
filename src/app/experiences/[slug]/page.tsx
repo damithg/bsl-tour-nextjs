@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
@@ -6,7 +5,7 @@ import { useEffect, useState } from 'react';
 import DetailHero from '@/components/common/DetailHero';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, Users, MapPin, Star, Check, X } from 'lucide-react';
+import { MapPin, Clock, Camera, Users, Star, Check } from 'lucide-react';
 
 interface ExperienceImage {
   publicId?: string;
@@ -22,16 +21,13 @@ interface ExperienceData {
   id: number;
   slug: string;
   name: string;
-  duration: string;
-  summary: string;
+  description: string;
+  duration?: string;
   highlights?: string[];
-  inclusions?: string[];
-  exclusions?: string[];
   heroImage?: ExperienceImage;
+  galleryImages?: ExperienceImage[];
   location?: string;
-  difficulty?: string;
-  minGroupSize?: number;
-  maxGroupSize?: number;
+  tags?: string[];
 }
 
 interface Props {
@@ -100,120 +96,94 @@ export default function ExperienceDetailPage({ params }: Props) {
           {/* Left Content */}
           <div className="lg:w-8/12">
             <section className="mb-12">
-              <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">Overview</h2>
-              <p className="text-lg text-gray-600 mb-6">{experienceData.summary}</p>
+              <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">About This Experience</h2>
+              <p className="text-lg text-gray-600 mb-6">{experienceData.description}</p>
 
-              {/* Experience Details */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <Clock className="w-5 h-5 text-[#0F4C81] mb-2" />
-                  <div className="text-sm text-gray-500">Duration</div>
-                  <div className="font-semibold">{experienceData.duration}</div>
-                </div>
-                
+              {/* Duration and Location Info */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                {experienceData.duration && (
+                  <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <div className="flex items-center">
+                      <Clock className="w-5 h-5 text-[#0F4C81] mr-2" />
+                      <span className="font-medium">Duration: </span>
+                      <span className="ml-1">{experienceData.duration}</span>
+                    </div>
+                  </div>
+                )}
                 {experienceData.location && (
                   <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <MapPin className="w-5 h-5 text-[#0F4C81] mb-2" />
-                    <div className="text-sm text-gray-500">Location</div>
-                    <div className="font-semibold">{experienceData.location}</div>
-                  </div>
-                )}
-
-                {experienceData.difficulty && (
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <Star className="w-5 h-5 text-[#0F4C81] mb-2" />
-                    <div className="text-sm text-gray-500">Difficulty</div>
-                    <div className="font-semibold">{experienceData.difficulty}</div>
-                  </div>
-                )}
-
-                {(experienceData.minGroupSize || experienceData.maxGroupSize) && (
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <Users className="w-5 h-5 text-[#0F4C81] mb-2" />
-                    <div className="text-sm text-gray-500">Group Size</div>
-                    <div className="font-semibold">
-                      {experienceData.minGroupSize && experienceData.maxGroupSize 
-                        ? `${experienceData.minGroupSize}-${experienceData.maxGroupSize} people`
-                        : experienceData.minGroupSize 
-                          ? `Min ${experienceData.minGroupSize} people`
-                          : `Max ${experienceData.maxGroupSize} people`
-                      }
+                    <div className="flex items-center">
+                      <MapPin className="w-5 h-5 text-[#0F4C81] mr-2" />
+                      <span className="font-medium">Location: </span>
+                      <span className="ml-1">{experienceData.location}</span>
                     </div>
                   </div>
                 )}
               </div>
 
+              {/* Tags */}
+              {experienceData.tags && experienceData.tags.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold mb-4 text-[#0F4C81]">Experience Features</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {experienceData.tags.map((tag, index) => (
+                      <span key={index} className="px-3 py-1 bg-[#0F4C81]/10 text-[#0F4C81] rounded-full text-sm font-medium">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Highlights */}
               {experienceData.highlights && experienceData.highlights.length > 0 && (
                 <div className="mb-8">
-                  <h3 className="text-xl font-semibold mb-4 text-[#0F4C81]">Highlights</h3>
+                  <h3 className="text-xl font-semibold mb-4 text-[#0F4C81]">What's Included</h3>
                   <ul className="space-y-2">
                     {experienceData.highlights.map((highlight, idx) => (
                       <li key={idx} className="flex items-start">
-                        <Check className="w-5 h-5 text-[#0F4C81]/80 mr-2 mt-1" />
+                        <Check className="w-5 h-5 text-[#0F4C81] mr-2 mt-1" />
                         <span>{highlight}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               )}
+
+              {/* Gallery */}
+              {experienceData.galleryImages && experienceData.galleryImages.length > 0 && (
+                <section className="mb-12">
+                  <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">Gallery</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {experienceData.galleryImages.map((image, index) => (
+                      <div key={index} className="relative h-64 overflow-hidden rounded-lg">
+                        <img 
+                          src={image.large || image.medium || image.small || image.baseUrl} 
+                          alt={image.alt || `${experienceData.name} ${index + 1}`}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
             </section>
 
-            {/* Inclusions / Exclusions */}
-            <section className="mb-12">
-              <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">What's Included</h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Inclusions */}
-                <div>
-                  <h3 className="font-semibold flex items-center mb-4">
-                    <Check className="w-5 h-5 mr-2 text-green-600" /> Inclusions
-                  </h3>
-                  <ul className="space-y-2">
-                    {experienceData.inclusions && experienceData.inclusions.length > 0 ? (
-                      experienceData.inclusions.map((item, idx) => (
-                        <li key={idx} className="flex items-start">
-                          <Check className="w-4 h-4 text-green-600 mr-2 mt-1" />
-                          {item}
-                        </li>
-                      ))
-                    ) : (
-                      <li className="text-gray-500">No inclusions specified.</li>
-                    )}
-                  </ul>
-                </div>
-
-                {/* Exclusions */}
-                <div>
-                  <h3 className="font-semibold flex items-center mb-4">
-                    <X className="w-5 h-5 mr-2 text-red-600" /> Exclusions
-                  </h3>
-                  <ul className="space-y-2">
-                    {experienceData.exclusions && experienceData.exclusions.length > 0 ? (
-                      experienceData.exclusions.map((item, idx) => (
-                        <li key={idx} className="flex items-start">
-                          <X className="w-4 h-4 text-red-500 mr-2 mt-1" />
-                          <span>{item}</span>
-                        </li>
-                      ))
-                    ) : (
-                      <li className="text-gray-500">No exclusions specified.</li>
-                    )}
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* Contact */}
+            {/* Call to Action */}
             <section>
               <h2 className="text-3xl font-semibold mb-6 text-[#0F4C81]">Book This Experience</h2>
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <p className="text-gray-600 mb-4">
-                  Ready to experience this unique adventure? Contact us to check availability and make your booking.
+                  Ready to embark on this amazing experience? Contact us to book or get more information.
                 </p>
-                <Button className="w-full">
-                  Contact Us to Book
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button className="flex-1">
+                    Book Now
+                  </Button>
+                  <Button variant="outline" className="flex-1">
+                    Contact Us
+                  </Button>
+                </div>
               </div>
             </section>
           </div>
@@ -221,28 +191,30 @@ export default function ExperienceDetailPage({ params }: Props) {
           {/* Sidebar */}
           <div className="lg:w-4/12">
             <div className="sticky top-24 bg-white p-6 rounded-lg shadow">
-              <h3 className="font-semibold mb-4 text-[#0F4C81]">Quick Info</h3>
+              <h3 className="font-semibold mb-4 text-[#0F4C81]">Quick Facts</h3>
               <div className="space-y-4">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Duration:</span>
-                  <span className="font-medium">{experienceData.duration}</span>
-                </div>
+                {experienceData.duration && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Duration:</span>
+                    <span className="font-medium">{experienceData.duration}</span>
+                  </div>
+                )}
                 {experienceData.location && (
                   <div className="flex justify-between">
                     <span className="text-gray-600">Location:</span>
                     <span className="font-medium">{experienceData.location}</span>
                   </div>
                 )}
-                {experienceData.difficulty && (
+                {experienceData.tags && experienceData.tags.length > 0 && (
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Difficulty:</span>
-                    <span className="font-medium">{experienceData.difficulty}</span>
+                    <span className="text-gray-600">Features:</span>
+                    <span className="font-medium">{experienceData.tags.length} highlights</span>
                   </div>
                 )}
               </div>
-              
+
               <Button className="w-full mt-6">
-                Get Quote
+                Book This Experience
               </Button>
             </div>
           </div>
