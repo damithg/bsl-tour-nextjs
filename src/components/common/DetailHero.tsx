@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Home, Clock, MapPin } from 'lucide-react';
-//import RatingStars from '@/components/shared/RatingStars';
+import RatingStars from '@/components/shared/RatingStars';
 
 export interface BreadcrumbItem {
   label: string;
