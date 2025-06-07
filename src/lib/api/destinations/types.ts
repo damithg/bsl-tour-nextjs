@@ -19,16 +19,6 @@ export interface RawDestinationCard {
   };
 }
 
-export interface DestinationCardDto {
-  id: number;
-  slug: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  tags: string[];
-}
-
-
 // Dto for frontend consumption
 export interface DestinationCardDto {
   id: number;
