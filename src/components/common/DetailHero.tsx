@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Home, Clock, MapPin } from 'lucide-react';
+import RatingStars from '@/components/ui/RatingStars';
 
 export interface BreadcrumbItem {
   label: string;

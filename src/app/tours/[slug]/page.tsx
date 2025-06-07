@@ -59,11 +59,12 @@ interface TourData {
 }
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export default function TourDetailPage({ params }: Props) {
-  const slug = params.slug;
+export default async function TourDetailPage({ params }: Props) {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
   const { currency } = useCurrency();
 
   const [activeDay, setActiveDay] = useState(1);
