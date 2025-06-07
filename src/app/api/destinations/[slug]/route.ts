@@ -6,9 +6,9 @@ const API_BASE_URL = "https://bsl-tours-api-yqmyn.ondigitalocean.app";
 
 export async function GET(
   request: NextRequest,
-  context: { params: { slug: string } }
+  context: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = context.params;
+  const { slug } = await context.params;
   const upstreamUrl = `${API_BASE_URL}/api/destinations/${slug}`;
 
   try {
